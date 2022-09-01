@@ -1,0 +1,36 @@
+{
+  "name": "get-lit-server",
+  "version": "1.0.0",
+  "description": "get lit server",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SierraNN/Get-Lit.git"
+  },
+  "keywords": [
+    "books",
+    "reading",
+    "literature"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SierraNN/Get-Lit/issues"
+  },
+  "homepage": "https://github.com/SierraNN/Get-Lit#readme",
+  "dependencies": {
+    "apollo-server-express": "^3.10.2",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "graphql": "^16.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
