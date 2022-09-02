@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose')
 const { TaggableSchema, TaggableModel } = require('./custom/Taggable')
+const bcrypt = require('bcrypt')
 
 const UserSchema = new TaggableSchema({
   username: {

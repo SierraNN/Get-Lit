@@ -1,0 +1,31 @@
+{
+  "name": "get-lit",
+  "version": "1.0.0",
+  "description": "book lovers community",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm i --prefix client && npm i --prefix server",
+    "dev:client": "npm run start --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "dev": "concurrently \"npm:dev:*\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SierraNN/Get-Lit.git"
+  },
+  "keywords": [
+    "books",
+    "reading",
+    "library",
+    "literature"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SierraNN/Get-Lit/issues"
+  },
+  "homepage": "https://github.com/SierraNN/Get-Lit#readme",
+  "devDependencies": {
+    "concurrently": "^7.3.0"
+  }
+}
