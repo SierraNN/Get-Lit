@@ -20,12 +20,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-<<<<<<< HEAD
-    "eject": "react-scripts eject"
-=======
     "eject": "react-scripts eject",
     "postinstall": "semantic-ui-css-patch"
->>>>>>> main
   },
   "eslintConfig": {
     "extends": [
@@ -44,11 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-<<<<<<< HEAD
-=======
   },
   "devDependencies": {
     "sass": "^1.54.8"
->>>>>>> main
   }
 }
