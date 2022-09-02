@@ -1,0 +1,8 @@
+const resolveReviews = {
+  Query: {
+
+  },
+  Mutation: {
+
+  }
+}
