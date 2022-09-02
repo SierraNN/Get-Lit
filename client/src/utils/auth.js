@@ -29,12 +29,12 @@ class AuthService {
 
   login(idToken) {
     localStorage.setItem('lit-auth-token', idToken);
-    window.location.assign('/');
+    // window.location.assign('/');
   }
 
   logout() {
     localStorage.removeItem('lit-auth-token');
-    window.location.reload();
+    // window.location.reload();
   }
 }
 
