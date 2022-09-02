@@ -2,6 +2,7 @@
   "name": "get-lit",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@codewizard-dt/use-form-hook": "^1.1.34",
     "@semantic-ui-react/css-patch": "^1.1.2",
