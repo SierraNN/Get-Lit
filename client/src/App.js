@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import 'semantic-ui-css/semantic.min.css'
->>>>>>> main
 import './App.css';
 import Body from "./components/Body";
 
