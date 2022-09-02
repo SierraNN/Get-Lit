@@ -1,10 +1,11 @@
 import React from "react";
+import SideNav from "./SideNav";
 
 
-export default function About() {
-  return (
+export default function Body() {
+    return (
         <div>
-                <div className="background">
+            <div className="background">
 
             </div>
 
@@ -12,7 +13,7 @@ export default function About() {
 
 
                 <div className="paper">
-                    
+
                     <h1> welcome, readers! </h1>
                     <p>
                         insert text here!
@@ -20,28 +21,6 @@ export default function About() {
                 </div>
 
             </div>
-            <div id="main-navigation">
-                <ul>
-                    <li>
-                        <a href="javascript:void(0)" className="wattpad-logo">Home</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" className="entypo-layout">Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" className="entypo-map">Discover</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" className="entypo-users">My Friends</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" className="entypo-archive">My Books</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" className="entypo-mail">Share</a>
-                    </li>
-                </ul>
-            </div>
         </div>
-  );
+    );
 }
