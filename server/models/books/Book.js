@@ -8,10 +8,14 @@ const BookSchema = new TaggableSchema({
     type: String,
     required: true
   },
+  googleId: {
+    type: String,
+    required: true
+  },
   authors: { type: [String], required: true },
   urls: [String],
   description: { type: String, required: true },
-  genre: String,
+  categories: [String],
   eBooks: {
     type: Schema.Types.ObjectId,
     ref: 'eBook'
@@ -20,6 +24,6 @@ const BookSchema = new TaggableSchema({
   // schema options
 })
 
-const Book = TaggableModel('Book', BookSchema)
+const Book = new TaggableModel('Book', BookSchema)
 
 module.exports = Book

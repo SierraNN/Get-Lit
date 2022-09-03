@@ -9,13 +9,17 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
 import SideNav from './components/SideNav';
 import NotFound from './pages/NotFound';
-import Login from './pages/Login';
 import AuthProvider from './context/AuthContext';
 import GuestOnly from './components/auth/GuestOnly';
 import AuthGuard from './components/auth/AuthGuard';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import BookSearch from './pages/BookSearch';
+import BookDetails from './pages/BookDetails';
+import ProfileProvider from './context/ProfileContext';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -42,23 +46,31 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <ApolloProvider client={client}>
-          <SideNav />
-          <Routes>
-            <Route path="/" element={<Body />} />
-            <Route path="/" element={<GuestOnly />}>
-              <Route path="login" element={<Login />} />
-            </Route>
-            <Route path="/" element={<AuthGuard />}>
-              <Route path="profile" element={<div>PROFILE</div>} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </ApolloProvider>
-      </BrowserRouter>
-    </AuthProvider>
+    <ApolloProvider client={client}>
+      <AuthProvider>
+        <ProfileProvider>
+          <BrowserRouter>
+            <SideNav />
+            <Routes>
+              <Route path="/" element={<Body />} />
+              <Route path="/search" element={<BookSearch />} />
+              <Route path="/books" element={<Outlet />}>
+                <Route path=":bookId" element={<BookDetails />} />
+              </Route>
+              <Route path="/" element={<GuestOnly />}>
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
+              </Route>
+              <Route path="/" element={<AuthGuard />}>
+                <Route path="profile" element={<div>PROFILE</div>} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+
+        </ProfileProvider>
+      </AuthProvider>
+    </ApolloProvider>
   );
 }
 

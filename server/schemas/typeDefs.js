@@ -18,11 +18,13 @@ const typeDefs = gql`
     user: User
   }
   type Tag {
+    _id: ID
     text: String
   }
   type Comment {
+    _id: ID
     text: String
-    author: ID
+    author: User
     replies: [Comment]
   }
 
@@ -35,6 +37,15 @@ const typeDefs = gql`
     genre: String
     tags: [Tag]
     ebooks: [eBook]
+  }
+  input BookInfo {
+    googleId: ID
+    title: String
+    authors: [String]
+    urls: [String]
+    description: String
+    categories: [String]
+    tags: [String]
   }
   type eBook {
     book: Book
@@ -68,11 +79,13 @@ const typeDefs = gql`
 
   type Query {
     user(username: String!): User
+    myProfile: User
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(username: String!, password: String!): Auth
+    saveBook(book: BookInfo): User
   }
 `;
 

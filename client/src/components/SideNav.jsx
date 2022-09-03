@@ -10,6 +10,9 @@ const SideNav = (props) => {
       <Link to="/">
         <Menu.Item><Icon name='home' />Home</Menu.Item>
       </Link>
+      <Link to="/search">
+        <Menu.Item><Icon name="search" />Search</Menu.Item>
+      </Link>
       {auth
         ? <>
           <Link to="/profile">
