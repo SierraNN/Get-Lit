@@ -29,6 +29,7 @@
     "concurrently": "^7.3.0"
   },
   "dependencies": {
+    "@tolgee/react": "^4.8.6",
     "gsap": "^3.11.0",
     "three": "^0.144.0"
   }
