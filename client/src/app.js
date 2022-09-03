@@ -21,7 +21,7 @@ function App() {
           <button className="btn" onClick={() => setLanguage("es")} style={{background: getLanguage() === "es" ? "#ffba02" : "#a7a7a7"}}>Spanish</button>
         </p>
       </div>
-
+      {/* content in each class has a T surrounding it to say its from tolgee */}
       <div className="choices">
         <h1><T>choices_title</T></h1>
         <div className="choices-table">
