@@ -1,6 +1,7 @@
 const { AuthenticationError } = require("apollo-server-express");
-const Book = require("../models/books/Book");
-const User = require("../models/User");
+// const Book = require("../models/books/Book");
+// const User = require("../models/User");
+const { User, Book, BookList, BookClub, Review } = require('../models')
 const { signToken } = require("../utils/auth");
 const { Types } = require('mongoose')
 

@@ -20,6 +20,7 @@ import Register from './pages/auth/Register';
 import BookSearch from './pages/BookSearch';
 import BookDetails from './pages/BookDetails';
 import ProfileProvider from './context/ProfileContext';
+import Profile from './pages/Profile';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -62,12 +63,11 @@ function App() {
                 <Route path="register" element={<Register />} />
               </Route>
               <Route path="/" element={<AuthGuard />}>
-                <Route path="profile" element={<div>PROFILE</div>} />
+                <Route path="profile" element={<Profile />} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
-
         </ProfileProvider>
       </AuthProvider>
     </ApolloProvider>

@@ -53,6 +53,7 @@ const typeDefs = gql`
     free: Boolean
   }
   type Review {
+    _id: ID
     book: Book
     creator: User
     reviewText: String
@@ -62,19 +63,23 @@ const typeDefs = gql`
     comments: [Comment]
   }
   type BookList {
-    description: String
-    tags: [Tag]
-    books: [ID]
+    _id: ID
     creator: User
+    name: String
+    description: String
+    books: [Book]
+    tags: [Tag]
     comments: [Comment]
   }
   type BookClub {
+    _id: ID
+    creator: User
+    name: String
     description: String
     tags: [Tag]
     books: [Book]
     lists: [BookList]
-    creator: User
-    comments: [Comment]
+    posts: [Comment]
   }
 
   type Query {

@@ -1,10 +1,11 @@
 const { Schema, model } = require('mongoose')
-const { TaggableSchema, TaggableModel } = require('./custom/Taggable')
-const bcrypt = require('bcrypt')
+// const { TaggableSchema, TaggableModel } = require('./custom/Taggable')
+const bcrypt = require('bcrypt');
+const TagSchema = require('./Tag');
 
 const ID = Schema.Types.ObjectId
 
-const UserSchema = new TaggableSchema({
+const UserSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -34,6 +35,11 @@ const UserSchema = new TaggableSchema({
     type: [ID],
     ref: 'BookList'
   },
+  reviews: {
+    type: [ID],
+    ref: 'Review'
+  },
+  tags: [TagSchema]
 }, {
   // schema options
 })
@@ -56,6 +62,6 @@ UserSchema.statics.fullProfile = async function (userId) {
   return user
 }
 
-const User = new TaggableModel('User', UserSchema)
+const User = new model('User', UserSchema)
 
 module.exports = User

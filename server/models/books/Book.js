@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose')
-const { TaggableSchema, TaggableModel } = require('../custom/Taggable')
+// const { TaggableSchema, TaggableModel } = require('../custom/Taggable')
 
 
-const BookSchema = new TaggableSchema({
+const BookSchema = new Schema({
   // attributes
   title: {
     type: String,
@@ -24,6 +24,6 @@ const BookSchema = new TaggableSchema({
   // schema options
 })
 
-const Book = new TaggableModel('Book', BookSchema)
+const Book = new model('Book', BookSchema)
 
 module.exports = Book
