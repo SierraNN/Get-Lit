@@ -7,6 +7,7 @@ require('dotenv').config()
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
+const { bookSearch } = require('./controllers/googleApi');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -26,6 +27,8 @@ if (process.env.NODE_ENV === 'production') {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
+
+app.get('/api/books/search/:type/:term/:page', bookSearch)
 
 
 // Create a new instance of an Apollo server with the GraphQL schema

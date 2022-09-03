@@ -1,8 +1,0 @@
-const resolveReviews = {
-  Query: {
-
-  },
-  Mutation: {
-
-  }
-}
