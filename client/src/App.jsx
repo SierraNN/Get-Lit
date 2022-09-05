@@ -9,6 +9,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+<<<<<<< HEAD
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
 import SideNav from './components/SideNav';
 import NotFound from './pages/NotFound';
@@ -30,6 +31,15 @@ import ClubDetails from './pages/ClubDetails';
 import Clubs from './pages/Clubs';
 import CreateReview from './components/forms/CreateReview';
 import CreateClub from './components/forms/CreateClub';
+=======
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import SideNav from './components/SideNav';
+import NotFound from './pages/NotFound';
+import Login from './pages/Login';
+import AuthProvider from './context/AuthContext';
+import GuestOnly from './components/auth/GuestOnly';
+import AuthGuard from './components/auth/AuthGuard';
+>>>>>>> main
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -56,6 +66,7 @@ const client = new ApolloClient({
 
 function App() {
   return (
+<<<<<<< HEAD
     <ApolloProvider client={client}>
       <AuthProvider>
         <ProfileProvider>
@@ -97,6 +108,25 @@ function App() {
         </ProfileProvider>
       </AuthProvider>
     </ApolloProvider>
+=======
+    <AuthProvider>
+      <BrowserRouter>
+        <ApolloProvider client={client}>
+          <SideNav />
+          <Routes>
+            <Route path="/" element={<Body />} />
+            <Route path="/" element={<GuestOnly />}>
+              <Route path="login" element={<Login />} />
+            </Route>
+            <Route path="/" element={<AuthGuard />}>
+              <Route path="profile" element={<div>PROFILE</div>} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </ApolloProvider>
+      </BrowserRouter>
+    </AuthProvider>
+>>>>>>> main
   );
 }
 

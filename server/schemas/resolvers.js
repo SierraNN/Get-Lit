@@ -1,4 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
+<<<<<<< HEAD
 // const Book = require("../models/books/Book");
 // const User = require("../models/User");
 const { User, Book, BookList, BookClub, Review } = require('../models')
@@ -7,11 +8,17 @@ const { Types } = require('mongoose');
 const { create } = require("../models/books/eBook");
 
 const ID = Types.ObjectId
+=======
+const User = require("../models/User");
+const { signToken } = require("../utils/auth");
+
+>>>>>>> main
 const resolvers = {
   Query: {
     user: async (parent, { username }) => {
       const user = await User.findOne({ username })
       return user
+<<<<<<< HEAD
     },
     myProfile: async (parent, args, { user }) => {
       if (!user) throw new AuthenticationError('Not logged in')
@@ -81,6 +88,15 @@ const resolvers = {
         }
         throw new AuthenticationError('Network error')
       }
+=======
+    }
+  },
+  Mutation: {
+    addUser: async (parent, { username, email, password }) => {
+      const user = await User.create({ username, email, password });
+      const token = signToken(user);
+      return { token, user };
+>>>>>>> main
     },
     login: async (parent, { username, password }) => {
       const user = await User.findOne({ username });
@@ -91,6 +107,7 @@ const resolvers = {
 
       const token = signToken(user);
       return { token, user };
+<<<<<<< HEAD
     },
     /** BOOKS */
     saveBook: async (parent, { book }, { user }) => {
@@ -154,6 +171,9 @@ const resolvers = {
       }
       return created
     },
+=======
+    }
+>>>>>>> main
   }
 }
 
