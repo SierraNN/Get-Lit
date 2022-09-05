@@ -13,6 +13,9 @@ const SideNav = (props) => {
       <Link to="/search">
         <Menu.Item><Icon name="search" />Search</Menu.Item>
       </Link>
+      <Link to="/profile">
+            <Menu.Item><Icon name="user" />Profile</Menu.Item>
+      </Link>
       {auth
         ? <>
           <Link to="/profile">

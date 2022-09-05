@@ -27,5 +27,8 @@
   "homepage": "https://github.com/SierraNN/Get-Lit#readme",
   "devDependencies": {
     "concurrently": "^7.3.0"
+  },
+  "dependencies": {
+    "js-pixel-fonts": "^1.6.0"
   }
 }
