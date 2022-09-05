@@ -1,8 +1,8 @@
-import Book from './Book';
-import BookList from './BookList';
-import BookClub from './BookClub';
-import eBook from './eBook';
+const Book = require('./Book');
+const BookList = require('./BookList');
+const BookClub = require('./BookClub');
+const eBook = require('./eBook');
 
-export default {
+module.exports = {
   Book, BookList, BookClub, eBook
 }

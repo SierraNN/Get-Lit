@@ -10,11 +10,17 @@ const SideNav = (props) => {
       <Link to="/">
         <Menu.Item><Icon name='home' />Home</Menu.Item>
       </Link>
-      <Link to="/search">
-        <Menu.Item><Icon name="search" />Search</Menu.Item>
+      <Link to="/books">
+        <Menu.Item><Icon name="file alternate" />Books</Menu.Item>
       </Link>
-      <Link to="/profile">
-            <Menu.Item><Icon name="user" />Profile</Menu.Item>
+      <Link to="/reviews">
+        <Menu.Item><Icon name="comment" />Reviews</Menu.Item>
+      </Link>
+      <Link to="/lists">
+        <Menu.Item><Icon name="list" />Lists</Menu.Item>
+      </Link>
+      <Link to="/clubs">
+        <Menu.Item><Icon name="users" />Clubs</Menu.Item>
       </Link>
       {auth
         ? <>

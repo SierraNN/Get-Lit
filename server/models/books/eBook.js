@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+const { Schema, model } = require('mongoose')
 
 const eBookSchema = new Schema({
   // attributes
@@ -8,4 +8,4 @@ const eBookSchema = new Schema({
 
 const eBook = model('eBook', eBookSchema)
 
-export default eBook
+module.exports = eBook

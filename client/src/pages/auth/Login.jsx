@@ -1,14 +1,16 @@
-import { Container, Header } from 'semantic-ui-react'
+import { Container, Header, Message } from 'semantic-ui-react'
 import { FormProvider, useForm } from '@codewizard-dt/use-form-hook'
 import { useMutation } from '@apollo/client'
 import { LOGIN } from '../../utils/mutations'
 import { useAuth } from '../../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Login = (props) => {
   const { Form } = useForm()
   const [auth, setAuth] = useAuth()
   const [login] = useMutation(LOGIN)
+  const { state } = useLocation()
+  const message = state && state.message
   const navigate = useNavigate()
 
   const onSubmit = async (data) => {
@@ -20,6 +22,7 @@ const Login = (props) => {
   return (
     <Container>
       <Header>Login</Header>
+      {message && <Message content={message} />}
       <FormProvider>
         <Form submit={onSubmit} respond={onResponse} fields={[
           { name: 'username', required: true },

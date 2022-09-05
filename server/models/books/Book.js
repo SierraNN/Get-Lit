@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose')
-const { TaggableSchema, TaggableModel } = require('../custom/Taggable')
+// const { TaggableSchema, TaggableModel } = require('../custom/Taggable')
 
 
-const BookSchema = new TaggableSchema({
+const BookSchema = new Schema({
   // attributes
   title: {
     type: String,
@@ -14,7 +14,7 @@ const BookSchema = new TaggableSchema({
   },
   authors: { type: [String], required: true },
   urls: [String],
-  description: { type: String, required: true },
+  description: { type: String, default: "" },
   categories: [String],
   eBooks: {
     type: Schema.Types.ObjectId,
@@ -24,6 +24,6 @@ const BookSchema = new TaggableSchema({
   // schema options
 })
 
-const Book = new TaggableModel('Book', BookSchema)
+const Book = new model('Book', BookSchema)
 
 module.exports = Book

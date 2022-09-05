@@ -15,10 +15,15 @@
   display: flex
   flex-flow: row wrap
   align-items: center
-  justify-content: space-around
-  gap: 0.5rem
+  // align-content: flex-start
+  justify-content: flex-start
+  // justify-items: flex-start
+  gap: 1rem
   transition: transform 400ms
   > a, > .ui.item
+    margin: 0
+    .header
+      margin-bottom: 0.5rem
     &:hover
       transform: translateY(-3px)
 
@@ -34,4 +39,7 @@
       .button
         flex-grow: 0
 
-  
+a.placeholder 
+  width: 128px
+  margin-top: 1rem
+  align-self: flex-start

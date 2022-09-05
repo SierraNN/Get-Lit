@@ -1,22 +1,40 @@
 const API_KEY = process.env.GOOGLE_API_KEY || 'notAkey'
+const { Axios } = require('axios')
+
+const googleBooks = new Axios({
+  baseURL: 'https://www.googleapis.com/books/v1',
+  transformResponse: data => JSON.parse(data)
+})
 
 const bookSearch = async (req, res) => {
-  let url = 'https://www.googleapis.com/books/v1/volumes'
-  const { type, term, page } = req.params
+  let url = '/volumes'
+  const { type, term, size, page } = req.params
 
-  // Building query string
   let query = type === 'all' ? `?q=${term}` : `?q=${type}:${term}`
   query += `&key=${API_KEY}`
-  // If not first page
-  if (page > 1) query += `&startIndex=${(page - 1) * 10}`
+
+  if (page > 1) query += `&startIndex=${(page - 1) * size}`
+  query += `&maxResults=${size}`
   url += query
+
   try {
-    const result = await fetch(url)
-    const data = await result.json()
+    const { data } = await googleBooks.get(url)
     res.json({ data })
   } catch (error) {
     res.json({ error })
   }
 }
 
-module.exports = { bookSearch }
+const fetchBook = async (req, res) => {
+  const { googleId } = req.params
+  const url = `/volumes/${googleId}?key=${API_KEY}`
+  console.log({ googleId })
+  try {
+    const { data } = await googleBooks.get(url)
+    res.json({ data })
+  } catch (error) {
+    res.json({ error })
+  }
+}
+
+module.exports = { bookSearch, fetchBook }
