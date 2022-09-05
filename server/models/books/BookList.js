@@ -15,7 +15,7 @@ const BookListSchema = new Schema({
   },
   description: {
     type: String,
-    required: true,
+    defaultValue: ''
   },
   books: {
     type: [ID],

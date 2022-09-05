@@ -14,7 +14,7 @@ const BookSchema = new Schema({
   },
   authors: { type: [String], required: true },
   urls: [String],
-  description: { type: String, required: true },
+  description: { type: String, default: "" },
   categories: [String],
   eBooks: {
     type: Schema.Types.ObjectId,

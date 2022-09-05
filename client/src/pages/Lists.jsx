@@ -1,37 +1,45 @@
 import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
 import { useState } from "react"
-import { Card, Container, Dropdown, Header, Message } from 'semantic-ui-react'
-import BookImageList from "../components/BookImageList"
-import books from "../utils/books"
-import { bookSearch } from "../utils/google"
+import { Button, Container, Dropdown, Header, Message } from "semantic-ui-react"
+import ListOfLists from "../components/lists/ListOfLists"
+import bookLists from "../utils/bookLists"
 
-const cachedResults = books.results.get()
+const cachedResults = bookLists.results.get()
 
-const BookSearch = (props) => {
+const Lists = (props) => {
   const { Form } = useForm()
   const [results, setResults] = useState(cachedResults)
-  // const [resultCount, setResultCount] = useState(null)
+  const [searchParams, setSearchParams] = useState({})
+  const [fresh, setFresh] = useState(false)
+
+
   const [pageNum, setPageNum] = useState(1)
-  // const [loading, setLoading] = useState(false)
+  const [pageSize] = useState(20)
+
   const onSubmit = async ({ term, type }) => {
     if (term === '') {
       return { errors: { term: 'Please enter a search term' } }
     } else {
-      return bookSearch({ term, type, pageNum })
+      setPageNum(1)
+      // return bookSearch({ term, type, pageSize, pageNum: 1 })
     }
   }
   const onResponse = async ({ data, error }) => {
-    // console.log(data)
     if (data) {
-      // setResultCount(data.totalItems)
+      setFresh(true)
       setResults(data.items)
-      books.results.set(data.items)
+      bookLists.results.set(data.items)
     }
   }
+
+  const nextPage = async () => setPageNum(pageNum + 1)
+  const prevPage = async () => setPageNum(pageNum - 1 || 1)
+
+
   return (
     <Container>
       <FormProvider>
-        <Header as='h1'>Search</Header>
+        <Header as='h1'>Book Lists!</Header>
         <Form submit={onSubmit} respond={onResponse} fields={[
           { name: 'term', useLabel: false, width: '12' },
           {
@@ -43,13 +51,21 @@ const BookSearch = (props) => {
             ], width: '4'
           }
         ]} />
+        {fresh && <div>
+          <Button.Group floated="right">
+            <Button icon="angle left" onClick={prevPage} />
+            <Button content={pageNum} onClick={null} />
+            <Button icon="angle right" onClick={nextPage} />
+          </Button.Group>
+        </div>}
       </FormProvider>
+
       {results
-        ? <BookImageList list={results} />
+        ? <ListOfLists list={results} />
         : results && <Message>No results</Message>
       }
     </Container>
   )
 }
 
-export default BookSearch
+export default Lists

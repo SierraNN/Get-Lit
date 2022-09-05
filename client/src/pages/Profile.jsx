@@ -1,7 +1,7 @@
 import { useProfile } from "../context/ProfileContext"
 
 const Profile = (props) => {
-  const profile = useProfile()
+  const [profile] = useProfile()
   console.log(profile)
   return (
     <div>

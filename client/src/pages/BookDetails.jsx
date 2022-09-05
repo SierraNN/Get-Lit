@@ -1,28 +1,38 @@
 import { useEffect } from "react"
 import { useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Button, Container, Header, Image, Label, Segment } from "semantic-ui-react"
 import books from "../utils/books"
 import { useAuth } from '../context/AuthContext';
 import { useMutation } from '@apollo/client';
-import { SAVE_BOOK } from '../utils/mutations';
+import { REMOVE_BOOK, SAVE_BOOK } from '../utils/mutations';
+import { bookByGoogleId } from "../utils/google"
+import Loading from "../components/Loading"
+import { useProfile } from "../context/ProfileContext"
 
 const BookDetails = (props) => {
   const [auth] = useAuth()
+  const [profile, updateProfile] = useProfile()
   const { bookId } = useParams()
   const [book, setBook] = useState(null)
+  const navigate = useNavigate()
+  const alreadySaved = () => profile.books.find(({ googleId }) => bookId === googleId) !== undefined
 
   useEffect(() => {
+    const fetchById = async () => {
+      const { data } = await bookByGoogleId(bookId)
+      setBook(data)
+      books.recent.updateById(bookId, data)
+    }
     let cached = books.recent.getById(bookId)
     if (cached) setBook(cached)
+    else fetchById()
   }, [bookId])
 
   const [saveBook] = useMutation(SAVE_BOOK)
-
   const handleSave = async () => {
-    console.log('hello')
     if (!book) return
-    const { title, authors, categories, description } = book.volumeInfo
+    const { title, authors, categories = [], description = "" } = book.volumeInfo
     const { data, error } = await saveBook({
       variables: {
         book: {
@@ -34,19 +44,33 @@ const BookDetails = (props) => {
         }
       }
     })
-    console.log(data)
+    if (data && data.saveBook) {
+      updateProfile('ADD_BOOK', data.saveBook)
+    }
   }
 
-  if (!book) return <div>loading</div>
+  const [removeBook] = useMutation(REMOVE_BOOK)
+  const handleRemove = async () => {
+    const id = profile.books.find(({ googleId }) => bookId === googleId)._id
+    const { data, error } = await removeBook({
+      variables: {
+        bookId: id
+      }
+    })
+    if (data && data.removeBook === true) {
+      updateProfile('REMOVE_BOOK', id)
+    }
+  }
+  if (!book) return <Loading message="Getting Book" />
   const { volumeInfo: info } = book
-  console.log(book)
-
+  // const info = book.volumeInfo || 
   return (
     <Container>
       <Header as='h1' content={info.title} />
+      <Button icon="angle left" content="Back" onClick={() => navigate(-1)} />
       <Segment.Group>
         <Segment basic className="flex">
-          <Image inline src={info.imageLinks.thumbnail} />
+          <Image inline src={info?.imageLinks?.thumbnail} />
           <div className="stretch">
             <Header content="Categories" />
             <Label.Group>
@@ -56,8 +80,11 @@ const BookDetails = (props) => {
           </div>
           {auth &&
             <Button.Group vertical>
-              <Button color="blue" onClick={handleSave} >Save Book</Button>
-              <Button color='teal' >Add To List</Button>
+              {alreadySaved()
+                ? <Button color='red' icon='trash' onClick={handleRemove} content="Remove from Profile" />
+                : <Button color="blue" icon='save' onClick={handleSave} content="Save Book" />}
+              <Button color='teal' icon='plus' content="Add to Book List" />
+              <Button color='teal' icon='pencil' content="Write a Review" onClick={() => navigate(`/books/${book.id}/reviews/new`)} />
             </Button.Group>
           }
 

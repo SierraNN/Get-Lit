@@ -1,5 +1,3 @@
-// const Book = require("./books/Book");
-// const BookList = require('./books/BookList')
 const User = require('./User')
 const Review = require('./Review')
 const Comment = require('./Comment')

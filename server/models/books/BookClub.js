@@ -9,6 +9,10 @@ const BookClubSchema = new Schema({
     type: ID,
     ref: 'User'
   },
+  members: {
+    type: [ID],
+    ref: 'User'
+  },
   name: {
     type: String,
     required: true,
