@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
-import { Image } from 'semantic-ui-react'
-//import { useAuth } from '../../context/AuthContext';
+import { Form, FormField, Image } from 'semantic-ui-react'
+//import { useAuth } from '../../context/AuthContext'
 import { Container } from 'semantic-ui-react'
-import { Divider, Header, Segment, Modal, Columns } from 'semantic-ui-react'
+import { Divider, Header, Segment, Modal, Columns, Button } from 'semantic-ui-react'
 import { Icon, Menu } from 'semantic-ui-react'
-import './Profile.css';
-import { useAuth } from '../../context/AuthContext';
-import ProfileImage from '../../components/ProfileImage';
+import './Profile.css'
+import { useAuth } from '../../context/AuthContext'
+import ProfileImage from '../../components/ProfileImage'
 import { Dropdown } from 'semantic-ui-react'
 
 const options = [
@@ -30,103 +30,60 @@ const options = [
   { key: 'ux', text: 'User Experience', value: 'ux' },
 ]
 
-const Profile = (currentModal, handleModalChange) => {
-    const ModalBio = () => (
-      <div className="ui modal" id='bio'>
-        <i className="close icon"></i>
-        <div className="header">
-          Profile Picture
-        </div>
-        <div className="image content">
-          <div className="ui medium image">
-            <img src="/images/avatar/large/chris.jpg" />
-          </div>
-          <div className="description">
-            <div className="ui header">We've auto-chosen a profile image for you.</div>
-            <p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your registered e-mail address.</p>
-            <p>Is it okay to use this photo?</p>
-          </div>
-        </div>
-        <div className="actions">
-          <div className="ui black deny button">
-            Nope
-          </div>
-          <div className="ui positive right labeled icon button">
-            Yep, that's me
-            <i className="checkmark icon"></i>
-          </div>
-        </div>
-      </div>
-    )
+const Profile = () => {
+
     const ImageExampleCircular = () => (
         <div>
-          <Image className="ui bordered middle aligned tiny small circular right floated image"  src='https://easydrawingguides.com/wp-content/uploads/2021/09/Dog-Pixel-Art-step-by-step-drawing-tutorial-step-10.png' size='small' circular />
-          <br />
-          <ProfileImage />
+          <Image className="imageborder ui bordered middle aligned tiny small circular right floated image"  src='https://easydrawingguides.com/wp-content/uploads/2021/09/Dog-Pixel-Art-step-by-step-drawing-tutorial-step-10.png' size='small' circular />
         </div>
         ) 
-    const ContainerExampleContainer = () => (
-      <Container>
-        <button className="ui basic button right floated">
-          <i className="icon user"></i>
-          Follow
-        </button> 
+    const GenresContainer = () => (
         <Container>
           <Segment raised>
-            <div className="ui justified container">
-              <p>
-              <Dropdown placeholder='Skills' fluid multiple selection options={options} />
-              </p>
-            </div>
+            <GenresDisplay/>
           </Segment>
-          <Segment color='purple'><FriendsContainer /></Segment>
         </Container>
-      </Container>
     )
-    const showModal = () => (
-      <div className="ui grid">
-            <div className="four wide column">
-              <div className="ui vertical fluid tabular menu">
-                <a
-                  href="#bio" onClick={() => handleModalChange('Bio')}>
-                  Bio
-                </a>
-                <a
-                  href="#fav" onClick={() => handleModalChange('Favorited Books')}>
-                  Favorited Books
-                </a>
-                <a
-                  href="#list" onClick={() => handleModalChange('Book Lists')}>
-                  Book Lists
-                </a>
-                <a
-                  href="#following" onClick={() => handleModalChange('Following')}>
-                  Following
-                </a>
-              </div>
-            </div>
-          </div>
+    const GenresDisplay = () => (
+      //need to link the dropdown selections to displayh here
+      <>
+      <i className='tag icon' />
+      <a>Fantasy</a>
+      <a> Mystery</a>
+      <a> Suspense</a>
+      <a> Poetry</a>
+      <a> Historical</a>
+      </>
     )
+
+    const GenresSelect = () => (
+      <p>
+      <i className='tag icon' />
+      <Dropdown placeholder='Skills' fluid multiple selection options={options} />
+      </p>
+    )
+
     const FriendsContainer = () => (
+      //edit this so it renders dynamically
       <Container>
         <Header>Followers List</Header>
-        <div className="ui horizontal list">
+        <div className="ui vertical list">
           <div className="item">
-            <img className="ui mini circular image" src="/images/avatar2/small/molly.png" />
+            <img className="ui mini circular image" src="" />
             <div className="content">
               <div className="ui sub header">Molly</div>
             </div>
           </div>
           <br />
           <div className="item">
-            <img className="ui mini circular image" src="/images/avatar2/small/elyse.png" />
+            <img className="ui mini circular image" src="" />
             <div className="content">
               <div className="ui sub header">Elyse</div>
             </div>
           </div>
           <br />
           <div className="item">
-            <img src="/images/avatar2/small/eve.png" className="ui mini circular image" />
+            <img src="" className="ui mini circular image" />
             <div className="content">
               <div className="ui sub header">Eve</div>
             </div>
@@ -134,30 +91,95 @@ const Profile = (currentModal, handleModalChange) => {
         </div>
       </Container>
     )
+
+    const BioContainer = () => (
+      //edit this so it renders dynamically
+      <Container>
+        <Header>Bio</Header>
+        <Form>
+          <Form.Field>
+            <textarea placeholder='My favorite book is...' input='text' id='userBio'></textarea>
+          </Form.Field>
+        </Form>
+        <br />
+      </Container>
+    )
+
+    const BioContainerEdit = () => (
+      //edit this so it renders dynamically
+      <Container>
+        <Header>Bio</Header>
+        <Form>
+          <Form.Field>
+            <textarea placeholder='My favorite book is...' input='text' id='userBio'></textarea>
+            <button>Save</button>
+          </Form.Field>
+        </Form>
+        <br />
+      </Container>
+    )
+
+    const FavoritesContainer = () => (
+      //edit this so it renders dynamically
+      <Container>
+        <Header>Favorites</Header>
+        <div className="ui vertical list">
+          <div className="ui sub">Insert Favorites Here</div>
+        </div>
+        <br />
+
+      </Container>
+    )
+
+    const BookListContainer = () => (
+      //edit this so it renders dynamically
+      <Container>
+        <Header>Book Lists</Header>
+        <div className="ui vertical list">
+          <div className="ui sub">Insert Lists Here</div>
+        </div>
+        <br />
+
+      </Container>
+    )
+
     const Title = () => (
       <div>
-      <button className='edit ui basic button right floated'><i className='cog icon' /></button>
       <Header >Username</Header>
       <ImageExampleCircular />
+      <br /> <br /> <br /> <br /> <br />
+      <button className="ui basic button right floated">
+          <i className="icon user"></i>
+          Follow
+      </button> 
       </div>
     )
-    const [auth, setAuth] = useAuth()
+
     return (
+      
       <div className="background1">
           <div className="right floated sixteen wide column body">          
             <Segment>
               <Title />
               <Divider clearing/>
-              <ContainerExampleContainer />
+              <GenresContainer />
+              <Segment color='brown'>Bio</Segment>
+              <Segment color='brown'><FriendsContainer /></Segment>
+              <Segment color='brown'><BookListContainer /></Segment>
+              <Segment color='brown'><FavoritesContainer /></Segment>
             </Segment>
+
           </div>
         </div>
     )
-    {auth
-      ? <>
-      </>
-      : <>
-      </>}
+    // {auth
+    //   ? <>
+    //   <button className='edit ui basic button right floated'><i className='cog icon' /></button>
+    //   <ProfileImage />
+    //   <GenresSelect />
+    //   </>
+    //   : <>
+    //   </>}
   }
   
   export default Profile

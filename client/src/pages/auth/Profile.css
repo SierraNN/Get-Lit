@@ -1,11 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500&display=swap');
 
+*{
+  overflow-y: 'scroll';
+}
+
 .hidden{
     visibility: hidden;
 }
 
+.imageBorder{
+  border-color: #995200;
+  border-width: 10px;
+}
+
 .background1 {
-  background: url("https://mir-s3-cdn-cf.behance.net/project_modules/fs/43bff762974361.5aa1a2adb2a54.jpg");
+  background: url("https://mir-s3-cdn-cf.behance.net/project_modules/fs/43bff762974361.5aa1a2adb2a54.jpg") ;
   position: fixed;
   background-size:cover;
   background-size:contain;
@@ -13,10 +22,17 @@
   height: 100%;
   top: 0;
   left: 0;
-  z-index: -1
+  z-index: -1;
+  overflow-y: 'scroll';
+}
+
+h1{
+font-size: xx-large;
+
 }
 
 .body{
+  
     height: auto;
     width: 75%;
     display: flex;
@@ -40,11 +56,11 @@
   top: 0px;
   left: 0px;
   min-width: 5px;
-  max-width: 200px;
+  max-width: 120px;
   height: 100%;
   background-color: rgba(222, 0, 0, 0.565);
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  box-shadow: 0 0 20px rgb(43, 24, 5);
 }
 #main-navigation ul {
   list-style: none;
@@ -98,8 +114,8 @@
 }
 
 #main-navigation:hover {
-  max-width: 100px;
-  -webkit-box-shadow: 0 0 10px #995200;
+  max-width: 200px;
+  -webkit-box-shadow: 0 0 10px rgb(43, 24, 5);
   -moz-box-shadow: 0 0 10px #995200;
   box-shadow: 0 0 10px #995200;
 }

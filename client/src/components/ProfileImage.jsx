@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import { Image } from 'semantic-ui-react'
 
 export default class PictureUploader extends React.Component {
   constructor(props) {
@@ -29,7 +30,7 @@ export default class PictureUploader extends React.Component {
     } else {
       return (
         <p>
-          No Preview
+          <Image className=" imageborder ui bordered middle aligned tiny small circular right floated image"  src='https://easydrawingguides.com/wp-content/uploads/2021/09/Dog-Pixel-Art-step-by-step-drawing-tutorial-step-10.png' size='small' circular />
         </p>
       );
     }
@@ -56,8 +57,10 @@ export default class PictureUploader extends React.Component {
   render() {
     return (
       <div>
+        
         <h5>Picture Uploader</h5>
-
+        <Image className="ui bordered middle aligned tiny small circular right floated image"  src='https://easydrawingguides.com/wp-content/uploads/2021/09/Dog-Pixel-Art-step-by-step-drawing-tutorial-step-10.png' size='small' circular />
+        
         <input
           type="file"
           onChange={this.handlePictureSelected.bind(this)}
@@ -66,7 +69,6 @@ export default class PictureUploader extends React.Component {
         <div>
         {this.renderPreview()}
         </div>
-        <hr/>
         <button
           onClick={this.upload.bind(this)}
         >
