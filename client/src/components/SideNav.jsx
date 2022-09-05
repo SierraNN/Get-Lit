@@ -10,7 +10,6 @@ const SideNav = (props) => {
       <Link to="/">
         <Menu.Item><Icon name='home' />Home</Menu.Item>
       </Link>
-<<<<<<< HEAD
       <Link to="/books">
         <Menu.Item><Icon name="file alternate" />Books</Menu.Item>
       </Link>
@@ -23,8 +22,6 @@ const SideNav = (props) => {
       <Link to="/clubs">
         <Menu.Item><Icon name="users" />Clubs</Menu.Item>
       </Link>
-=======
->>>>>>> main
       {auth
         ? <>
           <Link to="/profile">
