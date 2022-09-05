@@ -18,7 +18,6 @@ const typeDefs = gql`
     user: User
   }
   type Tag {
-<<<<<<< HEAD
     _id: ID
     text: String
   }
@@ -26,27 +25,16 @@ const typeDefs = gql`
     _id: ID
     text: String
     author: User
-=======
-    text: String
-  }
-  type Comment {
-    text: String
-    author: ID
->>>>>>> main
     replies: [Comment]
   }
 
   type Book {
     _id: ID
-<<<<<<< HEAD
     googleId: ID
-=======
->>>>>>> main
     title: String
     authors: [String]
     urls: [String]
     description: String
-<<<<<<< HEAD
     categories: [String]
     tags: [Tag]
     ebooks: [eBook]
@@ -61,22 +49,13 @@ const typeDefs = gql`
     tags: [String]
   }
 
-=======
-    genre: String
-    tags: [Tag]
-    ebooks: [eBook]
-  }
->>>>>>> main
   type eBook {
     book: Book
     link: String
     free: Boolean
   }
   type Review {
-<<<<<<< HEAD
     _id: ID
-=======
->>>>>>> main
     book: Book
     creator: User
     reviewText: String
@@ -85,7 +64,6 @@ const typeDefs = gql`
     rating: Int
     comments: [Comment]
   }
-<<<<<<< HEAD
   input CreateReview {
     book: ID
     reviewText: String
@@ -112,35 +90,19 @@ const typeDefs = gql`
     creator: User
     members: [User]
     name: String
-=======
-  type BookList {
-    description: String
-    tags: [Tag]
-    books: [ID]
-    creator: User
-    comments: [Comment]
-  }
-  type BookClub {
->>>>>>> main
     description: String
     tags: [Tag]
     books: [Book]
     lists: [BookList]
-<<<<<<< HEAD
     posts: [Comment]
   }
   input CreateClub {
     name: String
     description: String
-=======
-    creator: User
-    comments: [Comment]
->>>>>>> main
   }
 
   type Query {
     user(username: String!): User
-<<<<<<< HEAD
     myProfile: User
     myLists: [BookList]
     myBooks: [Book]
@@ -164,13 +126,6 @@ const typeDefs = gql`
     createReview(review: CreateReview): Review
     # lists
     createClub(club: CreateClub): BookClub
-=======
-  }
-
-  type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
-    login(username: String!, password: String!): Auth
->>>>>>> main
   }
 `;
 
