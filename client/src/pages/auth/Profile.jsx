@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom'
-import { Form, FormField, Image } from 'semantic-ui-react'
+
+import { Form, FormField, Image } from 'semantic-ui-react';
 //import { useAuth } from '../../context/AuthContext'
-import { Container } from 'semantic-ui-react'
-import { Divider, Header, Segment, Modal, Columns, Button } from 'semantic-ui-react'
-import { Icon, Menu } from 'semantic-ui-react'
-import './Profile.css'
-import { useAuth } from '../../context/AuthContext'
-import ProfileImage from '../../components/ProfileImage'
-import { Dropdown } from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react';
+import { Divider, Header, Segment, Modal, Columns, Button } from 'semantic-ui-react';
+import { Icon, Menu } from 'semantic-ui-react';
+import './Profile.css';
+import { useAuth } from '../../context/AuthContext';
+import ProfileImage from '../../components/ProfileImage';
+import { Dropdown } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+
 
 const options = [
   { key: 'angular', text: 'Angular', value: 'angular' },
@@ -105,19 +107,14 @@ const Profile = () => {
       </Container>
     )
 
+
     const BioContainerEdit = () => (
-      //edit this so it renders dynamically
-      <Container>
-        <Header>Bio</Header>
-        <Form>
-          <Form.Field>
-            <textarea placeholder='My favorite book is...' input='text' id='userBio'></textarea>
-            <button>Save</button>
-          </Form.Field>
-        </Form>
-        <br />
-      </Container>
+      <Container />
+
+
     )
+      
+      
 
     const FavoritesContainer = () => (
       //edit this so it renders dynamically
@@ -163,7 +160,7 @@ const Profile = () => {
               <Title />
               <Divider clearing/>
               <GenresContainer />
-              <Segment color='brown'>Bio</Segment>
+              <Segment color='brown'><BioContainerEdit /></Segment>
               <Segment color='brown'><FriendsContainer /></Segment>
               <Segment color='brown'><BookListContainer /></Segment>
               <Segment color='brown'><FavoritesContainer /></Segment>
