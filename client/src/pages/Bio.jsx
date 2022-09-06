@@ -3,18 +3,17 @@ import EasyEdit from 'react-easy-edit';
 
 function Bio() {
 
-  const save = (value) => {alert(value)}
-  const cancel = () => {alert("Cancelled")}
+  const save = (value) => {console.log(value)}
+  const cancel = () => {console.log("Cancelled")}
 
   return (
     <EasyEdit
       type="text"
       onSave={save}
       onCancel={cancel}
-      saveButtonLabel="Save Me"
-      cancelButtonLabel="Cancel Me"
+      saveButtonLabel="Save"
+      cancelButtonLabel="Cancel"
       attributes={{ name: "awesome-input", id: 1}}
-      instructions="Star this repo!"
     />
   );
 } 

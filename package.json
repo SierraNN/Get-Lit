@@ -30,6 +30,8 @@
   },
   "dependencies": {
     "js-pixel-fonts": "^1.6.0",
-    "react-easy-edit": "^1.15.0"
+    "multiselect-react-dropdown": "^2.0.25",
+    "react-easy-edit": "^1.15.0",
+    "react-select": "^5.4.0"
   }
 }
