@@ -101,11 +101,14 @@ const typeDefs = gql`
   input CreateClub {
     name: String
     description: String
+<<<<<<< HEAD
   }
 
   input SearchParams {
     term: String
     type: String
+=======
+>>>>>>> main
   }
 
   type Query {
