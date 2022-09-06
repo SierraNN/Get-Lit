@@ -2,14 +2,11 @@ import { useAuth } from '../context/AuthContext'
 import { Container } from 'semantic-ui-react';
 import { Divider, Header, Segment, Modal, Columns, Button, Icon, Menu } from 'semantic-ui-react';
 import './Profile.css';
-import ProfileImage from '../components/ProfileImage';
 import { Dropdown } from 'semantic-ui-react';
 import React, { Component } from 'react';
 import Bio from './Bio';
-import { components } from "react-select";
-import { useProfile } from '../context/ProfileContext';
 import ProfileBookLists from './ProfileBookList';
-import bookLists from "../utils/bookLists"
+import ProfileImage from '../components/ProfileImage'
 
 
 const Genres = [
@@ -33,12 +30,6 @@ const Genres = [
   { key: 'ux', text: 'True Crime', value: 'ux' },
 ]
 const Profile = () => {
-  // const [profile, updateProfile] = useProfile()
-  // let [auth] = useAuth();
-  const ImageExampleCircular = () => (
-    //<Image src='https://images6.alphacoders.com/715/715677.png' />
-    <></>
-  )
   const GenresSelect = () => (
     <Segment raised>
     <p>
@@ -107,8 +98,7 @@ const Profile = () => {
   )
   const Title = () => (
     <div>
-    <Header >Username</Header>
-    <ImageExampleCircular />
+
     <br /> <br /> <br /> <br /> <br />
     <Button basic onClick={() => {console.log('Hi')}}>
         <i className="icon user"></i>
@@ -121,6 +111,7 @@ const Profile = () => {
       <div className="right floated sixteen wide column body">          
         <Segment>
           <Title />
+          <ProfileImage />
           <Divider clearing/>
           <GenresSelect />
           <Segment color='brown'><BioContainer /></Segment>
