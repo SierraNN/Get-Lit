@@ -1,10 +1,10 @@
-const { Schema } = require('mongoose')
+const { Schema, model } = require('mongoose')
 
-const { CommentableSchema, CommentableModel } = require("./custom/Commentable")
+// const { CommentableSchema, CommentableModel } = require("./custom/Commentable")
 
 const ID = Schema.Types.ObjectId
 
-const ReviewSchema = new CommentableSchema({
+const ReviewSchema = new Schema({
   // attributes
   book: {
     type: ID,
@@ -29,6 +29,6 @@ const ReviewSchema = new CommentableSchema({
   // schema options
 })
 
-const Review = CommentableModel('Review', ReviewSchema)
+const Review = new model('Review', ReviewSchema)
 
 module.exports = Review

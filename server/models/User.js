@@ -1,8 +1,11 @@
 const { Schema, model } = require('mongoose')
-const { TaggableSchema, TaggableModel } = require('./custom/Taggable')
-const bcrypt = require('bcrypt')
+// const { TaggableSchema, TaggableModel } = require('./custom/Taggable')
+const bcrypt = require('bcrypt');
+const TagSchema = require('./Tag');
 
-const UserSchema = new TaggableSchema({
+const ID = Schema.Types.ObjectId
+
+const UserSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -18,8 +21,25 @@ const UserSchema = new TaggableSchema({
   password: {
     type: String,
     required: true,
-    minlength: 5,
+    minlength: [5, 'Password is too short'],
   },
+  books: {
+    type: [ID],
+    ref: 'Book'
+  },
+  clubs: {
+    type: [ID],
+    ref: 'BookClub'
+  },
+  lists: {
+    type: [ID],
+    ref: 'BookList'
+  },
+  reviews: {
+    type: [ID],
+    ref: 'Review'
+  },
+  tags: [TagSchema]
 }, {
   // schema options
 })
@@ -29,7 +49,6 @@ UserSchema.pre('save', async function (next) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
-
   next();
 });
 
@@ -38,7 +57,11 @@ UserSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
+UserSchema.statics.fullProfile = async function (userId) {
+  const user = await this.findById(userId).populate('books').populate('lists').populate('clubs')
+  return user
+}
 
-const User = new TaggableModel('User', UserSchema)
+const User = new model('User', UserSchema)
 
 module.exports = User

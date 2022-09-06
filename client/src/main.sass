@@ -1,7 +1,45 @@
 
 #main-navigation
-  color: white
-
-.ui.menu 
+  color: white 
+  z-index: 2
   .item
     color: white
+    transition: color 400ms, background 400ms
+    &:hover
+      background: rgba(90,90,90,0.3)
+  + *
+    padding-left: 55px
+
+
+.ui.horizontal.list.book-list
+  display: flex
+  flex-flow: row wrap
+  align-items: center
+  // align-content: flex-start
+  justify-content: flex-start
+  // justify-items: flex-start
+  gap: 1rem
+  transition: transform 400ms
+  > a, > .ui.item
+    margin: 0
+    .header
+      margin-bottom: 0.5rem
+    &:hover
+      transform: translateY(-3px)
+
+.ui.segment
+  &.flex
+    display: flex
+    flex-flow: row wrap
+    gap: 0.5rem
+    .stretch
+      flex-grow: 1
+    .ui.buttons
+      align-items: flex-start
+      .button
+        flex-grow: 0
+
+a.placeholder 
+  width: 128px
+  margin-top: 1rem
+  align-self: flex-start

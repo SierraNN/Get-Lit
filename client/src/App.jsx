@@ -9,13 +9,27 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
 import SideNav from './components/SideNav';
 import NotFound from './pages/NotFound';
-import Login from './pages/Login';
 import AuthProvider from './context/AuthContext';
 import GuestOnly from './components/auth/GuestOnly';
 import AuthGuard from './components/auth/AuthGuard';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import Books from './pages/Books';
+import BookDetails from './pages/BookDetails';
+import ProfileProvider from './context/ProfileContext';
+import Profile from './pages/Profile';
+import Lists from './pages/Lists';
+import ListDetails from './pages/ListDetails';
+import Reviews from './pages/Reviews';
+import ReviewDetails from './pages/ReviewDetails';
+import CreateList from './components/forms/CreateList';
+import ClubDetails from './pages/ClubDetails';
+import Clubs from './pages/Clubs';
+import CreateReview from './components/forms/CreateReview';
+import CreateClub from './components/forms/CreateClub';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -42,23 +56,47 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <ApolloProvider client={client}>
-          <SideNav />
-          <Routes>
-            <Route path="/" element={<Body />} />
-            <Route path="/" element={<GuestOnly />}>
-              <Route path="login" element={<Login />} />
-            </Route>
-            <Route path="/" element={<AuthGuard />}>
-              <Route path="profile" element={<div>PROFILE</div>} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </ApolloProvider>
-      </BrowserRouter>
-    </AuthProvider>
+    <ApolloProvider client={client}>
+      <AuthProvider>
+        <ProfileProvider>
+          <BrowserRouter>
+            <SideNav />
+            <Routes>
+              <Route path="/" element={<Body />} />
+              <Route path="/books" element={<Outlet />}>
+                <Route index element={<Books />} />
+                <Route path=":bookId" element={<BookDetails />} />
+              </Route>
+              <Route path="/lists" element={<Outlet />}>
+                <Route index element={<Lists />} />
+                <Route path=":listId" element={<ListDetails />} />
+              </Route>
+              <Route path="/reviews" element={<Outlet />}>
+                <Route index element={<Reviews />} />
+                <Route path=":reviewId" element={<ReviewDetails />} />
+              </Route>
+              <Route path="/clubs" element={<Outlet />}>
+                <Route index element={<Clubs />} />
+                <Route path=":clubId" element={<ClubDetails />} />
+              </Route>
+              <Route path="/" element={<GuestOnly />}>
+                {/** Redirected if already logged in  */}
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
+              </Route>
+              <Route path="/" element={<AuthGuard />}>
+                {/** Redirected if not logged in */}
+                <Route path="profile" element={<Profile />} />
+                <Route path="lists/new" element={<CreateList />} />
+                <Route path="books/:bookId/reviews/new" element={<CreateReview />} />
+                <Route path="clubs/new" element={<CreateClub />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </ProfileProvider>
+      </AuthProvider>
+    </ApolloProvider>
   );
 }
 

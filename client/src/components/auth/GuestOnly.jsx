@@ -1,9 +1,13 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 export const GuestOnly = () => {
   let [auth] = useAuth();
-  return !auth ? <Outlet /> : <Navigate to="/" />
+  let location = useLocation()
+  let { state } = location
+  const url = (state && state.from) ? state.from : '/'
+  console.log(location)
+  return !auth ? <Outlet /> : <Navigate to={url} />
 }
 
 export default GuestOnly;
