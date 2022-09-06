@@ -16,7 +16,7 @@ const BookDetails = (props) => {
   const { bookId } = useParams()
   const [book, setBook] = useState(null)
   const navigate = useNavigate()
-  const alreadySaved = () => profile.books.find(({ googleId }) => bookId === googleId) !== undefined
+  const alreadySaved = () => profile.books && profile.books.find(({ googleId }) => bookId === googleId) !== undefined
 
   useEffect(() => {
     const fetchById = async () => {
@@ -32,7 +32,8 @@ const BookDetails = (props) => {
   const [saveBook] = useMutation(SAVE_BOOK)
   const handleSave = async () => {
     if (!book) return
-    const { title, authors, categories = [], description = "" } = book.volumeInfo
+    const { title, authors, categories = [], description = "", imageLinks = {} } = book.volumeInfo
+    let { thumbnail } = imageLinks
     const { data, error } = await saveBook({
       variables: {
         book: {
@@ -40,7 +41,8 @@ const BookDetails = (props) => {
           title,
           authors,
           categories,
-          description
+          description,
+          thumbnail
         }
       }
     })

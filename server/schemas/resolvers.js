@@ -88,7 +88,7 @@ const resolvers = {
     },
     login: async (parent, { username, password }) => {
       const user = await User.findOne({ username });
-      if (!user) throw new AuthenticationError('No user found with this email address')
+      if (!user) throw new AuthenticationError('Username does not exist')
 
       const correctPw = await user.isCorrectPassword(password);
       if (!correctPw) throw new AuthenticationError('Incorrect credentials')

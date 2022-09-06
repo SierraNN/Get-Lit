@@ -34,7 +34,7 @@ const typeDefs = gql`
     googleId: ID
     title: String
     authors: [String]
-    urls: [String]
+    thumbnail: String
     description: String
     categories: [String]
     tags: [Tag]
@@ -44,7 +44,7 @@ const typeDefs = gql`
     googleId: ID
     title: String
     authors: [String]
-    urls: [String]
+    thumbnail: String
     description: String
     categories: [String]
     tags: [String]
