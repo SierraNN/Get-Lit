@@ -13,7 +13,7 @@ import { useAuth } from './AuthContext';
 const ProfileContext = createContext()
 const ProfileDispatchContext = createContext()
 
-export const useProfile = () => [useContext(ProfileContext), useContext(ProfileDispatchContext)]
+export const useProfile =( ) => [useContext(ProfileContext), useContext(ProfileDispatchContext)]
 
 const reducer = (state, action) => {
   const { books = [], lists = [], reviews = [], clubs = [], friends = [] } = state
