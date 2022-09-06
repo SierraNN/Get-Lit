@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose')
+const CommentSchema = require('./Comment')
+const TagSchema = require('./Tag')
 
 // const { CommentableSchema, CommentableModel } = require("./custom/Commentable")
 
@@ -24,7 +26,8 @@ const ReviewSchema = new Schema({
     type: [ID],
     ref: 'Book',
   },
-  rating: Number
+  rating: Number,
+  comments: [CommentSchema]
 }, {
   // schema options
 })

@@ -7,6 +7,7 @@ const typeDefs = gql`
     _id: String
     username: String
     email: String
+    friends: [User]
     books: [Book]
     lists: [BookList]
     reviews: [Review]
@@ -33,7 +34,7 @@ const typeDefs = gql`
     googleId: ID
     title: String
     authors: [String]
-    urls: [String]
+    thumbnail: String
     description: String
     categories: [String]
     tags: [Tag]
@@ -43,7 +44,7 @@ const typeDefs = gql`
     googleId: ID
     title: String
     authors: [String]
-    urls: [String]
+    thumbnail: String
     description: String
     categories: [String]
     tags: [String]
@@ -84,6 +85,7 @@ const typeDefs = gql`
     name: String
     description: String
     tags: [String]
+    book: BookInfo
   }
   type BookClub {
     _id: ID
@@ -99,6 +101,14 @@ const typeDefs = gql`
   input CreateClub {
     name: String
     description: String
+<<<<<<< HEAD
+  }
+
+  input SearchParams {
+    term: String
+    type: String
+=======
+>>>>>>> main
   }
 
   type Query {
@@ -108,9 +118,15 @@ const typeDefs = gql`
     myBooks: [Book]
     myReviews: [Review]
     myClubs: [BookClub]
+    getBook(id: ID!): Book
     getList(id: ID!): BookList
     getReview(id: ID!): Review
     getClub(id: ID!): BookClub
+    getUser(id: ID!): User
+    getLists(params: SearchParams): [BookList]
+    getReviews(params: SearchParams): [Review]
+    getClubs(params: SearchParams): [BookClub]
+    getUsers(params: SearchParams): [User]
   }
 
   type Mutation {
@@ -122,6 +138,7 @@ const typeDefs = gql`
     removeBook(bookId: ID): Boolean
     # lists
     createList(list: CreateList): BookList
+    addBookToList(listId: ID, book:BookInfo): BookList
     # reviews
     createReview(review: CreateReview): Review
     # lists
