@@ -29,6 +29,7 @@
     "concurrently": "^7.3.0"
   },
   "dependencies": {
-    "js-pixel-fonts": "^1.6.0"
+    "js-pixel-fonts": "^1.6.0",
+    "react-easy-edit": "^1.15.0"
   }
 }

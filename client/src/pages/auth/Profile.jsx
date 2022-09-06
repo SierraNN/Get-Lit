@@ -8,7 +8,10 @@ import './Profile.css';
 import { useAuth } from '../../context/AuthContext';
 import ProfileImage from '../../components/ProfileImage';
 import { Dropdown } from 'semantic-ui-react';
-import React, { useEffect, useState } from 'react';
+import React, { Component } from 'react';
+import EasyEdit from 'react-easy-edit';
+import Bio from '../Bio'
+
 
 
 const options = [
@@ -33,12 +36,11 @@ const options = [
 ]
 
 const Profile = () => {
-
     const ImageExampleCircular = () => (
         <div>
           <Image className="imageborder ui bordered middle aligned tiny small circular right floated image"  src='https://easydrawingguides.com/wp-content/uploads/2021/09/Dog-Pixel-Art-step-by-step-drawing-tutorial-step-10.png' size='small' circular />
         </div>
-        ) 
+    ) 
     const GenresContainer = () => (
         <Container>
           <Segment raised>
@@ -50,21 +52,19 @@ const Profile = () => {
       //need to link the dropdown selections to displayh here
       <>
       <i className='tag icon' />
-      <a>Fantasy</a>
+      <a> Fantasy</a>
       <a> Mystery</a>
       <a> Suspense</a>
       <a> Poetry</a>
       <a> Historical</a>
       </>
     )
-
     const GenresSelect = () => (
       <p>
       <i className='tag icon' />
-      <Dropdown placeholder='Skills' fluid multiple selection options={options} />
+      <Dropdown placeholder='Genres' fluid multiple selection options={options} />
       </p>
     )
-
     const FriendsContainer = () => (
       //edit this so it renders dynamically
       <Container>
@@ -93,29 +93,17 @@ const Profile = () => {
         </div>
       </Container>
     )
-
+    const save = (value) => {alert(value)}
+    const cancel = () => {alert("Cancelled")}
     const BioContainer = () => (
-      //edit this so it renders dynamically
       <Container>
         <Header>Bio</Header>
-        <Form>
-          <Form.Field>
-            <textarea placeholder='My favorite book is...' input='text' id='userBio'></textarea>
-          </Form.Field>
-        </Form>
-        <br />
+        <Bio />
       </Container>
     )
-
-
     const BioContainerEdit = () => (
       <Container />
-
-
     )
-      
-      
-
     const FavoritesContainer = () => (
       //edit this so it renders dynamically
       <Container>
@@ -127,7 +115,6 @@ const Profile = () => {
 
       </Container>
     )
-
     const BookListContainer = () => (
       //edit this so it renders dynamically
       <Container>
@@ -139,19 +126,17 @@ const Profile = () => {
 
       </Container>
     )
-
     const Title = () => (
       <div>
       <Header >Username</Header>
       <ImageExampleCircular />
       <br /> <br /> <br /> <br /> <br />
-      <button className="ui basic button right floated">
+      <Button basic onClick={() => {console.log('Hi')}}>
           <i className="icon user"></i>
           Follow
-      </button> 
+      </Button> 
       </div>
     )
-
     return (
       
       <div className="background1">
@@ -160,7 +145,7 @@ const Profile = () => {
               <Title />
               <Divider clearing/>
               <GenresContainer />
-              <Segment color='brown'><BioContainerEdit /></Segment>
+              <Segment color='brown'><BioContainer /></Segment>
               <Segment color='brown'><FriendsContainer /></Segment>
               <Segment color='brown'><BookListContainer /></Segment>
               <Segment color='brown'><FavoritesContainer /></Segment>

@@ -20,7 +20,7 @@ import Register from './pages/auth/Register';
 import Books from './pages/Books';
 import BookDetails from './pages/BookDetails';
 import ProfileProvider from './context/ProfileContext';
-import Profile from './pages/Profile';
+import Profile from './pages/auth/Profile';
 import Lists from './pages/Lists';
 import ListDetails from './pages/ListDetails';
 import Reviews from './pages/Reviews';
