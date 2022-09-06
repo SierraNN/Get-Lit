@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const TagSchema = require('../Tag')
 // const { TaggableSchema, TaggableModel } = require('../custom/Taggable')
 
 
@@ -13,13 +14,14 @@ const BookSchema = new Schema({
     required: true
   },
   authors: { type: [String], required: true },
-  urls: [String],
+  thumbnail: String,
   description: { type: String, default: "" },
   categories: [String],
   eBooks: {
     type: Schema.Types.ObjectId,
     ref: 'eBook'
-  }
+  },
+  tags: [TagSchema],
 }, {
   // schema options
 })

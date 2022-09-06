@@ -15,4 +15,4 @@ const ListOfLists = ({headerText, list}) => {
     )
 }
 
-export default ListOfLists
+export default ListOfLists 

@@ -1,3 +1,4 @@
+import { useQuery } from "@apollo/client"
 import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
@@ -6,8 +7,7 @@ import ListOfLists from "../components/lists/ListOfLists"
 import { useAuth } from "../context/AuthContext"
 import { useProfile } from "../context/ProfileContext"
 import bookLists from "../utils/bookLists"
-
-
+import { GET_LISTS } from "../utils/queries"
 
 const cachedResults = bookLists.results.get()
 
@@ -28,6 +28,14 @@ const Lists = (props) => {
   const [searchParams, setSearchParams] = useState({})
   const [fresh, setFresh] = useState(false)
 
+  const { loading, data, refetch } = useQuery(GET_LISTS, {
+    variables: { ...searchParams }
+  })
+
+  useEffect(() => {
+    if (data && data.getLists) setResults(data.getLists)
+    console.log(data)
+  }, [data, data?.getLists])
 
   const [pageNum, setPageNum] = useState(1)
   const [pageSize] = useState(20)
@@ -37,6 +45,9 @@ const Lists = (props) => {
       return { errors: { term: 'Please enter a search term' } }
     } else {
       setPageNum(1)
+      let { loading, data } = await refetch({ term, type })
+      console.log({ loading, data })
+      return { data }
       // return bookSearch({ term, type, pageSize, pageNum: 1 })
     }
   }

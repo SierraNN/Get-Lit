@@ -1,6 +1,4 @@
 const { AuthenticationError } = require("apollo-server-express");
-// const Book = require("../models/books/Book");
-// const User = require("../models/User");
 const { User, Book, BookList, BookClub, Review } = require('../models')
 const { signToken } = require("../utils/auth");
 const { Types } = require('mongoose');
@@ -34,9 +32,9 @@ const resolvers = {
     },
     myReviews: async (parent, args, { user }) => {
       if (!user) throw new AuthenticationError('Not logged in')
-      const found = await User.findById(user._id).populate('reviews')
-      if (!found) throw new AuthenticationError('User not found')
-      return found.reviews
+      const found = await Review.find({ creator: ID(user._id) }).populate('book')
+      // if (!found) throw new AuthenticationError('User not found')
+      return found
 
     },
     myClubs: async (parent, args, { user }) => {
@@ -44,6 +42,11 @@ const resolvers = {
       const found = await User.findById(user._id).populate('clubs')
       if (!found) throw new AuthenticationError('User not found')
       return found.clubs
+    },
+    getBook: async (parent, { id }) => {
+      console.log(id)
+      const book = await Book.findById(id)
+      return book
     },
     getList: async (parent, { id }) => {
       const list = await BookList.findById(id).populate('creator')
@@ -55,11 +58,17 @@ const resolvers = {
       if (!review) throw new Error('List not found')
       return review
     },
-    getClub: async (parent, { id }) => {
-      const list = await BookList.findById(id).populate('creator')
-      if (!list) throw new Error('List not found')
-      return list
+    getUser: async (parent, { id }) => {
+      const found = await User.fullProfile(user._id)
+      if (!found) throw new AuthenticationError('User not found')
+      return found
     },
+    getLists: async (parent, { params = {} }) => {
+      const { term, type = 'name' } = params
+      if (term) params = { [type]: term }
+      const lists = await BookList.search(params)
+      return lists
+    }
   },
   Mutation: {
     /** AUTH */
@@ -84,7 +93,7 @@ const resolvers = {
     },
     login: async (parent, { username, password }) => {
       const user = await User.findOne({ username });
-      if (!user) throw new AuthenticationError('No user found with this email address')
+      if (!user) throw new AuthenticationError('Username does not exist')
 
       const correctPw = await user.isCorrectPassword(password);
       if (!correctPw) throw new AuthenticationError('Incorrect credentials')
@@ -110,18 +119,42 @@ const resolvers = {
     },
     /** LISTS */
     createList: async (parent, { list }, { user }) => {
+      if (list.book) {
+        let book = await Book.find({ googleId: list.book.googleId })
+        if (!book) book = await Book.create(book)
+        list.books = [ID(book._id)]
+        delete list.book
+      }
       if (!user) throw new AuthenticationError('Not logged in')
-      const created = await BookList.create({
+      const listInfo = {
         ...list,
         tags: list.tags.map(tag => ({ text: tag })),
         creator: ID(user._id)
-      })
+      }
+      const created = await BookList.create(listInfo)
+      create.populate('books')
       if (created) {
         await User.findByIdAndUpdate(user._id, {
           $addToSet: { lists: ID(created._id) }
         })
       }
       return created
+    },
+    addBookToList: async (parent, { listId, book }, { user }) => {
+      let foundBook = await Book.findOne({ googleId: book.googleId })
+      if (!foundBook) foundBook = await Book.create(book)
+
+      const list = await BookList.findOneAndUpdate({
+        _id: ID(listId),
+        creator: ID(user._id)
+      }, {
+        $addToSet: { books: Types.ObjectId(foundBook._id) }
+      }, {
+        new: true
+      }).populate('creator').populate('books')
+
+      if (!list) throw new AuthenticationError("List not found")
+      return list
     },
     /** REVIEWS */
     createReview: async (parent, { review }, { user }) => {
