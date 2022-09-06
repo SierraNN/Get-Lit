@@ -101,14 +101,11 @@ const typeDefs = gql`
   input CreateClub {
     name: String
     description: String
-<<<<<<< HEAD
   }
 
   input SearchParams {
     term: String
     type: String
-=======
->>>>>>> main
   }
 
   type Query {
@@ -139,6 +136,7 @@ const typeDefs = gql`
     # lists
     createList(list: CreateList): BookList
     addBookToList(listId: ID, book:BookInfo): BookList
+    addCommentToList(listId: ID, comment:String): [Comment]
     # reviews
     createReview(review: CreateReview): Review
     # lists

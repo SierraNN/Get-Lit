@@ -49,8 +49,9 @@ const resolvers = {
       return book
     },
     getList: async (parent, { id }) => {
-      const list = await BookList.findById(id).populate('creator')
+      const list = await BookList.findById(id).populate('creator').populate('books')
       if (!list) throw new Error('List not found')
+      
       return list
     },
     getReview: async (parent, { id }) => {
@@ -151,10 +152,19 @@ const resolvers = {
         $addToSet: { books: Types.ObjectId(foundBook._id) }
       }, {
         new: true
-      }).populate('creator').populate('books')
+      }).populate('creator')
+      list.populate('books')
 
       if (!list) throw new AuthenticationError("List not found")
       return list
+    },
+    addCommentToList: async (parent, { listId, comment }, { user }) => {
+      const list = await BookList.findByIdAndUpdate(listId,{
+        $addToSet:{comments:{text:comment, author:ID(user._id)}}
+      },{new:true}).populate({path:"comments", populate:"author"})
+
+      if (!list) throw new AuthenticationError("List not found")
+      return list.comments
     },
     /** REVIEWS */
     createReview: async (parent, { review }, { user }) => {
