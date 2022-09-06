@@ -8,23 +8,10 @@ import { useProfile } from "../context/ProfileContext"
 import { GET_LIST } from "../utils/queries"
 
 function ProfileBookLists() {
-  const { listId } = useParams()
-  const [profile] = useProfile()
-  const { data, refetch } = useQuery(GET_LIST, {
-    variables: { id: listId }
-  })
-  const list = data?.getList || null
-  useEffect(() => {
-    if (listId) refetch()
-  }, [listId])
-  if (!list) return <Loading message="Retrieving list" />
-  const isCreator = list.creator._id === profile._id
-  const { name, description, books, comments, tags } = list
-  return (
-    <Container>
-      <pre>{JSON.stringify(list, null, 2)}</pre>
-    </Container>
-  );
+
+
+
+
 } 
 
 export default ProfileBookLists

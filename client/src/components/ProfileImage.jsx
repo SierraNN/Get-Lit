@@ -13,7 +13,6 @@ const ProfileImage = () => {
         } else {
             setSprite(sprite + 1)
         }
-
     }
 
     const onClickBack = () => {
@@ -32,7 +31,6 @@ const ProfileImage = () => {
                 src={imgList[sprite]} 
                 />
             </div>
-
             <button className="1" onClick={() => onClickBack()}>Back</button>
             <button className="2" onClick={() => onClickForward()}>Next</button>
         </Container>
