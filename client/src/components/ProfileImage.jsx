@@ -1,43 +1,36 @@
 
 import { Button, Image, Container, Loader, Message } from "semantic-ui-react"
 import React, { useState } from "react";
-import sprite1 from '../assets/sprite1.jpg';
-import sprite2 from '../assets/sprite2.png';
-import sprite3 from '../assets/sprite3.jpg';
-
 
 const ProfileImage = () => {
 
-  
+    const [sprite, setSprite] = useState(0) 
+    const imgList = ['/assets/sprite1.jpg','/assets/sprite2.png','/assets/sprite3.jpg']
 
     const onClickForward = () => {
-        if (this.state.index + 1 === this.state.imgList.length) {
-            this.setState({
-                index: 0
-            })
+        if (sprite == 2){
+        setSprite(0)
         } else {
-            this.setState ({
-                index: this.state.index +1
-            })
+            setSprite(sprite + 1)
         }
+
     }
 
     const onClickBack = () => {
-        if(this.state.index -1 === -1) {
-            this.setState({
-                index: this.state.imgList.length - 1
-            })
-        } else {
-            this.setState({
-                index: this.state.index - 1
-            })
-        }
+    
+        if (sprite == 0){
+            setSprite(2)
+            } else {
+                setSprite(sprite - 1)
+            }
     }
 
     return (
         <Container>
             <div>
-                <Image className="circular small ui image" src={sprite1} />
+                <Image className="circular small ui image" 
+                src={imgList[sprite]} 
+                />
             </div>
 
             <button className="1" onClick={() => onClickBack()}>Back</button>
@@ -46,7 +39,5 @@ const ProfileImage = () => {
     )
     
 }
-
-
 
 export default ProfileImage
