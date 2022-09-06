@@ -1,12 +1,28 @@
 import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 import { Button, Container, Dropdown, Header, Message } from "semantic-ui-react"
 import ListOfLists from "../components/lists/ListOfLists"
+import { useAuth } from "../context/AuthContext"
+import { useProfile } from "../context/ProfileContext"
 import bookLists from "../utils/bookLists"
+
+
 
 const cachedResults = bookLists.results.get()
 
 const Lists = (props) => {
+
+  const [display, setDisplay] = useState('search')
+
+  useEffect(() => {
+    if (display === 'search') setResults(bookLists.results.get())
+    else if (display === 'profile') setResults(myLists)
+  }, [display])
+
+  const [auth] = useAuth()
+  const [profile, updateProfile] = useProfile()
+  const myLists = auth ? profile.lists : null
   const { Form } = useForm()
   const [results, setResults] = useState(cachedResults)
   const [searchParams, setSearchParams] = useState({})
@@ -50,7 +66,7 @@ const Lists = (props) => {
               { text: 'By subject', value: 'subject' },
             ], width: '4'
           }
-        ]} />
+        ]} buttons={auth ? [{ content: 'My Book List', color: 'green', onClick: () => setDisplay('profile') }] : []}/>
         {fresh && <div>
           <Button.Group floated="right">
             <Button icon="angle left" onClick={prevPage} />
