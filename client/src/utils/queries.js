@@ -20,6 +20,10 @@ export const MY_PROFILE = gql`
       _id
       username
       email
+      friends {
+        _id
+        username
+      }
       books {
         _id
         googleId
@@ -172,4 +176,32 @@ export const GET_LIST = gql`
       }
     }
   }
+`
+export const GET_LISTS = gql`
+  query getLists($params: SearchParams) {
+    getLists(params: $params) {
+      _id
+      creator {
+        _id
+        username
+      }
+      name
+      description
+      books {
+        _id
+        googleId
+        title
+        authors
+      }
+      tags {
+        _id
+        text
+      }
+      comments {
+        _id
+        text
+      }
+    }
+  }
+
 `

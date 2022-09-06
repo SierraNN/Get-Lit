@@ -1,6 +1,4 @@
 const { AuthenticationError } = require("apollo-server-express");
-// const Book = require("../models/books/Book");
-// const User = require("../models/User");
 const { User, Book, BookList, BookClub, Review } = require('../models')
 const { signToken } = require("../utils/auth");
 const { Types } = require('mongoose');
@@ -34,9 +32,9 @@ const resolvers = {
     },
     myReviews: async (parent, args, { user }) => {
       if (!user) throw new AuthenticationError('Not logged in')
-      const found = await User.findById(user._id).populate('reviews')
-      if (!found) throw new AuthenticationError('User not found')
-      return found.reviews
+      const found = await Review.find({ creator: ID(user._id) }).populate('book')
+      // if (!found) throw new AuthenticationError('User not found')
+      return found
 
     },
     myClubs: async (parent, args, { user }) => {
@@ -55,11 +53,17 @@ const resolvers = {
       if (!review) throw new Error('List not found')
       return review
     },
-    getClub: async (parent, { id }) => {
-      const list = await BookList.findById(id).populate('creator')
-      if (!list) throw new Error('List not found')
-      return list
+    getUser: async (parent, { id }) => {
+      const found = await User.fullProfile(user._id)
+      if (!found) throw new AuthenticationError('User not found')
+      return found
     },
+    getLists: async (parent, { params = {} }) => {
+      const { term, type = 'name' } = params
+      if (term) params = { [type]: term }
+      const lists = await BookList.search(params)
+      return lists
+    }
   },
   Mutation: {
     /** AUTH */

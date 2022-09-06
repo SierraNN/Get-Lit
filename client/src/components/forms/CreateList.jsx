@@ -33,7 +33,7 @@ const BookListForm = (props) => {
     <Container>
       <FormProvider>
         <Header as='h1'>New Book List</Header>
-        <Form submit={onSubmit} respond={onResponse} fields={[
+        <Form display="toggle" submit={onSubmit} respond={onResponse} fields={[
           { name: 'name', required: true },
           { name: 'description', control: TextArea },
           { name: 'tags', label: 'Tags (comma separated)' }

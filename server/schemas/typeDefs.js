@@ -7,6 +7,7 @@ const typeDefs = gql`
     _id: String
     username: String
     email: String
+    friends: [User]
     books: [Book]
     lists: [BookList]
     reviews: [Review]
@@ -101,6 +102,11 @@ const typeDefs = gql`
     description: String
   }
 
+  input SearchParams {
+    term: String
+    type: String
+  }
+
   type Query {
     user(username: String!): User
     myProfile: User
@@ -111,6 +117,11 @@ const typeDefs = gql`
     getList(id: ID!): BookList
     getReview(id: ID!): Review
     getClub(id: ID!): BookClub
+    getUser(id: ID!): User
+    getLists(params: SearchParams): [BookList]
+    getReviews(params: SearchParams): [Review]
+    getClubs(params: SearchParams): [BookClub]
+    getUsers(params: SearchParams): [User]
   }
 
   type Mutation {

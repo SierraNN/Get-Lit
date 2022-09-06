@@ -23,6 +23,10 @@ const UserSchema = new Schema({
     required: true,
     minlength: [5, 'Password is too short'],
   },
+  friends: {
+    type: [ID],
+    ref: 'User'
+  },
   books: {
     type: [ID],
     ref: 'Book'
@@ -58,7 +62,7 @@ UserSchema.methods.isCorrectPassword = async function (password) {
 };
 
 UserSchema.statics.fullProfile = async function (userId) {
-  const user = await this.findById(userId).populate('books').populate('lists').populate('clubs')
+  const user = await this.findById(userId).populate('friends').populate('books').populate('lists').populate('clubs')
   return user
 }
 
