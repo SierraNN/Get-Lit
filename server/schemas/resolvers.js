@@ -43,6 +43,11 @@ const resolvers = {
       if (!found) throw new AuthenticationError('User not found')
       return found.clubs
     },
+    getBook: async (parent, { id }) => {
+      console.log(id)
+      const book = await Book.findById(id)
+      return book
+    },
     getList: async (parent, { id }) => {
       const list = await BookList.findById(id).populate('creator')
       if (!list) throw new Error('List not found')
@@ -114,18 +119,42 @@ const resolvers = {
     },
     /** LISTS */
     createList: async (parent, { list }, { user }) => {
+      if (list.book) {
+        let book = await Book.find({ googleId: list.book.googleId })
+        if (!book) book = await Book.create(book)
+        list.books = [ID(book._id)]
+        delete list.book
+      }
       if (!user) throw new AuthenticationError('Not logged in')
-      const created = await BookList.create({
+      const listInfo = {
         ...list,
         tags: list.tags.map(tag => ({ text: tag })),
         creator: ID(user._id)
-      })
+      }
+      const created = await BookList.create(listInfo)
+      create.populate('books')
       if (created) {
         await User.findByIdAndUpdate(user._id, {
           $addToSet: { lists: ID(created._id) }
         })
       }
       return created
+    },
+    addBookToList: async (parent, { listId, book }, { user }) => {
+      let foundBook = await Book.findOne({ googleId: book.googleId })
+      if (!foundBook) foundBook = await Book.create(book)
+
+      const list = await BookList.findOneAndUpdate({
+        _id: ID(listId),
+        creator: ID(user._id)
+      }, {
+        $addToSet: { books: Types.ObjectId(foundBook._id) }
+      }, {
+        new: true
+      }).populate('creator').populate('books')
+
+      if (!list) throw new AuthenticationError("List not found")
+      return list
     },
     /** REVIEWS */
     createReview: async (parent, { review }, { user }) => {

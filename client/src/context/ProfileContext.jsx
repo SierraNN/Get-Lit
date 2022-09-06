@@ -36,6 +36,10 @@ const reducer = (state, action) => {
       const noList = lists.filter(({ _id }) => _id !== action.payload)
       bookListCache.saved.set(noList)
       return { ...state, lists: noList }
+    case 'ADD_BOOK_TO_LIST':
+      return { ...state, lists: withList }
+    case 'REMOVE_BOOK_FROM_LIST':
+      return { ...state, lists: noList }
     default:
       return state
   }

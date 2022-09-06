@@ -85,6 +85,7 @@ const typeDefs = gql`
     name: String
     description: String
     tags: [String]
+    book: BookInfo
   }
   type BookClub {
     _id: ID
@@ -114,6 +115,7 @@ const typeDefs = gql`
     myBooks: [Book]
     myReviews: [Review]
     myClubs: [BookClub]
+    getBook(id: ID!): Book
     getList(id: ID!): BookList
     getReview(id: ID!): Review
     getClub(id: ID!): BookClub
@@ -133,6 +135,7 @@ const typeDefs = gql`
     removeBook(bookId: ID): Boolean
     # lists
     createList(list: CreateList): BookList
+    addBookToList(listId: ID, book:BookInfo): BookList
     # reviews
     createReview(review: CreateReview): Review
     # lists

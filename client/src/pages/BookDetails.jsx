@@ -9,6 +9,8 @@ import { REMOVE_BOOK, SAVE_BOOK } from '../utils/mutations';
 import { bookByGoogleId } from "../utils/google"
 import Loading from "../components/Loading"
 import { useProfile } from "../context/ProfileContext"
+import AddToListButton from "../components/AddToListButton"
+import bookData from "../utils/bookData"
 
 const BookDetails = (props) => {
   const [auth] = useAuth()
@@ -32,18 +34,10 @@ const BookDetails = (props) => {
   const [saveBook] = useMutation(SAVE_BOOK)
   const handleSave = async () => {
     if (!book) return
-    const { title, authors, categories = [], description = "", imageLinks = {} } = book.volumeInfo
-    let { thumbnail } = imageLinks
+    let bookForDb = bookData(book)
     const { data, error } = await saveBook({
       variables: {
-        book: {
-          googleId: book.id,
-          title,
-          authors,
-          categories,
-          description,
-          thumbnail
-        }
+        book: bookForDb
       }
     })
     if (data && data.saveBook) {
@@ -85,7 +79,7 @@ const BookDetails = (props) => {
               {alreadySaved()
                 ? <Button color='red' icon='trash' onClick={handleRemove} content="Remove from Profile" />
                 : <Button color="blue" icon='save' onClick={handleSave} content="Save Book" />}
-              <Button color='teal' icon='plus' content="Add to Book List" />
+              <AddToListButton book={book} />
               <Button color='teal' icon='pencil' content="Write a Review" onClick={() => navigate(`/books/${book.id}/reviews/new`)} />
             </Button.Group>
           }

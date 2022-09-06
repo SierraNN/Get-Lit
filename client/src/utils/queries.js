@@ -8,7 +8,7 @@ export const MY_BOOKS = gql`
       _id
       title
       authors
-      urls
+      thumbnail
       description
       categories
     }
@@ -29,7 +29,7 @@ export const MY_PROFILE = gql`
         googleId
         title
         authors
-        urls
+        thumbnail
         description
         categories
       }
@@ -43,7 +43,9 @@ export const MY_PROFILE = gql`
         }
         books {
           _id
+          googleId
           title
+          authors
         }
         comments {
           _id
@@ -76,7 +78,12 @@ export const MY_LISTS = gql`
       description
       books {
         _id
+        googleId
         title
+        authors
+        thumbnail
+        description
+        categories
       }
       tags {
         _id
@@ -93,9 +100,14 @@ export const MY_REVIEWS = gql`
   query myReviews {
     myReviews {
       _id
-      book {
+      books {
         _id
-        title      
+        googleId
+        title
+        authors
+        thumbnail
+        description
+        categories
       }
       reviewText
       rating
@@ -126,7 +138,12 @@ export const MY_CLUBS = gql`
       }
       books {
         _id
+        googleId
         title
+        authors
+        thumbnail
+        description
+        categories
       }
       lists {
         _id
@@ -154,13 +171,9 @@ export const GET_LIST = gql`
         googleId
         title
         authors
-        urls
+        thumbnail
         description
         categories
-        tags {
-          _id
-          text
-        }
       }
       tags {
         _id
