@@ -68,7 +68,7 @@ export function init() {
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setAnimationLoop( animation );
-    renderer.setClearColor( 0x272727, 1 );
+        renderer.setClearColor( 0x272727, 1 );
 	document.body.appendChild( renderer.domElement );
 
     window.addEventListener( 'resize', () => {
