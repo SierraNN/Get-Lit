@@ -51,6 +51,11 @@ export const CREATE_LIST = gql`
         _id
         text
       }
+      books {
+        _id
+        googleId
+        title
+      }
     }
   }
 `
@@ -111,6 +116,46 @@ export const CREATE_CLUB = gql`
         }
       }
       posts {
+        _id
+        text
+        author {
+          _id
+          username
+          email
+        }
+        replies {
+          _id
+          text
+        }
+      }
+    }
+  }
+`
+export const ADD_BOOK_TO_LIST = gql`
+  mutation AddBookToList($listId: ID, $book: BookInfo) {
+    addBookToList(listId: $listId, book: $book) {
+      _id
+      creator {
+        _id
+        username
+        email
+      }
+      name
+      description
+      books {
+        _id
+        googleId
+        title
+        authors
+        thumbnail
+        description
+        categories
+      }
+      tags {
+        _id
+        text
+      }
+      comments {
         _id
         text
         author {

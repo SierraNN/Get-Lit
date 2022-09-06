@@ -8,7 +8,7 @@ export const MY_BOOKS = gql`
       _id
       title
       authors
-      urls
+      thumbnail
       description
       categories
     }
@@ -20,12 +20,16 @@ export const MY_PROFILE = gql`
       _id
       username
       email
+      friends {
+        _id
+        username
+      }
       books {
         _id
         googleId
         title
         authors
-        urls
+        thumbnail
         description
         categories
       }
@@ -39,7 +43,9 @@ export const MY_PROFILE = gql`
         }
         books {
           _id
+          googleId
           title
+          authors
         }
         comments {
           _id
@@ -72,7 +78,12 @@ export const MY_LISTS = gql`
       description
       books {
         _id
+        googleId
         title
+        authors
+        thumbnail
+        description
+        categories
       }
       tags {
         _id
@@ -89,9 +100,14 @@ export const MY_REVIEWS = gql`
   query myReviews {
     myReviews {
       _id
-      book {
+      books {
         _id
-        title      
+        googleId
+        title
+        authors
+        thumbnail
+        description
+        categories
       }
       reviewText
       rating
@@ -122,7 +138,12 @@ export const MY_CLUBS = gql`
       }
       books {
         _id
+        googleId
         title
+        authors
+        thumbnail
+        description
+        categories
       }
       lists {
         _id
@@ -150,13 +171,9 @@ export const GET_LIST = gql`
         googleId
         title
         authors
-        urls
+        thumbnail
         description
         categories
-        tags {
-          _id
-          text
-        }
       }
       tags {
         _id
@@ -172,4 +189,32 @@ export const GET_LIST = gql`
       }
     }
   }
+`
+export const GET_LISTS = gql`
+  query getLists($params: SearchParams) {
+    getLists(params: $params) {
+      _id
+      creator {
+        _id
+        username
+      }
+      name
+      description
+      books {
+        _id
+        googleId
+        title
+        authors
+      }
+      tags {
+        _id
+        text
+      }
+      comments {
+        _id
+        text
+      }
+    }
+  }
+
 `
