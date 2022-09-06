@@ -17,7 +17,7 @@ const AddToListButton = ({ book }) => {
   const [lists, setLists] = useState([])
   useEffect(() => {
     setLists(profile.lists || [])
-  }, [profile])
+  }, [profile, profile.lists])
 
   const { volumeInfo: { title } } = book
 
@@ -30,8 +30,15 @@ const AddToListButton = ({ book }) => {
     })
     if (data && data.addBookToList) {
       console.log(data)
+      const list = data.addBookToList
+      updateProfile("UPDATE_LIST", list)
+
     }
   }
+  const alreadySaved = (list) => {
+    const foundList = profile.lists && profile.lists.find(({ _id }) => list._id === _id)
+    return foundList.books.find(({ googleId }) => googleId === book.id) !== undefined
+}
 
   return (
     <Modal
@@ -48,7 +55,7 @@ const AddToListButton = ({ book }) => {
         </Modal.Header>
         <Modal.Description>
           <List className="clickable">
-            {lists.map((list, i) => <List.Item onClick={() => addBook(list._id)} key={i} icon="plus" content={list.name} />)}
+            {lists.map((list, i) => <List.Item onClick={() => addBook(list._id)} key={i} icon={alreadySaved(list)?"checkmark":"plus"} content={list.name} />)}
           </List>
           <Link to="/lists/new" state={{ book }}>
             <Button content='Create a New List' />
