@@ -2,6 +2,7 @@
 
 *{
   overflow-y: 'scroll';
+  
 }
 
 .hidden{
@@ -23,6 +24,7 @@
   top: 0;
   left: 0;
   overflow-y: 'scroll';
+
 }
 
 h1{

@@ -1,6 +1,6 @@
 const Reviews = (props) => {
   return (
-    <div>
+    <div className="background4">
       Reviews
     </div>
   )

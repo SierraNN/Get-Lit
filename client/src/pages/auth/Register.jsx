@@ -23,6 +23,7 @@ const Register = (props) => {
   }
 
   return (
+    <div className='background'>
     <Container>
       <Header>Register</Header>
       <FormProvider>
@@ -38,6 +39,7 @@ const Register = (props) => {
         ]} />
       </FormProvider>
     </Container>
+    </div>
   )
 }
 
