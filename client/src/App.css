@@ -1208,68 +1208,77 @@ body {
  * TODO: Make Background Dynamic
  */
 .background {
-
+  background: url("../public/assets/bg/1.png");
   position: fixed;
-  background-size:cover;
-  background-size:contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
+  overflow: auto;
 }
 
 .background2{
-  background: url("../public/assets/BG_01.png");
+  background: url("../public/assets/bg/1.png");
   position: fixed;
-  background-size:cover;
-  background-size:contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
+  overflow: auto;
 }
 
 .background3{
-  background: url("../public/assets/BG_02.png");
+  background: url("../public/assets/bg/1.png");
   position: fixed;
-  background-size:auto;
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
+  overflow: auto;
 }
 
 .background4{
+  background: url("../public/assets/bg/2.png");
   position: fixed;
-  background-size:cover;
-  background-size:contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background: url("../public/assets/BG_03.png");
+  overflow: auto;
 }
 
 .background5{
+  background: url("../public/assets/bg/3.png");
   position: fixed;
-  background-size:cover;
-  background-size:contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background: url("../public/assets/BG_04.png");
+  overflow: auto;
+
 }
 
 .background6{
+  background: url("../public/assets/bg/3.png");
   position: fixed;
-  background-size:cover;
-  background-size:contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background: url('../public/assets/BG_01.png');
+  overflow: auto;
+
 }
 
 /* Navigation and misc */
