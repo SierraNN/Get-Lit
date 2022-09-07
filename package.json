@@ -4,7 +4,6 @@
   "description": "book lovers community",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm i --prefix client && npm i --prefix server",
     "dev:client": "npm run start --prefix client",
     "dev:server": "npm run dev --prefix server",
     "dev": "concurrently \"npm:dev:*\""
