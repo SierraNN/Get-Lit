@@ -20,7 +20,7 @@ export const MY_PROFILE = gql`
       _id
       username
       email
-      friends {
+      following {
         _id
         username
       }
@@ -124,7 +124,7 @@ export const MY_REVIEWS = gql`
       }
     }
   }
-`
+`;
 export const MY_CLUBS = gql`
   query myClubs {
     myClubs {
@@ -158,7 +158,7 @@ export const MY_CLUBS = gql`
       }
     }
   }
-`
+`;
 export const GET_LIST = gql`
   query getList($id: ID!) {
     getList(id: $id) {
@@ -193,7 +193,7 @@ export const GET_LIST = gql`
       }
     }
   }
-`
+`;
 export const GET_LISTS = gql`
   query GetLists($params: SearchParams) {
     getLists(params: $params) {
@@ -236,4 +236,157 @@ export const GET_LISTS = gql`
       page
     }
   }
-`
+`;
+export const GET_USER = gql`
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      _id
+      username
+      spriteChoice
+      following {
+        _id
+        username
+      }
+      books {
+        _id
+        googleId
+        title
+        authors
+        thumbnail
+        description
+      }
+      lists {
+        _id
+        name
+        description
+        books {
+          _id
+          googleId
+          title
+          thumbnail
+        }
+        tags {
+          _id
+          text
+        }
+        comments {
+          _id
+          text
+          author {
+            _id
+            username
+            email
+            following {
+              _id
+              username
+              email
+              spriteChoice
+            }
+            books {
+              _id
+              googleId
+              title
+              authors
+              thumbnail
+              description
+              categories
+              ebooks {
+                link
+                free
+              }
+            }
+            lists {
+              _id
+              creator {
+                _id
+                username
+                email
+                spriteChoice
+              }
+              name
+              description
+              comments {
+                _id
+                text
+                createdAt
+              }
+            }
+            reviews {
+              _id
+              book {
+                _id
+                googleId
+                title
+                authors
+                thumbnail
+                description
+                categories
+              }
+              reviewText
+              suggestedBooks {
+                _id
+                googleId
+                title
+                authors
+                thumbnail
+                description
+                categories
+              }
+              suggestedTags {
+                _id
+                text
+              }
+              rating
+            }
+            clubs {
+              _id
+              members {
+                _id
+                username
+                email
+                spriteChoice
+              }
+              name
+              description
+              posts {
+                _id
+                text
+                createdAt
+              }
+            }
+            tags {
+              _id
+              text
+            }
+            spriteChoice
+          }
+          createdAt
+          replies {
+            _id
+            text
+            createdAt
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_USERS = gql`
+  query GetUsers($params: SearchParams) {
+    getUsers(params: $params) {
+      totalDocs
+      docs {
+        _id
+        username
+        following {
+          _id
+          username
+        }
+        spriteChoice
+      }
+      totalPages
+      page
+    }
+  }
+`;

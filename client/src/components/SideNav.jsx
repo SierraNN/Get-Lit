@@ -8,52 +8,57 @@ const SideNav = (props) => {
   return (
     <Menu id="main-navigation" vertical>
       <Link to="/">
-      <span class="hovertext" data-hover="Home">
-      <Menu.Item><Icon name='home' /></Menu.Item>
-      </span>
+        <span className="hovertext" data-hover="Home">
+          <Menu.Item><Icon name='home' /></Menu.Item>
+        </span>
       </Link>
 
       <Link to="/books">
-      <span class="hovertext" data-hover="Books">
-        <Menu.Item><Icon name="file alternate" /></Menu.Item>
-      </span>
+        <span className="hovertext" data-hover="Books">
+          <Menu.Item><Icon name="file alternate" /></Menu.Item>
+        </span>
       </Link>
 
       <Link to="/reviews">
-      <span class="hovertext" data-hover="Reviews">
-        <Menu.Item><Icon name="comment" /></Menu.Item>
-      </span>
+        <span className="hovertext" data-hover="Reviews">
+          <Menu.Item><Icon name="comment" /></Menu.Item>
+        </span>
       </Link>
 
       <Link to="/lists">
-      <span class="hovertext" data-hover="Lists">
-        <Menu.Item><Icon name="list" /></Menu.Item>
-      </span>
+        <span className="hovertext" data-hover="Lists">
+          <Menu.Item><Icon name="list" /></Menu.Item>
+        </span>
       </Link>
 
       <Link to="/clubs">
-      <span class="hovertext" data-hover="Clubs">
-        <Menu.Item><Icon name="users" /></Menu.Item>
-      </span>
+        <span className="hovertext" data-hover="Clubs">
+          <Menu.Item><Icon name="users" /></Menu.Item>
+        </span>
+      </Link>
+      <Link to="/users">
+        <span className="hovertext" data-hover="Users">
+          <Menu.Item><Icon name="users" /></Menu.Item>
+        </span>
       </Link>
       {auth
         ? <>
           <Link to="/profile">
-          <span class="hovertext" data-hover="Profile">
-            <Menu.Item><Icon name="user" /></Menu.Item>
+            <span className="hovertext" data-hover="Profile">
+              <Menu.Item><Icon name="user" /></Menu.Item>
             </span>
           </Link>
-          <Link to = "/login">
-          <span class="hovertext" data-hover="Logout">
-          <Menu.Item onClick={() => setAuth(null)}><Icon name="sign out" /></Menu.Item>
-          </span>
+          <Link to="/login">
+            <span className="hovertext" data-hover="Logout">
+              <Menu.Item onClick={() => setAuth(null)}><Icon name="sign out" /></Menu.Item>
+            </span>
           </Link>
         </>
         : <>
           <Link to="/login">
-          <span class="hovertext" data-hover="Login">
-            <Menu.Item><Icon name='sign in' /></Menu.Item>
-          </span>
+            <span className="hovertext" data-hover="Login">
+              <Menu.Item><Icon name='sign in' /></Menu.Item>
+            </span>
           </Link>
         </>}
     </Menu>

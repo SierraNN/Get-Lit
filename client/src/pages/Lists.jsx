@@ -16,7 +16,7 @@ const Lists = (props) => {
 
 
   const [auth] = useAuth()
-  const [profile, updateProfile] = useProfile()
+  const [profile] = useProfile()
   const myLists = auth ? profile.lists : null
   const { Form } = useForm()
   const [results, setResults] = useState(cachedResults)

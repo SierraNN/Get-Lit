@@ -1,7 +1,8 @@
 const { Schema, model } = require('mongoose')
-// const { TaggableSchema, TaggableModel } = require('./custom/Taggable')
+const mongoosePaginate = require('mongoose-paginate-v2')
 const bcrypt = require('bcrypt');
 const TagSchema = require('./Tag');
+const paginatedSearch = require('../utils/paginatedSearch');
 
 const ID = Schema.Types.ObjectId
 
@@ -23,9 +24,17 @@ const UserSchema = new Schema({
     required: true,
     minlength: [5, 'Password is too short'],
   },
-  friends: {
+  bio: String,
+  following: {
     type: [ID],
     ref: 'User'
+  },
+  spriteChoice: {
+    type: Number,
+    default: 0,
+    get: function (value) {
+      return value || 0
+    }
   },
   books: {
     type: [ID],
@@ -62,9 +71,13 @@ UserSchema.methods.isCorrectPassword = async function (password) {
 };
 
 UserSchema.statics.fullProfile = async function (userId) {
-  const user = await this.findById(userId).populate('friends').populate('books').populate('lists').populate('clubs')
+  const user = await this.findById(userId).populate('following').populate('books').populate('lists').populate('clubs')
   return user
 }
+
+UserSchema.plugin(mongoosePaginate)
+
+UserSchema.statics.search = paginatedSearch({})
 
 const User = new model('User', UserSchema)
 

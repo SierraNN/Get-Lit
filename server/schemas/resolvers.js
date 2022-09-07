@@ -60,14 +60,18 @@ const resolvers = {
       return review
     },
     getUser: async (parent, { id }) => {
-      const found = await User.fullProfile(user._id)
+      const found = await User.fullProfile(id)
       if (!found) throw new AuthenticationError('User not found')
       return found
     },
     getLists: async (parent, { params = {} }) => {
       const results = await BookList.search(params)
       return results
-    }
+    },
+    getUsers: async (parent, { params = {} }) => {
+      const results = await User.search(params)
+      return results
+    },
   },
   Mutation: {
     /** AUTH */
@@ -99,6 +103,19 @@ const resolvers = {
 
       const token = signToken(user);
       return { token, user };
+    },
+    /** FOLLOWING */
+    addFollowing: async (parent, { followingId }, { user }) => {
+      const update = await User.findByIdAndUpdate(user._id, {
+        $addToSet: { following: Types.ObjectId(followingId) }
+      }, { new: true })
+      return update
+    },
+    removeFollowing: async (parent, { followingId }, { user }) => {
+      const update = await User.findByIdAndUpdate(user._id, {
+        $pull: { following: Types.ObjectId(followingId) }
+      }, { new: true })
+      return update
     },
     /** BOOKS */
     saveBook: async (parent, { book }, { user }) => {

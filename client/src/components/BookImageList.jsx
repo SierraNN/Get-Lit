@@ -5,7 +5,7 @@ const BookImageList = ({ headerText, list }) => {
   return (
     <>
       <Header>{headerText}</Header>
-      <List horizontal className="book-list">
+      <List horizontal className="display-list">
         {list && list.length ? list.map((item, i) => <BookImage key={i} book={item} />) : <ListItem content="No books" />}
       </List>
     </>

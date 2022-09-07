@@ -17,8 +17,9 @@
 .ui.form.use-form
   .ui.dropdown
     background-color: white
+    min-width: max-content
 
-.ui.horizontal.list.book-list
+.ui.horizontal.list.display-list
   display: flex
   flex-flow: row wrap
   align-items: center
@@ -53,3 +54,14 @@ a.placeholder
 
 #LandingPage
   color: white
+
+.display-list.users
+  .item
+    background: rgba(255,255,255,0.2)
+    border-radius: 5px
+    border: 1px solid white
+    transition: transform 400ms
+    &:hover
+      transform: translateY(-3px)
+  .image
+    max-width: 120px

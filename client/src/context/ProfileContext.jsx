@@ -16,7 +16,7 @@ const ProfileDispatchContext = createContext()
 export const useProfile = () => [useContext(ProfileContext), useContext(ProfileDispatchContext)]
 
 const reducer = (state, action) => {
-  const { books = [], lists = [], reviews = [], clubs = [], friends = [] } = state
+  const { books = [], lists = [], reviews = [], clubs = [], following = [] } = state
   switch (action.type) {
     case 'SET_PROFILE':
       return { ...state, ...action.payload }

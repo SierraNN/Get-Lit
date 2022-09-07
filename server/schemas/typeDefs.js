@@ -7,12 +7,13 @@ const typeDefs = gql`
     _id: String
     username: String
     email: String
-    friends: [User]
+    following: [User]
     books: [Book]
     lists: [BookList]
     reviews: [Review]
     clubs: [BookClub]
     tags: [Tag]
+    spriteChoice: Int
   }
   type Auth {
     token: String
@@ -117,6 +118,24 @@ const typeDefs = gql`
     totalPages: Int
     page: Int
   }
+  type ClubResults {
+    totalDocs: Int
+    docs: [BookClub]
+    totalPages: Int
+    page: Int
+  }
+  type UserResults {
+    totalDocs: Int
+    docs: [User]
+    totalPages: Int
+    page: Int
+  }
+  type ReviewResults {
+    totalDocs: Int
+    docs: [Review]
+    totalPages: Int
+    page: Int
+  }
 
   type Query {
     user(username: String!): User
@@ -131,15 +150,18 @@ const typeDefs = gql`
     getClub(id: ID!): BookClub
     getUser(id: ID!): User
     getLists(params: SearchParams): ListResults
-    getReviews(params: SearchParams): [Review]
-    getClubs(params: SearchParams): [BookClub]
-    getUsers(params: SearchParams): [User]
+    getReviews(params: SearchParams): ReviewResults
+    getClubs(params: SearchParams): ClubResults
+    getUsers(params: SearchParams): UserResults
   }
 
   type Mutation {
     # auth
     addUser(username: String!, email: String!, password: String!): Auth
     login(username: String!, password: String!): Auth
+    # following
+    addFollowing(followingId:ID): [User]
+    removeFollowing(followingId:ID): [User]
     # books
     saveBook(book: BookInfo): Book
     removeBook(bookId: ID): Boolean
