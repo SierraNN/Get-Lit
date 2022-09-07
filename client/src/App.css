@@ -1,18 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500);
-@font-face {
-  font-family: 'entypo';
-  font-style: 'normal';
-  font-weight: 'normal';
-  src: url('http://weloveiconfonts.com/api/fonts/entypo/entypo.eot');
-  src: url('http://weloveiconfonts.com/api/fonts/entypo/entypo.eot?#iefix') format('eot'), url('http://weloveiconfonts.com/api/fonts/entypo/entypo.woff') format('woff'), url('http://weloveiconfonts.com/api/fonts/entypo/entypo.ttf') format('truetype'), url('http://weloveiconfonts.com/api/fonts/entypo/entypo.svg#entypo') format('svg');
-}
 
 **{ background: url('../public/assets/BG_01.png');
   position: fixed;
   background-size:cover;
   background-size:contain;
-
-  
 }
 /* Sidebar */
 .entypo-note:before {
@@ -1203,6 +1194,17 @@ body {
   border: 10px;
 
 }
+
+@font-face {
+  font-family: "PrStart";
+  src: local("PrStart"),
+   url("./font/PrStart.ttf") format("truetype");
+  font-weight: bold;
+  }
+
+  .font-face-ps {
+    font-family: "PrStart";
+   }
 
 /* Parallax Background
  * TODO: Make Background Dynamic
