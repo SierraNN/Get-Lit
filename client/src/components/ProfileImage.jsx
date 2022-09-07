@@ -21,7 +21,7 @@ const ProfileImage = () => {
     "/assets/Sprites/Demon/Character5_face2.png",
     "/assets/Sprites/Demon/Character6_face2.png",
     "/assets/Sprites/Demon/Character7_face2.png",
-    "/assets/Sprites/Demons/Character8_face2.png",
+    "/assets/Sprites/Demon/Character8_face2.png",
     "/assets/Sprites/Halfling/Character1_face2.png",
     "/assets/Sprites/Halfling/Character2_face2.png",
     "/assets/Sprites/Halfling/Character3_face2.png",
