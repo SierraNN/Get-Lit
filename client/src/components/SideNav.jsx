@@ -8,32 +8,52 @@ const SideNav = (props) => {
   return (
     <Menu id="main-navigation" vertical>
       <Link to="/">
-        <Menu.Item><Icon name='home' />Home</Menu.Item>
+      <span class="hovertext" data-hover="Home">
+      <Menu.Item><Icon name='home' /></Menu.Item>
+      </span>
       </Link>
+
       <Link to="/books">
-        <Menu.Item><Icon name="file alternate" />Books</Menu.Item>
+      <span class="hovertext" data-hover="Books">
+        <Menu.Item><Icon name="file alternate" /></Menu.Item>
+      </span>
       </Link>
+
       <Link to="/reviews">
-        <Menu.Item><Icon name="comment" />Reviews</Menu.Item>
+      <span class="hovertext" data-hover="Reviews">
+        <Menu.Item><Icon name="comment" /></Menu.Item>
+      </span>
       </Link>
+
       <Link to="/lists">
-        <Menu.Item><Icon name="list" />Lists</Menu.Item>
+      <span class="hovertext" data-hover="Lists">
+        <Menu.Item><Icon name="list" /></Menu.Item>
+      </span>
       </Link>
+
       <Link to="/clubs">
-        <Menu.Item><Icon name="users" />Clubs</Menu.Item>
+      <span class="hovertext" data-hover="Clubs">
+        <Menu.Item><Icon name="users" /></Menu.Item>
+      </span>
       </Link>
       {auth
         ? <>
           <Link to="/profile">
-            <Menu.Item><Icon name="user" />Profile</Menu.Item>
+          <span class="hovertext" data-hover="Profile">
+            <Menu.Item><Icon name="user" /></Menu.Item>
+            </span>
           </Link>
-          <Menu.Item onClick={() => setAuth(null)}>
-            <Icon name="sign out" />Log Out
-          </Menu.Item>
+          <Link to = "/login">
+          <span class="hovertext" data-hover="Logout">
+          <Menu.Item onClick={() => setAuth(null)}><Icon name="sign out" /></Menu.Item>
+          </span>
+          </Link>
         </>
         : <>
           <Link to="/login">
-            <Menu.Item><Icon name='sign in' />Login</Menu.Item>
+          <span class="hovertext" data-hover="Login">
+            <Menu.Item><Icon name='sign in' /></Menu.Item>
+          </span>
           </Link>
         </>}
     </Menu>

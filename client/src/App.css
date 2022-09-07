@@ -1,17 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500);
-@font-face {
-  font-family: 'entypo';
-  font-style: 'normal';
-  font-weight: 'normal';
-  src: url('http://weloveiconfonts.com/api/fonts/entypo/entypo.eot');
-  src: url('http://weloveiconfonts.com/api/fonts/entypo/entypo.eot?#iefix') format('eot'), url('http://weloveiconfonts.com/api/fonts/entypo/entypo.woff') format('woff'), url('http://weloveiconfonts.com/api/fonts/entypo/entypo.ttf') format('truetype'), url('http://weloveiconfonts.com/api/fonts/entypo/entypo.svg#entypo') format('svg');
-}
 
 **{ background: url('../public/assets/BG_01.png');
   position: fixed;
   background-size:cover;
   background-size:contain;
-  
 }
 /* Sidebar */
 .entypo-note:before {
@@ -1195,72 +1187,100 @@ body {
   padding: 0;
 }
 
+.ui.container1{
+  background-color: white;
+  color: black;
+  margin: 3%;
+  border: 10px;
+
+}
+
+@font-face {
+  font-family: "PrStart";
+  src: local("PrStart"),
+   url("./font/PrStart.ttf") format("truetype");
+  font-weight: bold;
+  }
+
+  .font-face-ps {
+    font-family: "PrStart";
+   }
+
 /* Parallax Background
  * TODO: Make Background Dynamic
  */
 .background {
-  background: url('../public/assets/BG_01.png');
+  background: url("../public/assets/bg/1.png");
   position: fixed;
-  background-size:cover;
-  background-size:contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
+  overflow: auto;
 }
 
 .background2{
-  background: url("../public/assets/BG_01.png");
+  background: url("../public/assets/bg/1.png");
   position: fixed;
-  background-size:cover;
-  background-size:contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
+  overflow: auto;
 }
 
 .background3{
-  background: url("../public/assets/BG_02.png");
+  background: url("../public/assets/bg/1.png");
   position: fixed;
-  background-size:auto;
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
+  overflow: auto;
 }
 
 .background4{
+  background: url("../public/assets/bg/2.png");
   position: fixed;
-  background-size:cover;
-  background-size:contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background: url("../public/assets/BG_03.png");
+  overflow: auto;
 }
 
 .background5{
+  background: url("../public/assets/bg/3.png");
   position: fixed;
-  background-size:cover;
-  background-size:contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background: url("../public/assets/BG_04.png");
+  overflow: auto;
+
 }
 
 .background6{
+  background: url("../public/assets/bg/3.png");
   position: fixed;
-  background-size:cover;
-  background-size:contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background: url("https://wallpaperaccess.com/full/6179577.jpg");
+  overflow: auto;
+
 }
 
 /* Navigation and misc */
@@ -1273,18 +1293,44 @@ body {
   height: 100%;
   padding: 10px;
 }
-#main-navigation {
+.hovertext {
+  position: relative;
+  border-bottom: 1px dotted black;
+}
 
+.hovertext:before {
+  content: attr(data-hover);
+  visibility: hidden;
+  opacity: 0;
+  width: 140px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(16, 76, 36);
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 0;
+  transition: opacity 1s ease-in-out;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 110%;
+}
+
+.hovertext:hover:before {
+  opacity: 1;
+  visibility: visible;
+}
+
+#main-navigation {
   top: 0px;
   left: 0px;
-  min-width: 5px;
-  max-width: 55px;
+  width: 200px;
   height: 100%;
-  background: url("../public/assets/bgnav.jpg");
+  background: url("https://t4.ftcdn.net/jpg/02/15/41/59/360_F_215415983_iQF8mT8PiTOLz1uolJuHYlem0WLZxlxW.jpg");
   position: fixed;
   background-size:auto;
   overflow: hidden;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    font-size: xx-large;
 }
 #main-navigation ul {
   list-style: none;
