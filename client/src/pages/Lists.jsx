@@ -8,6 +8,7 @@ import { useProfile } from "../context/ProfileContext"
 import bookLists from "../utils/bookLists"
 import { GET_LISTS } from "../utils/queries"
 import Loading from '../components/Loading';
+import { Link } from "react-router-dom"
 
 const cachedResults = bookLists.results.get()
 
@@ -22,6 +23,10 @@ const Lists = (props) => {
   const [searchParams, setSearchParams] = useState({})
   const [fresh, setFresh] = useState(false)
   const [display, setDisplay] = useState('search')
+  const [pageNum, setPageNum] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [pageSize] = useState(20)
+
 
   useEffect(() => {
     if (display === 'search') setResults(bookLists.results.get())
@@ -34,23 +39,22 @@ const Lists = (props) => {
 
   useEffect(() => {
     if (data && data.getLists) {
-      setResults(data.getLists)
+      let { docs, page, totalDocs, totalPages } = data.getLists
+      setResults(docs)
+      bookLists.results.set(docs)
+      setPageNum(page)
+      setTotalPages(totalPages)
       console.log('data', data)
     }
   }, [data])
   useEffect(() => {
     const search = async () => {
-      let { loading, data } = await refetch({ params: searchParams })
-      console.log('search', { searchParams, loading, data })
+      await refetch({ params: searchParams })
+      console.log('search', { searchParams })
       setFresh(true)
-      setResults(data.getLists)
-      bookLists.results.set(data.getLists)
     }
     if (searchParams.term) search()
   }, [searchParams])
-
-  const [pageNum, setPageNum] = useState(1)
-  const [pageSize] = useState(20)
 
   const onSubmit = async ({ term, type }) => {
     if (term === '') {
@@ -62,7 +66,7 @@ const Lists = (props) => {
     }
   }
 
-  const nextPage = async () => setPageNum(pageNum + 1)
+  const nextPage = async () => setPageNum(Math.min(pageNum + 1, totalPages))
   const prevPage = async () => setPageNum(pageNum - 1 || 1)
 
   if (loading) return <div className="background5"><Loading /></div>
@@ -70,28 +74,39 @@ const Lists = (props) => {
   return (
     <div className="background5">
       <Container>
-        <FormProvider>
-          <Header as='h1'>Book Lists!</Header>
-          <Form submit={onSubmit} fields={[
-            { name: 'term', useLabel: false, width: '12' },
-            {
-              name: 'type', useLabel: false, control: Dropdown, options: [
-                { text: 'Search list name', value: 'name' },
-                { text: 'By description', value: 'description' },
-                { text: 'By tags', value: 'tags' },
-                { text: 'By creator', value: 'creator' },
-              ], width: '4'
-            }
-          ]} buttons={auth ? [{ content: 'My Book List', color: 'green', onClick: () => setDisplay('profile') }] : []} />
-          {fresh && <div>
-            <Button.Group floated="right">
-              <Button icon="angle left" onClick={prevPage} />
-              <Button content={pageNum} onClick={null} />
-              <Button icon="angle right" onClick={nextPage} />
-            </Button.Group>
-          </div>}
-        </FormProvider>
+        <Header as='h1'>Book Lists!</Header>
+        {display === 'search' && (
+          <FormProvider>
+            <Form submit={onSubmit} fields={[
+              { name: 'term', useLabel: false, width: '12' },
+              {
+                name: 'type', useLabel: false, control: Dropdown, options: [
+                  { text: 'Search list name', value: 'name' },
+                  { text: 'By description', value: 'description' },
+                  { text: 'By tags', value: 'tags' },
+                  { text: 'By creator', value: 'creator' },
+                ], width: '4'
+              }
+            ]} buttons={auth ? [{ content: 'My Lists', color: 'green', onClick: () => setDisplay('profile') }] : []} />
+            {fresh && <div>
+              <Button.Group floated="right">
+                <Button icon="angle left" onClick={prevPage} />
+                <Button content={pageNum} onClick={null} />
+                <Button icon="angle right" onClick={nextPage} />
+              </Button.Group>
+            </div>}
+          </FormProvider>
+        )}
+        {display === 'profile' && (
+          <>
+            <Button icon="search" color="green" content="Search for Lists" onClick={() => setDisplay('search')} />
+            <Link to="/lists/new">
+              <Button icon="plus" color="teal" content="New List" />
+            </Link>
 
+          </>
+
+        )}
         {results
           ? <ListOfLists list={results} />
           : results && <Message>No results</Message>

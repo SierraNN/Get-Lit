@@ -37,9 +37,9 @@ const reducer = (state, action) => {
       bookListCache.saved.set(noList)
       return { ...state, lists: noList }
     case 'UPDATE_LIST':
-      const filtered = lists.filter(({ _id }) => _id !== action.payload._id)
-      filtered.push(action.payload)
-      return { ...state, lists: filtered }
+      const filteredLists = lists.filter(({ _id }) => _id !== action.payload._id)
+      filteredLists.push(action.payload)
+      return { ...state, lists: filteredLists }
     default:
       return state
   }
@@ -52,12 +52,14 @@ const ProfileProvider = ({ children }) => {
   const updateProfile = (type, payload) => dispatch({ type, payload })
 
   useEffect(() => {
-    console.log(profile)
     if (auth) refetch()
   }, [auth])
 
   useEffect(() => {
-    if (!loading && data?.myProfile) dispatch({ type: 'SET_PROFILE', payload: data.myProfile })
+    if (!loading && data?.myProfile) {
+      dispatch({ type: 'SET_PROFILE', payload: data.myProfile })
+      console.log({ profile: data.myProfile })
+    }
   }, [loading, data])
 
   return (

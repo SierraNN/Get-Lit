@@ -46,6 +46,9 @@ export const MY_PROFILE = gql`
           googleId
           title
           authors
+          thumbnail
+          description
+          categories
         }
         comments {
           _id
@@ -70,32 +73,32 @@ export const MY_PROFILE = gql`
     }
   }
 `;
-export const MY_LISTS = gql`
-  query Query {
-    myLists {
-      _id
-      name
-      description
-      books {
-        _id
-        googleId
-        title
-        authors
-        thumbnail
-        description
-        categories
-      }
-      tags {
-        _id
-        text
-      }
-      comments {
-        _id
-        text
-      }
-    }
-  }
-`
+// export const MY_LISTS = gql`
+//   query Query {
+//     myLists {
+//       _id
+//       name
+//       description
+//       books {
+//         _id
+//         googleId
+//         title
+//         authors
+//         thumbnail
+//         description
+//         categories
+//       }
+//       tags {
+//         _id
+//         text
+//       }
+//       comments {
+//         _id
+//         text
+//       }
+//     }
+//   }
+// `
 export const MY_REVIEWS = gql`
   query myReviews {
     myReviews {
@@ -186,35 +189,51 @@ export const GET_LIST = gql`
           _id
           username
         }
+        createdAt
       }
     }
   }
 `
 export const GET_LISTS = gql`
-  query getLists($params: SearchParams) {
+  query GetLists($params: SearchParams) {
     getLists(params: $params) {
-      _id
-      creator {
+      totalDocs
+      docs {
         _id
-        username
+        name
+        creator {
+          _id
+          username
+        }
+        description
+        books {
+          _id
+          googleId
+          title
+          authors
+          thumbnail
+          description
+          categories
+          tags {
+            _id
+            text
+          }
+        }
+        tags {
+          _id
+          text
+        }
+        comments {
+          _id
+          text
+          author {
+            _id
+            username
+          }
+        }
       }
-      name
-      description
-      books {
-        _id
-        googleId
-        title
-        authors
-      }
-      tags {
-        _id
-        text
-      }
-      comments {
-        _id
-        text
-      }
+      totalPages
+      page
     }
   }
-
 `

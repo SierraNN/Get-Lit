@@ -19,7 +19,7 @@ const Books = (props) => {
   const [results, setResults] = useState(cachedResults)
   const [searchParams, setSearchParams] = useState({})
   const [fresh, setFresh] = useState(false)
-  const { state } = useLocation()
+  // const { state } = useLocation()
 
   const myBooks = auth ? profile.books : null
 
@@ -67,37 +67,37 @@ const Books = (props) => {
 
   return (
     <div className="background3">
-    <Container>
-      <Header as='h1'>Books!</Header>
-      {display === 'search' && (
-        <FormProvider>
-          <Form submit={onSubmit} respond={onResponse} fields={[
-            { name: 'term', useLabel: false, width: '12' },
-            {
-              name: 'type', useLabel: false, control: Dropdown, options: [
-                { text: 'Search all', value: 'all' },
-                { text: 'By author', value: 'inauthor' },
-                { text: 'By title', value: 'intitle' },
-                { text: 'By subject', value: 'subject' },
-              ], width: '4'
-            }
-          ]} buttons={auth ? [{ content: 'My Books', color: 'green', onClick: () => setDisplay('profile') }] : []} />
-        </FormProvider>
-      )}
-      {display === 'profile' && <Button icon="search" color="green" content="Search for Books" onClick={() => setDisplay('search')} />}
-      {fresh && <div>
-        <Button.Group floated="right">
-          <Button icon="angle left" onClick={prevPage} />
-          <Button content={pageNum} onClick={null} />
-          <Button icon="angle right" onClick={nextPage} />
-        </Button.Group>
-      </div>}
+      <Container>
+        <Header as='h1'>Books!</Header>
+        {display === 'search' && (
+          <FormProvider>
+            <Form submit={onSubmit} respond={onResponse} fields={[
+              { name: 'term', useLabel: false, width: '12' },
+              {
+                name: 'type', useLabel: false, control: Dropdown, options: [
+                  { text: 'Search all', value: 'all' },
+                  { text: 'By author', value: 'inauthor' },
+                  { text: 'By title', value: 'intitle' },
+                  { text: 'By subject', value: 'subject' },
+                ], width: '4'
+              }
+            ]} buttons={auth ? [{ content: 'My Books', color: 'green', onClick: () => setDisplay('profile') }] : []} />
+          </FormProvider>
+        )}
+        {display === 'profile' && <Button icon="search" color="green" content="Search for Books" onClick={() => setDisplay('search')} />}
+        {fresh && <div>
+          <Button.Group floated="right">
+            <Button icon="angle left" onClick={prevPage} />
+            <Button content={pageNum} onClick={null} />
+            <Button icon="angle right" onClick={nextPage} />
+          </Button.Group>
+        </div>}
 
-      {results
-        ? <BookImageList headerText={display === 'search' ? 'Search Results' : 'Your Books'} list={results} />
-        : results && <Message>No results</Message>
-      }
-    </Container>
+        {results
+          ? <BookImageList headerText={display === 'search' ? 'Search Results' : 'Your Books'} list={results} />
+          : results && <Message>No results</Message>
+        }
+      </Container>
     </div>
   )
 }
