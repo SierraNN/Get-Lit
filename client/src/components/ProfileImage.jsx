@@ -6,7 +6,6 @@ const ProfileImage = () => {
 
     const [sprite, setSprite] = useState(0) 
     const imgList = [
-    "/assets/Sprites/DarkElf/Character1_face2.png",
     "/assets/Sprites/DarkElf/Character2_face2.png",
     "/assets/Sprites/DarkElf/Character3_face2.png",
     "/assets/Sprites/DarkElf/Character4_face2.png",

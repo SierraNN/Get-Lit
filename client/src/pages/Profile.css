@@ -15,12 +15,14 @@
 }
 
 .profileImg{
-  max-width: 200px;
-  max-height: 300px;
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+
 }
 
 .background1 {
-  background: url("https://mir-s3-cdn-cf.behance.net/project_modules/fs/43bff762974361.5aa1a2adb2a54.jpg") ;
+  background: url('') ;
   position: fixed;
   background-size:cover;
   background-size:contain;
@@ -29,7 +31,6 @@
   top: 0;
   left: 0;
   overflow-y: 'scroll';
-
 }
 
 .body{

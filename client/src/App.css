@@ -1208,7 +1208,7 @@ body {
  * TODO: Make Background Dynamic
  */
 .background {
-  background: url('../public/assets/BG_01.png');
+
   position: fixed;
   background-size:cover;
   background-size:contain;
@@ -1269,7 +1269,7 @@ body {
   height: 100%;
   top: 0;
   left: 0;
-  background: url("https://wallpaperaccess.com/full/6179577.jpg");
+  background: url('../public/assets/BG_01.png');
 }
 
 /* Navigation and misc */

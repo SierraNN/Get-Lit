@@ -24,7 +24,7 @@ const Register = (props) => {
 
   return (
     <div className='background'>
-    <Container>
+    <Container className="ui container1">
       <Header>Register</Header>
       <FormProvider>
         <Form submit={onSubmit} respond={onResponse} fields={[
