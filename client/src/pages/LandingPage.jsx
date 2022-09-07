@@ -46,10 +46,46 @@ function LandingPage() {
             <Link to="/reviews">
             <button className="btn"><T>click_here</T></button>
             </Link>
-          </div>
+            </div>
         </div>
+        
       </div>
+      <div className="ui six doubling cards">
+      
+  <div className="card">
+    <div className="image">
+      <img src="https://avatars.githubusercontent.com/u/107427250?v=4"></img>
     </div>
+  </div>
+  <div className="card">
+    <div className="image">
+      <img src="https://avatars.githubusercontent.com/u/94571813?v=4"></img>
+    </div>
+  </div>
+  <div className="card">
+    <div className="image">
+      <img src="https://avatars.githubusercontent.com/u/106709941?v=4"></img>
+    </div>
+  </div>
+  <div className="card">
+    <div className="image">
+      <img src="https://avatars.githubusercontent.com/u/105377377?v=4"></img>
+    </div>
+  </div>
+  <div className="card">
+    <div className="image">
+      <img src="https://avatars.githubusercontent.com/u/107456698?v=4"></img>
+    </div>
+  </div>
+</div>
+<a href= "https://github.com/SierraNN/Get-Lit" target="_blank">
+<button className="ui github button">
+  <i className="github icon"></i>
+  Github
+</button>
+</a>
+    </div>
+    
   );
 }
 
