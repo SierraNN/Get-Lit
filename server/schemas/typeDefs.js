@@ -116,7 +116,6 @@ const typeDefs = gql`
     docs: [BookList]
     totalPages: Int
     page: Int
-<<<<<<< HEAD
   }
   type ClubResults {
     totalDocs: Int
@@ -135,8 +134,6 @@ const typeDefs = gql`
     docs: [User]
     totalPages: Int
     page: Int
-=======
->>>>>>> main
   }
 
   type Query {
@@ -152,15 +149,9 @@ const typeDefs = gql`
     getClub(id: ID!): BookClub
     getUser(id: ID!): User
     getLists(params: SearchParams): ListResults
-<<<<<<< HEAD
     getReviews(params: SearchParams): ReviewResults
     getClubs(params: SearchParams): ClubResults
     getUsers(params: SearchParams): UserResults
-=======
-    getReviews(params: SearchParams): [Review]
-    getClubs(params: SearchParams): [BookClub]
-    getUsers(params: SearchParams): [User]
->>>>>>> main
   }
 
   type Mutation {
