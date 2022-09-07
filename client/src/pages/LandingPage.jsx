@@ -13,7 +13,7 @@ function LandingPage() {
   const getLanguage = useCurrentLanguage()
 
   return (
-    <div className="App">
+    <div id = "LandingPage">
       <div className="hero">
         <h1 className="title"><T>page_title</T></h1>
         <p className="text"><T>page_description</T></p>

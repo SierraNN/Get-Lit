@@ -30,7 +30,7 @@ import ClubDetails from './pages/ClubDetails';
 import Clubs from './pages/Clubs';
 import CreateReview from './components/forms/CreateReview';
 import CreateClub from './components/forms/CreateClub';
-import landingPage from './pages/LandingPage';
+import LandingPage from './pages/LandingPage';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -63,7 +63,7 @@ function App() {
           <BrowserRouter>
             <SideNav />
             <Routes>
-              <Route path="/" element={<landingPage />} />
+              <Route path="/" element={<LandingPage />} />
               <Route path="/books" element={<Outlet />}>
                 <Route index element={<Books />} />
                 <Route path=":bookId" element={<BookDetails />} />
