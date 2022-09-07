@@ -2,6 +2,7 @@ import { init } from "../utils/initBookLayer.js"
 import { useEffect } from "react"
 
 import {T, useSetLanguage, useCurrentLanguage } from "@tolgee/react"
+import { Link } from "react-router-dom"
 
 
 function LandingPage() {
@@ -29,17 +30,23 @@ function LandingPage() {
           <div className="choices-card">
             <p className="title"><T>card1_title</T></p>
             <p className="info"><T>card1_text</T></p>
+            <Link to="/lists">
             <button className="btn"><T>click_here</T></button>
+            </Link>
           </div>
           <div className="choices-card">
             <p className="title"><T>card2_title</T></p>
             <p className="info"><T>card2_text</T></p>
+            <Link to="/clubs">
             <button className="btn"><T>click_here</T></button>
+            </Link>
           </div>
           <div className="choices-card">
             <p className="title"><T>card3_title</T></p>
             <p className="info"><T>card3_text</T></p>
+            <Link to="/reviews">
             <button className="btn"><T>click_here</T></button>
+            </Link>
           </div>
         </div>
       </div>
