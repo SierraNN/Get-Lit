@@ -1274,13 +1274,15 @@ body {
   padding: 10px;
 }
 #main-navigation {
-  position: fixed;
+
   top: 0px;
   left: 0px;
   min-width: 5px;
   max-width: 55px;
   height: 100%;
-  background-color: rgba(100, 24, 154, 0.565);
+  background: url("../public/assets/bgnav.jpg");
+  position: fixed;
+  background-size:auto;
   overflow: hidden;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
