@@ -6,6 +6,13 @@
   src: url('http://weloveiconfonts.com/api/fonts/entypo/entypo.eot');
   src: url('http://weloveiconfonts.com/api/fonts/entypo/entypo.eot?#iefix') format('eot'), url('http://weloveiconfonts.com/api/fonts/entypo/entypo.woff') format('woff'), url('http://weloveiconfonts.com/api/fonts/entypo/entypo.ttf') format('truetype'), url('http://weloveiconfonts.com/api/fonts/entypo/entypo.svg#entypo') format('svg');
 }
+
+**{ background: url('../public/assets/BG_01.png');
+  position: fixed;
+  background-size:cover;
+  background-size:contain;
+  
+}
 /* Sidebar */
 .entypo-note:before {
   content: "\266a";
@@ -1163,7 +1170,7 @@
   content: "U";
 }
 * {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Roboto Mono', monospace;
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   -ms-transition: all 0.2s ease-out;
@@ -1173,6 +1180,7 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   position: relative;
+  
 }
 [class*="entypo-"]:before {
   font-family: 'entypo', sans-serif;
@@ -1191,7 +1199,7 @@ body {
  * TODO: Make Background Dynamic
  */
 .background {
-  background: url("https://i.pinimg.com/originals/f5/81/ed/f581ed2cb2711454b0b62acf93004c6e.png");
+  background: url('../public/assets/BG_01.png');
   position: fixed;
   background-size:cover;
   background-size:contain;
@@ -1199,11 +1207,65 @@ body {
   height: 100%;
   top: 0;
   left: 0;
-  z-index: -1
+}
+
+.background2{
+  background: url("../public/assets/BG_01.png");
+  position: fixed;
+  background-size:cover;
+  background-size:contain;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.background3{
+  background: url("../public/assets/BG_02.png");
+  position: fixed;
+  background-size:auto;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.background4{
+  position: fixed;
+  background-size:cover;
+  background-size:contain;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: url("../public/assets/BG_03.png");
+}
+
+.background5{
+  position: fixed;
+  background-size:cover;
+  background-size:contain;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: url("../public/assets/BG_04.png");
+}
+
+.background6{
+  position: fixed;
+  background-size:cover;
+  background-size:contain;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: url("https://wallpaperaccess.com/full/6179577.jpg");
 }
 
 /* Navigation and misc */
 #main-content {
+  
   position: absolute;
   top: 0px;
   left: 55px;
@@ -1212,13 +1274,15 @@ body {
   padding: 10px;
 }
 #main-navigation {
-  position: fixed;
+
   top: 0px;
   left: 0px;
   min-width: 5px;
   max-width: 55px;
   height: 100%;
-  background-color: rgba(100, 24, 154, 0.565);
+  background: url("../public/assets/bgnav.jpg");
+  position: fixed;
+  background-size:auto;
   overflow: hidden;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }

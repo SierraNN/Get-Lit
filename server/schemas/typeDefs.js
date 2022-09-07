@@ -111,6 +111,11 @@ const typeDefs = gql`
 >>>>>>> main
   }
 
+  input SearchParams {
+    term: String
+    type: String
+  }
+
   type Query {
     user(username: String!): User
     myProfile: User
@@ -139,6 +144,10 @@ const typeDefs = gql`
     # lists
     createList(list: CreateList): BookList
     addBookToList(listId: ID, book:BookInfo): BookList
+<<<<<<< HEAD
+=======
+    addCommentToList(listId: ID, comment:String): [Comment]
+>>>>>>> main
     # reviews
     createReview(review: CreateReview): Review
     # lists
