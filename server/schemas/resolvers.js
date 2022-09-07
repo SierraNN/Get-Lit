@@ -51,7 +51,7 @@ const resolvers = {
     getList: async (parent, { id }) => {
       const list = await BookList.findById(id).populate('creator').populate('books')
       if (!list) throw new Error('List not found')
-      
+
       return list
     },
     getReview: async (parent, { id }) => {
@@ -65,10 +65,10 @@ const resolvers = {
       return found
     },
     getLists: async (parent, { params = {} }) => {
-      const { term, type = 'name' } = params
-      if (term) params = { [type]: term }
-      const lists = await BookList.search(params)
-      return lists
+      // const { term, type = 'name', pageSize = 20, pageNum = 1 } = params
+      // let queryParams = { term, type, limit: pageSize, skip: (pageNum - 1) * pageSize }
+      const results = await BookList.search(params)
+      return results
     }
   },
   Mutation: {
@@ -133,7 +133,7 @@ const resolvers = {
         creator: ID(user._id)
       }
       const created = await BookList.create(listInfo)
-      create.populate('books')
+      created.populate('books')
       if (created) {
         await User.findByIdAndUpdate(user._id, {
           $addToSet: { lists: ID(created._id) }
@@ -152,27 +152,20 @@ const resolvers = {
         $addToSet: { books: Types.ObjectId(foundBook._id) }
       }, {
         new: true
-<<<<<<< HEAD
-      }).populate('creator').populate('books')
-=======
       }).populate('creator')
       list.populate('books')
->>>>>>> main
 
       if (!list) throw new AuthenticationError("List not found")
       return list
     },
-<<<<<<< HEAD
-=======
     addCommentToList: async (parent, { listId, comment }, { user }) => {
-      const list = await BookList.findByIdAndUpdate(listId,{
-        $addToSet:{comments:{text:comment, author:ID(user._id)}}
-      },{new:true}).populate({path:"comments", populate:"author"})
+      const list = await BookList.findByIdAndUpdate(listId, {
+        $addToSet: { comments: { text: comment, author: ID(user._id) } }
+      }, { new: true }).populate({ path: "comments", populate: "author" })
 
       if (!list) throw new AuthenticationError("List not found")
       return list.comments
     },
->>>>>>> main
     /** REVIEWS */
     createReview: async (parent, { review }, { user }) => {
       if (!user) throw new AuthenticationError('Not logged in')

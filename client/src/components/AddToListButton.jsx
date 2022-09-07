@@ -17,11 +17,7 @@ const AddToListButton = ({ book }) => {
   const [lists, setLists] = useState([])
   useEffect(() => {
     setLists(profile.lists || [])
-<<<<<<< HEAD
-  }, [profile])
-=======
   }, [profile, profile.lists])
->>>>>>> main
 
   const { volumeInfo: { title } } = book
 
@@ -34,10 +30,6 @@ const AddToListButton = ({ book }) => {
     })
     if (data && data.addBookToList) {
       console.log(data)
-<<<<<<< HEAD
-    }
-  }
-=======
       const list = data.addBookToList
       updateProfile("UPDATE_LIST", list)
 
@@ -46,8 +38,7 @@ const AddToListButton = ({ book }) => {
   const alreadySaved = (list) => {
     const foundList = profile.lists && profile.lists.find(({ _id }) => list._id === _id)
     return foundList.books.find(({ googleId }) => googleId === book.id) !== undefined
-}
->>>>>>> main
+  }
 
   return (
     <Modal
@@ -64,11 +55,7 @@ const AddToListButton = ({ book }) => {
         </Modal.Header>
         <Modal.Description>
           <List className="clickable">
-<<<<<<< HEAD
-            {lists.map((list, i) => <List.Item onClick={() => addBook(list._id)} key={i} icon="plus" content={list.name} />)}
-=======
-            {lists.map((list, i) => <List.Item onClick={() => addBook(list._id)} key={i} icon={alreadySaved(list)?"checkmark":"plus"} content={list.name} />)}
->>>>>>> main
+            {lists.map((list, i) => <List.Item onClick={() => addBook(list._id)} key={i} icon={alreadySaved(list) ? "checkmark" : "plus"} content={list.name} />)}
           </List>
           <Link to="/lists/new" state={{ book }}>
             <Button content='Create a New List' />
