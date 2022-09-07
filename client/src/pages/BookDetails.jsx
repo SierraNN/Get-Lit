@@ -61,7 +61,7 @@ const BookDetails = (props) => {
   const { volumeInfo: info } = book
   // const info = book.volumeInfo || 
   return (
-    <Container>
+    <Container className="ui container1">
       <Header as='h1' content={info.title} />
       <Button icon="angle left" content="Back" onClick={() => navigate(-1)} />
       <Segment.Group>

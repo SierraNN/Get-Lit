@@ -26,7 +26,7 @@ const ListDetails = (props) => {
   const { name, description, books, comments, tags, creator } = list
   const addBook = () => {}
   return (
-    <Container>
+    <Container  className="ui container1">
       <Header as='h1' content={name} subheader={creator.username} />
       <Segment>
         <Header>Description</Header>

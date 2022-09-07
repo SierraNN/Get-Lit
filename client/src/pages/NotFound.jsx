@@ -1,6 +1,6 @@
 const NotFound = (props) => {
   return (
-    <div className="background">
+    <div className="background ui container1" >
       Page not found
     </div>
   )

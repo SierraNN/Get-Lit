@@ -69,7 +69,7 @@ const Lists = (props) => {
 
   return (
     <div className="background5">
-      <Container>
+      <Container  className="ui container1">
         <FormProvider>
           <Header as='h1'>Book Lists!</Header>
           <Form submit={onSubmit} fields={[
