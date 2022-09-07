@@ -97,21 +97,22 @@ const Profile = () => {
     </Container>
   )
   const Title = () => (
-    <div>
-
-    <br /> <br /> <br /> <br /> <br />
-    <Button basic onClick={() => {console.log('Hi')}}>
+    <Segment>
+      <Button className='right floated button' onClick={() => {console.log('Hi')}}>
         <i className="icon user"></i>
-        Follow
-    </Button> 
-    </div>
+        Follow 
+      </Button>
+      <br /><br />
+      <Divider class="ui vertical divider" color='brown'/>
+
+      <ProfileImage />
+    </Segment>
   )
   return (
     <div className="background1">
       <div className="right floated sixteen wide column body">          
         <Segment>
           <Title />
-          <ProfileImage />
           <Divider clearing/>
           <GenresSelect />
           <Segment color='brown'><BioContainer /></Segment>

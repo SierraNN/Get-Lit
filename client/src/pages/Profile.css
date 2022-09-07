@@ -2,6 +2,7 @@
 
 *{
   overflow-y: 'scroll';
+  
 }
 
 .hidden{
@@ -23,6 +24,13 @@
   top: 0;
   left: 0;
   overflow-y: 'scroll';
+
+}
+
+.btnImg{
+  background-color: #995200;
+  color: aqua;
+  
 }
 
 h1{

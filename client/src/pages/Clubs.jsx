@@ -1,6 +1,6 @@
 const Clubs = (props) => {
   return (
-    <div>
+    <div className="background6">
       Clubs
     </div>
   )
