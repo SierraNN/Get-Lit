@@ -29,8 +29,9 @@
     "concurrently": "^7.3.0"
   },
   "dependencies": {
-    "@tolgee/react": "^4.8.6",
-    "gsap": "^3.11.0",
-    "three": "^0.144.0"
+    "js-pixel-fonts": "^1.6.0",
+    "multiselect-react-dropdown": "^2.0.25",
+    "react-easy-edit": "^1.15.0",
+    "react-select": "^5.4.0"
   }
 }

@@ -20,6 +20,7 @@ const Login = (props) => {
     if (data && data.login) setAuth(data.login.token)
   }
   return (
+    <div className='background'>
     <Container>
       <Header>Login</Header>
       {message && <Message content={message} />}
@@ -32,6 +33,7 @@ const Login = (props) => {
         ]} />
       </FormProvider>
     </Container>
+    </div>
   )
 }
 

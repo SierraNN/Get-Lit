@@ -66,6 +66,7 @@ const Books = (props) => {
   }, [display])
 
   return (
+    <div className="background3">
     <Container>
       <Header as='h1'>Books!</Header>
       {display === 'search' && (
@@ -97,6 +98,7 @@ const Books = (props) => {
         : results && <Message>No results</Message>
       }
     </Container>
+    </div>
   )
 }
 

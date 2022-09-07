@@ -13,7 +13,7 @@ import { useAuth } from './AuthContext';
 const ProfileContext = createContext()
 const ProfileDispatchContext = createContext()
 
-export const useProfile = () => [useContext(ProfileContext), useContext(ProfileDispatchContext)]
+export const useProfile =( ) => [useContext(ProfileContext), useContext(ProfileDispatchContext)]
 
 const reducer = (state, action) => {
   const { books = [], lists = [], reviews = [], clubs = [], friends = [] } = state
@@ -36,10 +36,10 @@ const reducer = (state, action) => {
       const noList = lists.filter(({ _id }) => _id !== action.payload)
       bookListCache.saved.set(noList)
       return { ...state, lists: noList }
-    case 'ADD_BOOK_TO_LIST':
-      return { ...state, lists: withList }
-    case 'REMOVE_BOOK_FROM_LIST':
-      return { ...state, lists: noList }
+    case 'UPDATE_LIST':
+      const filtered = lists.filter(({ _id }) => _id !== action.payload._id)
+      filtered.push(action.payload)
+      return {...state, lists:filtered}
     default:
       return state
   }
@@ -52,6 +52,7 @@ const ProfileProvider = ({ children }) => {
   const updateProfile = (type, payload) => dispatch({ type, payload })
 
   useEffect(() => {
+    console.log(profile)
     if (auth) refetch()
   }, [auth])
 
