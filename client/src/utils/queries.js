@@ -73,92 +73,6 @@ export const MY_PROFILE = gql`
     }
   }
 `;
-// export const MY_LISTS = gql`
-//   query Query {
-//     myLists {
-//       _id
-//       name
-//       description
-//       books {
-//         _id
-//         googleId
-//         title
-//         authors
-//         thumbnail
-//         description
-//         categories
-//       }
-//       tags {
-//         _id
-//         text
-//       }
-//       comments {
-//         _id
-//         text
-//       }
-//     }
-//   }
-// `
-export const MY_REVIEWS = gql`
-  query myReviews {
-    myReviews {
-      _id
-      books {
-        _id
-        googleId
-        title
-        authors
-        thumbnail
-        description
-        categories
-      }
-      reviewText
-      rating
-      comments {
-        _id
-        author {
-          _id
-          username
-        }
-        text
-      }
-    }
-  }
-`
-export const MY_CLUBS = gql`
-  query myClubs {
-    myClubs {
-      _id
-      creator {
-        _id
-        username
-      }
-      name
-      description
-      tags {
-        _id
-        text
-      }
-      books {
-        _id
-        googleId
-        title
-        authors
-        thumbnail
-        description
-        categories
-      }
-      lists {
-        _id
-        name
-      }
-      posts {
-        _id
-        text
-      }
-    }
-  }
-`
 export const GET_LIST = gql`
   query getList($id: ID!) {
     getList(id: $id) {
@@ -193,7 +107,7 @@ export const GET_LIST = gql`
       }
     }
   }
-`
+`;
 export const GET_LISTS = gql`
   query GetLists($params: SearchParams) {
     getLists(params: $params) {
@@ -236,4 +150,4 @@ export const GET_LISTS = gql`
       page
     }
   }
-`
+`;
