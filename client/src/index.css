@@ -1,0 +1,96 @@
+*{
+    margin: 0;
+    padding: 0;
+  }
+  body{
+    color: #fff;
+    font-family :'Times New Roman', Times, serif
+  }
+  
+  canvas{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  
+  .hero{
+    padding: 4em 3em;
+    width: calc(50% - 2em);
+  }
+  
+  .hero .title{
+    color: green;
+    font-size: 3em;
+    margin-bottom: .5em;
+  }
+  
+  .hero .text{
+    letter-spacing: 1px;
+    line-height: 1.5;
+    color: rgb(238, 238, 238);
+    margin-bottom: 1em;
+  }
+  
+  .btn{
+    background: #a7a7a7;
+    color: #fff;
+    padding: .5em 1em;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 1em;
+    border: none;
+    margin-right: .5em;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  
+  .choices h1{
+    text-align: center;
+    font-size: 2.5em;
+  }
+  .choices-table{
+    padding: 3em;
+    display: flex;
+  }
+  /* cards slide in late after book animation is finished */
+  .choices-card{
+    background-color: rgba(114, 57, 16, 0.479);
+    padding: 1em;
+    border-radius: 5px;
+    transform: translate(-100px, 100px);
+    opacity: 0;
+    animation: 1s slideIn;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
+  }
+  @keyframes slideIn{
+    to{
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+    
+  .choices-card:nth-child(2){
+    margin: 0 2.5em;
+    transform: translate(0, 100px);
+    animation-delay: 2.2s;
+  }
+  .choices-card:nth-child(3){
+    transform: translate(100px, 100px);
+    animation-delay: 2.4s;
+  }
+  
+  
+  
+  .choices-card .title{
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  .choices-card .info{
+    margin: 1em 0;
+  }
+  .choices-card .btn{
+    background:green;
+  }

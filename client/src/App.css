@@ -11,6 +11,7 @@
   position: fixed;
   background-size:cover;
   background-size:contain;
+
   
 }
 /* Sidebar */
@@ -1195,11 +1196,19 @@ body {
   padding: 0;
 }
 
+.ui.container1{
+  background-color: white;
+  color: black;
+  margin: 3%;
+  border: 10px;
+
+}
+
 /* Parallax Background
  * TODO: Make Background Dynamic
  */
 .background {
-  background: url('../public/assets/BG_01.png');
+
   position: fixed;
   background-size:cover;
   background-size:contain;
@@ -1260,7 +1269,7 @@ body {
   height: 100%;
   top: 0;
   left: 0;
-  background: url("https://wallpaperaccess.com/full/6179577.jpg");
+  background: url('../public/assets/BG_01.png');
 }
 
 /* Navigation and misc */
@@ -1273,18 +1282,44 @@ body {
   height: 100%;
   padding: 10px;
 }
-#main-navigation {
+.hovertext {
+  position: relative;
+  border-bottom: 1px dotted black;
+}
 
+.hovertext:before {
+  content: attr(data-hover);
+  visibility: hidden;
+  opacity: 0;
+  width: 140px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(16, 76, 36);
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 0;
+  transition: opacity 1s ease-in-out;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 110%;
+}
+
+.hovertext:hover:before {
+  opacity: 1;
+  visibility: visible;
+}
+
+#main-navigation {
   top: 0px;
   left: 0px;
-  min-width: 5px;
-  max-width: 55px;
+  width: 200px;
   height: 100%;
-  background: url("../public/assets/bgnav.jpg");
+  background: url("https://cdna.artstation.com/p/assets/images/images/015/939/178/large/sean-teo-kaae-tileabletextures-wood.jpg?1550250095");
   position: fixed;
   background-size:auto;
   overflow: hidden;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    font-size: xx-large;
 }
 #main-navigation ul {
   list-style: none;

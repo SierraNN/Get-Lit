@@ -66,9 +66,9 @@ const Books = (props) => {
   }, [display])
 
   return (
-    <div className="background3">
-    <Container>
-      <Header as='h1'>Books!</Header>
+    <div className=" background3">
+    <Container className="ui container1 rounded">
+      <Header className="" as='h1'>Books!</Header>
       {display === 'search' && (
         <FormProvider>
           <Form submit={onSubmit} respond={onResponse} fields={[
