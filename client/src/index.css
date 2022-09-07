@@ -4,7 +4,7 @@
   }
   body{
     color: #fff;
-    font-family: Arial, Helvetica, sans-serif
+    font-family :'Times New Roman', Times, serif
   }
   
   canvas{
@@ -20,7 +20,7 @@
   }
   
   .hero .title{
-    color: #ffba02;
+    color: green;
     font-size: 3em;
     margin-bottom: .5em;
   }
@@ -54,8 +54,9 @@
     padding: 3em;
     display: flex;
   }
+  /* cards slide in late after book animation is finished */
   .choices-card{
-    background-color: rgba(255, 255, 255, .3);
+    background-color: rgba(114, 57, 16, 0.479);
     padding: 1em;
     border-radius: 5px;
     transform: translate(-100px, 100px);
@@ -91,5 +92,5 @@
     margin: 1em 0;
   }
   .choices-card .btn{
-    background: #ffba02;
+    background:green;
   }
