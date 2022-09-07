@@ -43,11 +43,11 @@ const SideNav = (props) => {
             <Menu.Item><Icon name="user" /></Menu.Item>
             </span>
           </Link>
-          <Menu.Item onClick={() => setAuth(null)}>
+          <Link to = "/login">
           <span class="hovertext" data-hover="Logout">
-            <Icon name="sign out" />
+          <Menu.Item onClick={() => setAuth(null)}><Icon name="sign out" /></Menu.Item>
           </span>
-          </Menu.Item>
+          </Link>
         </>
         : <>
           <Link to="/login">

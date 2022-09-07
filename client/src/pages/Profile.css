@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500&display=swap');
 
-*{
-  overflow-y: 'scroll';
-  
-}
-
 .hidden{
     visibility: hidden;
 }
@@ -22,15 +17,15 @@
 }
 
 .background1 {
-  background: url('') ;
-  position: fixed;
-  background-size:cover;
-  background-size:contain;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  overflow-y: 'scroll';
+  background: url('https://images7.alphacoders.com/120/1205979.png');
+  position: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: auto;
 }
 
 .body{

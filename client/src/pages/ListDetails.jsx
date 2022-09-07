@@ -44,7 +44,7 @@ const ListDetails = (props) => {
   }
 
   return (
-    <Container>
+    <Container  className="ui container1">
       <Header as='h1' content={name} subheader={creator.username} />
       <Segment>
         <Header>Description</Header>
