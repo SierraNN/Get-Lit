@@ -21,7 +21,7 @@ const Login = (props) => {
   }
   return (
     <div className='background'>
-    <Container>
+    <Container className= "ui container1">
       <Header>Login</Header>
       {message && <Message content={message} />}
       <FormProvider>
