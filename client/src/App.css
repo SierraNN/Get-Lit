@@ -1196,6 +1196,14 @@ body {
   padding: 0;
 }
 
+.ui.container1{
+  background-color: white;
+  color: black;
+  margin: 3%;
+  border: 10px;
+
+}
+
 /* Parallax Background
  * TODO: Make Background Dynamic
  */
