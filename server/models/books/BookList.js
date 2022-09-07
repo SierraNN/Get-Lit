@@ -27,8 +27,12 @@ const BookListSchema = new Schema({
   // schema options
 })
 
-BookListSchema.statics.search = async function (params = {}) {
-  const query = { ...params }
+BookListSchema.statics.search = async function ({ term, type = 'name', pageSize = 20, pageNum = 1 }) {
+  let query = {}
+  if (term) query[type] = term
+
+  let limit = pageSize, skip = (pageNum - 1) * pageSize
+
   for (let attr in query) {
     if (['name', 'description'].includes(attr)) {
       let regex = query[attr].trim().split(' ').map((n) => `(?=.*(?:\\b${n}|${n}\\b))`).join('')
@@ -38,7 +42,16 @@ BookListSchema.statics.search = async function (params = {}) {
       query[attr] = { $elemMatch: { text: { $regex: regex, $options: 'i' } } }
     }
   }
+
+  // console.log(query)
+  // const found = await this.aggregate([
+  //   { $match: query },
+  //   { $count: "totalItems" },
+
+  // ])
+
   const found = await this.find(query)
+    // .skip(skip).limit(limit)
     .populate('books')
     .populate('creator')
   return found

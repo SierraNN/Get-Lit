@@ -13,7 +13,7 @@ import { useAuth } from './AuthContext';
 const ProfileContext = createContext()
 const ProfileDispatchContext = createContext()
 
-export const useProfile =( ) => [useContext(ProfileContext), useContext(ProfileDispatchContext)]
+export const useProfile = () => [useContext(ProfileContext), useContext(ProfileDispatchContext)]
 
 const reducer = (state, action) => {
   const { books = [], lists = [], reviews = [], clubs = [], friends = [] } = state
@@ -39,7 +39,7 @@ const reducer = (state, action) => {
     case 'UPDATE_LIST':
       const filtered = lists.filter(({ _id }) => _id !== action.payload._id)
       filtered.push(action.payload)
-      return {...state, lists:filtered}
+      return { ...state, lists: filtered }
     default:
       return state
   }
