@@ -47,8 +47,9 @@
   }
   
   .choices h1{
-    text-align: center;
+    text-align: left;
     font-size: 2.5em;
+    margin: 2em
   }
   .choices-table{
     padding: 3em;

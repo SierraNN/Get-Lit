@@ -34,13 +34,13 @@ export function init() {
         })
 
         gsap.to(model.rotation, {
-        x: 2.5,
+        x: 3,
         duration: 1,
         delay: 1
         })
 
         gsap.to(model.rotation, {
-        y: Math.PI * 3,
+        y: Math.PI * 5,
         duration: 2,
         delay: 1
         })
