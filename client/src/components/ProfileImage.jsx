@@ -6,7 +6,6 @@ const ProfileImage = () => {
 
     const [sprite, setSprite] = useState(0) 
     const imgList = [
-    "/assets/Sprites/DarkElf/Charater1_face2.png",
     "/assets/Sprites/DarkElf/Character2_face2.png",
     "/assets/Sprites/DarkElf/Character3_face2.png",
     "/assets/Sprites/DarkElf/Character4_face2.png",
@@ -14,22 +13,22 @@ const ProfileImage = () => {
     "/assets/Sprites/DarkElf/Character6_face2.png",
     "/assets/Sprites/DarkElf/Character7_face2.png",
     "/assets/Sprites/DarkElf/Character8_face2.png",
-    "/assets/Sprites/Demons/Charater1_face2.png",
-    "/assets/Sprites/Demons/Charater2_face2.png",
-    "/assets/Sprites/Demons/Charater3_face2.png",
-    "/assets/Sprites/Demons/Charater4_face2.png",
-    "/assets/Sprites/Demons/Charater5_face2.png",
-    "/assets/Sprites/Demons/Charater6_face2.png",
-    "/assets/Sprites/Demons/Charater7_face2.png",
-    "/assets/Sprites/Demons/Charater8_face2.png",
-    "/assets/Sprites/Halfling/Charater1_face2.png",
-    "/assets/Sprites/Halfling/Charater2_face2.png",
-    "/assets/Sprites/Halfling/Charater3_face2.png",
-    "/assets/Sprites/Halfling/Charater4_face2.png",
-    "/assets/Sprites/Halfling/Charater5_face2.png",
-    "/assets/Sprites/Halfling/Charater6_face2.png",
-    "/assets/Sprites/Halfling/Charater7_face2.png",
-    "/assets/Sprites/Halfling/Charater8_face2.png"
+    "/assets/Sprites/Demon/Character1_face2.png",
+    "/assets/Sprites/Demon/Character2_face2.png",
+    "/assets/Sprites/Demon/Character3_face2.png",
+    "/assets/Sprites/Demon/Character4_face2.png",
+    "/assets/Sprites/Demon/Character5_face2.png",
+    "/assets/Sprites/Demon/Character6_face2.png",
+    "/assets/Sprites/Demon/Character7_face2.png",
+    "/assets/Sprites/Demon/Character8_face2.png",
+    "/assets/Sprites/Halfling/Character1_face2.png",
+    "/assets/Sprites/Halfling/Character2_face2.png",
+    "/assets/Sprites/Halfling/Character3_face2.png",
+    "/assets/Sprites/Halfling/Character4_face2.png",
+    "/assets/Sprites/Halfling/Character5_face2.png",
+    "/assets/Sprites/Halfling/Character6_face2.png",
+    "/assets/Sprites/Halfling/Character7_face2.png",
+    "/assets/Sprites/Halfling/Character8_face2.png"
 ]
 
     const onClickForward = () => {
@@ -42,7 +41,7 @@ const ProfileImage = () => {
     return (
         <Container>
             <div>
-                <Image style={{width: '200px', height: '350px'}} className="circular medium ui image bordered centered" 
+                <Image className=" profileImg circular medium ui image bordered centered" 
                 src={imgList[sprite]} 
                 />
             </div>
