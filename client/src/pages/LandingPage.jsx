@@ -1,7 +1,6 @@
 import { init } from "../utils/initBookLayer.js"
 import { useEffect } from "react"
-
-import {T, useSetLanguage, useCurrentLanguage } from "@tolgee/react"
+import { T, useSetLanguage, useCurrentLanguage } from "@tolgee/react"
 import { Link } from "react-router-dom"
 
 

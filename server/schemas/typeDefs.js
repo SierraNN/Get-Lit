@@ -102,10 +102,19 @@ const typeDefs = gql`
     name: String
     description: String
   }
-
+  
   input SearchParams {
     term: String
     type: String
+    pageNum: Int
+    pageSize: Int
+  }
+
+  type ListResults {
+    totalItems: Int
+    items: [BookList]
+    totalPages: Int
+    currentPage: Int
   }
 
   type Query {
