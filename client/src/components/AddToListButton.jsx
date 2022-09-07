@@ -37,6 +37,7 @@ const AddToListButton = ({ book }) => {
   }
   const alreadySaved = (list) => {
     const foundList = profile.lists && profile.lists.find(({ _id }) => list._id === _id)
+    if (!foundList.books) return false
     return foundList.books.find(({ googleId }) => googleId === book.id) !== undefined
   }
 

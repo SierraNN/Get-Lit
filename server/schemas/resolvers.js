@@ -19,7 +19,7 @@ const resolvers = {
     },
     myLists: async (parent, args, { user }) => {
       if (!user) throw new AuthenticationError('Not logged in')
-      const found = await User.findById(user._id).populate('lists')
+      const found = await User.findById(user._id).populate({ path: 'lists', populate: 'books' })
       if (!found) throw new AuthenticationError('User not found')
 
       return found.lists
@@ -49,7 +49,7 @@ const resolvers = {
       return book
     },
     getList: async (parent, { id }) => {
-      const list = await BookList.findById(id).populate('creator').populate('books')
+      const list = await BookList.findById(id).populate('creator').populate('books').populate('comments.author')
       if (!list) throw new Error('List not found')
 
       return list
@@ -65,8 +65,6 @@ const resolvers = {
       return found
     },
     getLists: async (parent, { params = {} }) => {
-      // const { term, type = 'name', pageSize = 20, pageNum = 1 } = params
-      // let queryParams = { term, type, limit: pageSize, skip: (pageNum - 1) * pageSize }
       const results = await BookList.search(params)
       return results
     }
@@ -120,20 +118,17 @@ const resolvers = {
     },
     /** LISTS */
     createList: async (parent, { list }, { user }) => {
-      if (list.book) {
-        let book = await Book.find({ googleId: list.book.googleId })
-        if (!book) book = await Book.create(book)
-        list.books = [ID(book._id)]
-        delete list.book
-      }
+      let book = list.book ? await Book.findOne({ googleId: list.book.googleId }) || await Book.create(list.book) : null
+      console.log({ body: list.book, doc: book })
       if (!user) throw new AuthenticationError('Not logged in')
+
       const listInfo = {
         ...list,
         tags: list.tags.map(tag => ({ text: tag })),
         creator: ID(user._id)
       }
-      const created = await BookList.create(listInfo)
-      created.populate('books')
+      if (book) listInfo.books = [book._id]
+      const created = await BookList.create(listInfo).then(c => c.populate('books'))
       if (created) {
         await User.findByIdAndUpdate(user._id, {
           $addToSet: { lists: ID(created._id) }

@@ -26,6 +26,7 @@ const typeDefs = gql`
     _id: ID
     text: String
     author: User
+    createdAt: String
     replies: [Comment]
   }
 
@@ -111,10 +112,10 @@ const typeDefs = gql`
   }
 
   type ListResults {
-    totalItems: Int
-    items: [BookList]
+    totalDocs: Int
+    docs: [BookList]
     totalPages: Int
-    currentPage: Int
+    page: Int
   }
 
   type Query {
@@ -129,7 +130,7 @@ const typeDefs = gql`
     getReview(id: ID!): Review
     getClub(id: ID!): BookClub
     getUser(id: ID!): User
-    getLists(params: SearchParams): [BookList]
+    getLists(params: SearchParams): ListResults
     getReviews(params: SearchParams): [Review]
     getClubs(params: SearchParams): [BookClub]
     getUsers(params: SearchParams): [User]
