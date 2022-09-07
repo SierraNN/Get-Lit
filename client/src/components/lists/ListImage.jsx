@@ -8,20 +8,20 @@ const ListImage = ({ list }) => {
   const [info, setInfo] = useState(null)
 
   useEffect(() => {
-    setInfo(list) 
+    setInfo(list)
   }, [list])
 
   if (!info) return <Placeholder.Image />
   const { _id, name, books } = info
 
-  //const { thumbnail } = imageLinks || {}
-  const {thumbnail=null} = books[0] || {}
+  console.log({ name, books })
+  const { thumbnail = null } = books[0] || {}
   return (
     <Link to={`/lists/${_id}`} className={thumbnail ? 'item' : 'item   placeholder'}>
       {thumbnail
         ?
         <> <Header as='h3'>{name}</Header>
-        <Image src={thumbnail} inline onClick={() => bookLists.recent.updateById(list._id, list)} />
+          <Image src={thumbnail} inline onClick={() => bookLists.recent.updateById(list._id, list)} />
         </>
         : <>
           <Header as='h3'>{name}</Header>

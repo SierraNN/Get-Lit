@@ -171,3 +171,16 @@ export const ADD_BOOK_TO_LIST = gql`
     }
   }
 `
+export const ADD_COMMENT_TO_LIST = gql`
+  mutation Mutation($listId: ID, $comment: String) {
+    addCommentToList(listId: $listId, comment: $comment) {
+      _id
+      text
+      author {
+        _id
+        username
+      }
+      createdAt
+    }
+  }
+`

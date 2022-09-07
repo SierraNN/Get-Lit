@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
 const TagSchema = require('../Tag')
 const CommentSchema = require('../Comment')
+const paginatedSearch = require('../../utils/paginatedSearch')
 
 const ID = Schema.Types.ObjectId
 const BookListSchema = new Schema({
@@ -27,35 +29,9 @@ const BookListSchema = new Schema({
   // schema options
 })
 
-BookListSchema.statics.search = async function ({ term, type = 'name', pageSize = 20, pageNum = 1 }) {
-  let query = {}
-  if (term) query[type] = term
+BookListSchema.plugin(mongoosePaginate)
 
-  let limit = pageSize, skip = (pageNum - 1) * pageSize
-
-  for (let attr in query) {
-    if (['name', 'description'].includes(attr)) {
-      let regex = query[attr].trim().split(' ').map((n) => `(?=.*(?:\\b${n}|${n}\\b))`).join('')
-      query[attr] = { $regex: regex, $options: 'i' }
-    } else if (['tags', 'comments'].includes(attr)) {
-      let regex = query[attr].trim().split(' ').map((n) => `(?=.*(?:\\b${n}|${n}\\b))`).join('')
-      query[attr] = { $elemMatch: { text: { $regex: regex, $options: 'i' } } }
-    }
-  }
-
-  // console.log(query)
-  // const found = await this.aggregate([
-  //   { $match: query },
-  //   { $count: "totalItems" },
-
-  // ])
-
-  const found = await this.find(query)
-    // .skip(skip).limit(limit)
-    .populate('books')
-    .populate('creator')
-  return found
-}
+BookListSchema.statics.search = paginatedSearch({ populate: ['books', 'creator'] })
 
 const BookList = model('BookList', BookListSchema)
 

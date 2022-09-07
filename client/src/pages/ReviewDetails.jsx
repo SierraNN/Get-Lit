@@ -1,6 +1,6 @@
 const ReviewDetails = (props) => {
   return (
-    <div>
+    <div  className="ui container1">
       ReviewDetails
     </div>
   )
