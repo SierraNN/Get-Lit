@@ -6,34 +6,39 @@ const ProfileImage = () => {
 
     const [sprite, setSprite] = useState(0) 
     const imgList = [
-    "/assets/Sprites/DarkElf/Character2_face2.png",
-    "/assets/Sprites/DarkElf/Character3_face2.png",
-    "/assets/Sprites/DarkElf/Character4_face2.png",
-    "/assets/Sprites/DarkElf/Character5_face2.png",
-    "/assets/Sprites/DarkElf/Character6_face2.png",
-    "/assets/Sprites/DarkElf/Character7_face2.png",
-    "/assets/Sprites/DarkElf/Character8_face2.png",
-    "/assets/Sprites/Demon/Character1_face2.png",
-    "/assets/Sprites/Demon/Character2_face2.png",
-    "/assets/Sprites/Demon/Character3_face2.png",
-    "/assets/Sprites/Demon/Character4_face2.png",
-    "/assets/Sprites/Demon/Character5_face2.png",
-    "/assets/Sprites/Demon/Character6_face2.png",
-    "/assets/Sprites/Demon/Character7_face2.png",
-    "/assets/Sprites/Demon/Character8_face2.png",
-    "/assets/Sprites/Halfling/Character1_face2.png",
-    "/assets/Sprites/Halfling/Character2_face2.png",
-    "/assets/Sprites/Halfling/Character3_face2.png",
-    "/assets/Sprites/Halfling/Character4_face2.png",
-    "/assets/Sprites/Halfling/Character5_face2.png",
-    "/assets/Sprites/Halfling/Character6_face2.png",
-    "/assets/Sprites/Halfling/Character7_face2.png",
-    "/assets/Sprites/Halfling/Character8_face2.png"
+        "/assets/bg/a.jpg",
+        "/assets/bg/b.png",
+        "/assets/bg/e.png",
+        "/assets/bg/f.png",
+        "/assets/bg/g.png",
+    // "/assets/Sprites/DarkElf/Character2_face2.png",
+    // "/assets/Sprites/DarkElf/Character3_face2.png",
+    // "/assets/Sprites/DarkElf/Character4_face2.png",
+    // "/assets/Sprites/DarkElf/Character5_face2.png",
+    // "/assets/Sprites/DarkElf/Character6_face2.png",
+    // "/assets/Sprites/DarkElf/Character7_face2.png",
+    // "/assets/Sprites/DarkElf/Character8_face2.png",
+    // "/assets/Sprites/Demon/Character1_face2.png",
+    // "/assets/Sprites/Demon/Character2_face2.png",
+    // "/assets/Sprites/Demon/Character3_face2.png",
+    // "/assets/Sprites/Demon/Character4_face2.png",
+    // "/assets/Sprites/Demon/Character5_face2.png",
+    // "/assets/Sprites/Demon/Character6_face2.png",
+    // "/assets/Sprites/Demon/Character7_face2.png",
+    // "/assets/Sprites/Demon/Character8_face2.png",
+    // "/assets/Sprites/Halfling/Character1_face2.png",
+    // "/assets/Sprites/Halfling/Character2_face2.png",
+    // "/assets/Sprites/Halfling/Character3_face2.png",
+    // "/assets/Sprites/Halfling/Character4_face2.png",
+    // "/assets/Sprites/Halfling/Character5_face2.png",
+    // "/assets/Sprites/Halfling/Character6_face2.png",
+    // "/assets/Sprites/Halfling/Character7_face2.png",
+    // "/assets/Sprites/Halfling/Character8_face2.png"
 ]
 
     const onClickForward = () => {
-        if (sprite == 24){
-        setSprite(0)
+        if (sprite == 5){
+        setSprite(sprite-4)
         } else {
             setSprite(sprite + 1)
         }
