@@ -68,6 +68,7 @@ const typeDefs = gql`
     suggestedTags: [Tag]
     rating: Int
     comments: [Comment]
+    createdAt: String
   }
   input CreateReview {
     book: ID
@@ -180,8 +181,10 @@ const typeDefs = gql`
     addCommentToList(listId: ID, comment: String): [Comment]
     # reviews
     createReview(review: CreateReview): Review
+    addCommentToReview(reviewId: ID, comment: String): [Comment]
     # lists
     createClub(club: CreateClub): BookClub
+    addPostToClub(clubId: ID, post: String): [Comment]
   }
 `;
 

@@ -55,12 +55,13 @@ a.placeholder
 #LandingPage
   color: white
 
-.display-list.users
+.display-list
   .item
     background: rgba(255,255,255,0.2)
     border-radius: 5px
-    border: 1px solid white
+    border: 1px solid rgba(255,255,255,0.4)
     transition: transform 400ms
+    min-width: 120px
     &:hover
       transform: translateY(-3px)
   .image
@@ -95,4 +96,17 @@ a.placeholder
         transform: rotate(3deg) scale(1.1)
       &:nth-of-type(3), &:nth-of-type(4)
         transform: rotate(-3deg) scale(1.1)
-    
+
+.ui.label.creatorLabel
+  position: absolute
+  bottom: 0.5rem  
+  right: 0
+  display: flex
+  align-items: center
+  border: 1px solid rgb(200,200,200)
+  .ui.image.labelSprite
+    display: inline-block
+    background: rgb(200,200,200)
+    transform: translateX(-50%) scale(1.4)
+    margin: -1rem
+    height: 3em

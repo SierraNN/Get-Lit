@@ -59,7 +59,7 @@ const BookDetails = (props) => {
   }
   if (!book) return <Loading message="Getting Book" />
   const { volumeInfo: info } = book
-  // const info = book.volumeInfo || 
+
   return (
     <Container className="ui container1">
       <Header as='h1' content={info.title} />
