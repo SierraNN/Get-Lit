@@ -10,7 +10,8 @@
   + *
     padding-top: 1rem
     padding-left: calc(120px + 1rem)
-    .ui.header
+    padding-right: 1rem
+    .ui.header, .sub.header 
       color: white
       text-shadow: 1px 1px 3px black
 
@@ -36,6 +37,7 @@
       transform: translateY(-3px)
 
 .ui.segment
+  background: rgba(255,255,255,0.8)
   &.flex
     display: flex
     flex-flow: row wrap
@@ -65,12 +67,17 @@ a.placeholder
     &:hover
       transform: translateY(-3px)
   .image
-    max-width: 150px
-    min-width: 150px 
-    max-height: 200px
-    min-height: 200px
-    &.books
-    
+    max-width: 120px
+  &.books
+    .item
+      background: transparent
+      border-width: 0px
+    .image
+      max-width: 150px
+      min-width: 150px 
+      max-height: 200px
+      min-height: 200px
+
 
 .ui.placeholder.profileImage
   height: 300px

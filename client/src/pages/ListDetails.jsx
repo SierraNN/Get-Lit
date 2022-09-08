@@ -44,7 +44,7 @@ const ListDetails = (props) => {
   }
 
   return (
-    <Container className="ui container1 background3">
+    <div className=" background3">
       <Header as='h1' content={name} subheader={creator.username} />
       <Segment>
         <Header>Description</Header>
@@ -70,7 +70,7 @@ const ListDetails = (props) => {
           ]} />
         </FormProvider>
       </Segment>
-    </Container>
+    </div>
   )
 }
 
