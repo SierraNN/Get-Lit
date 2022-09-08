@@ -21,19 +21,34 @@ const Login = (props) => {
   }
   return (
     <div className='background'>
-    <Container className= "ui container1">
-      <Header>Login</Header>
-      {message && <Message content={message} />}
-      <FormProvider>
-        <Form submit={onSubmit} respond={onResponse} fields={[
-          { name: 'username', required: true },
-          { name: 'password', type: 'password', required: true }
-        ]} buttons={[
-          { content: 'Register', onClick: () => navigate('/register') }
-        ]} />
-      </FormProvider>
-    </Container>
-    </div>
+      <Container className= "ui container1">
+      <div class="ui grid">
+        <div class="six wide column left floated">
+        <img className='ui image' src='/assets/11.png' />
+        </div>
+        <div class="ten wide column right floated">
+        <br />
+
+        <br />
+        
+          <Header>Login</Header>
+          {message && <Message content={message} />}
+            <FormProvider>
+              <Form submit={onSubmit} respond={onResponse} fields={[
+                { name: 'username', required: true },
+                { name: 'password', type: 'password', required: true }
+              ]} buttons={[
+                { content: 'Register', onClick: () => navigate('/register') }
+              ]} />
+              </FormProvider>
+              </div>
+              </div>
+      </Container>
+
+      </div>
+      
+
+
   )
 }
 
