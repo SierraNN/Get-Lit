@@ -120,7 +120,6 @@ const Profile = () => {
       <BookImageList headerText="Favorite Books" list={books} />
     </Container>
   )
-  console.log({ lists })
   const BookListContainer = () => (
     //edit this so it renders dynamically
     <Container>
@@ -130,7 +129,7 @@ const Profile = () => {
 
   const Title = () => (
     <Segment>
-      <ProfileImage spriteChoice={userInfo.spriteChoice} editable={isOwnProfile} />
+      <ProfileImage spriteChoice={userInfo.spriteChoice} isOwnProfile={isOwnProfile} />
     </Segment>
   )
 
@@ -158,8 +157,7 @@ const Profile = () => {
   }
   return (
     <div className="background1">
-      {/* <div className="right floated sixteen wide column body"> */}
-      <Segment>
+      <Segment className='profile'>
         <Header as='h1'>
           {username} {!isOwnProfile && <Button color={isFollowing ? "red" : "green"} style={{ marginLeft: '2rem' }} onClick={handleFollowingClick}>
             <i className="icon user"></i>
@@ -175,7 +173,6 @@ const Profile = () => {
         <Segment color='brown'><BookListContainer /></Segment>
         <Segment color='brown'><FavoritesContainer /></Segment>
       </Segment>
-      {/* </div> */}
     </div>
   )
 }

@@ -1182,15 +1182,15 @@ body {
   padding: 0;
 }
 
-.ui.container1{
+.ui.container1 {
   color: black;
-  margin: 3%;
-  border: 10px;
-  background-color:rgba(38, 47, 85, 0.8);
+  background-color: rgba(38, 47, 85, 0.8);
   margin: 5%;
   font-weight: bold;
+  padding: 20px;
+  border-radius: 25px;
+  padding: 20px;
 }
-
 
 @font-face {
   font-family: "PrStart";

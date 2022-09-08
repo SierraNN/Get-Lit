@@ -5,7 +5,7 @@ import { useProfile } from "../context/ProfileContext";
 import { useMutation } from "@apollo/client";
 import { UPDATE_SPRITE } from "../utils/mutations";
 
-const ProfileImage = ({ user, spriteChoice = 0, editable = false }) => {
+const ProfileImage = ({ user, spriteChoice = 0, isOwnProfile = false }) => {
     const [profile, updateProfile] = useProfile()
     const [loading, setLoading] = useState(user ? false : true)
     const [sprite, setSprite] = useState()
@@ -71,7 +71,7 @@ const ProfileImage = ({ user, spriteChoice = 0, editable = false }) => {
                 )}
 
             </div>
-            {editable && <Button className='spriteBtn' onClick={() => onClickForward()}>
+            {isOwnProfile && <Button className='spriteBtn' onClick={() => onClickForward()}>
                 Next
             </Button>}
         </Container>
