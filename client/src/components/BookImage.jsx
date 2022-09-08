@@ -13,7 +13,9 @@ const BookImage = ({ book }) => {
     else if (book.volumeInfo) setInfo(book)
   }, [book])
 
-  if (!info) return <Placeholder.Image />
+  if (!info) {
+    return <Placeholder.Image />
+  }
   const { id, volumeInfo: { title, authors, imageLinks } } = info
 
   const { thumbnail } = imageLinks || {}

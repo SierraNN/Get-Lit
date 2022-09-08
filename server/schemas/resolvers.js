@@ -48,6 +48,13 @@ const resolvers = {
       const book = await Book.findById(id)
       return book
     },
+    getClub: async (parent, { id }) => {
+      const club = await BookClub.findById(id).populate(['creator', 'members', 'posts.author'])
+      if (!club) throw new Error('Club not found')
+
+      return club
+
+    },
     getList: async (parent, { id }) => {
       const list = await BookList.findById(id).populate('creator').populate('books').populate('comments.author')
       if (!list) throw new Error('List not found')
@@ -237,7 +244,8 @@ const resolvers = {
 
       if (!list) throw new AuthenticationError("List not found")
       return list.comments
-    },    /** CLUBS */
+    },
+    /** CLUBS */
     createClub: async (parent, { club }, { user }) => {
       if (!user) throw new AuthenticationError('Not logged in')
       const clubInfo = {
@@ -254,6 +262,14 @@ const resolvers = {
         await created.populate({ path: 'creator', populate: 'clubs' })
       }
       return created
+    },
+    addPostToClub: async (parent, { clubId, post }, { user }) => {
+      const club = await BookClub.findByIdAndUpdate(clubId, {
+        $addToSet: { posts: { text: post, author: ID(user._id) } }
+      }, { new: true }).populate({ path: "posts", populate: "author" })
+
+      if (!club) throw new AuthenticationError("List not found")
+      return club.posts
     },
   }
 }

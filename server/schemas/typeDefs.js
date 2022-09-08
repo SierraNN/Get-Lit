@@ -182,7 +182,7 @@ const typeDefs = gql`
     # reviews
     createReview(review: CreateReview): Review
     addCommentToReview(reviewId: ID, comment: String): [Comment]
-    # lists
+    # clubs
     createClub(club: CreateClub): BookClub
     addPostToClub(clubId: ID, post: String): [Comment]
   }
