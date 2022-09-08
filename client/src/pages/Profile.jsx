@@ -13,6 +13,7 @@ import BookImageList from '../components/BookImageList';
 import ListOfLists from '../components/lists/ListOfLists';
 import { ADD_FOLLOWING, REMOVE_FOLLOWING, UPDATE_BIO, UPDATE_USER_TAGS } from '../utils/mutations';
 import UserList from '../components/lists/UserList';
+import { useAuth } from '../context/AuthContext';
 
 const Genres = [
   { key: 'fantasy', text: 'Fantasy', value: 'fantasy' },
@@ -36,6 +37,7 @@ const Genres = [
 ]
 
 const Profile = () => {
+  const [auth] = useAuth()
   const [profile, updateProfile] = useProfile()
   const [isOwnProfile, setIsOwnProfile] = useState(false)
   const [userInfo, setUserInfo] = useState({})
@@ -159,7 +161,7 @@ const Profile = () => {
     <div className="background1">
       <Segment className='profile'>
         <Header as='h1'>
-          {username} {!isOwnProfile && <Button color={isFollowing ? "red" : "green"} style={{ marginLeft: '2rem' }} onClick={handleFollowingClick}>
+          {username} {auth && !isOwnProfile && <Button color={isFollowing ? "red" : "green"} style={{ marginLeft: '2rem' }} onClick={handleFollowingClick}>
             <i className="icon user"></i>
             {isFollowing ? 'Unfollow' : 'Follow'}
           </Button>
