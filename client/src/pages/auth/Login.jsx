@@ -24,7 +24,7 @@ const Login = (props) => {
       <Container className= "ui container1">
       <div class="ui grid">
         <div class="six wide column left floated">
-        <img className='ui image' src='/assets/11.png' />
+        <img className='ui image' src='/assets/12.png' />
         </div>
         <div class="ten wide column right floated">
         <br />
