@@ -29,7 +29,7 @@ const BookSearch = (props) => {
     }
   }
   return (
-    <Container  className="ui container1">
+    <Container className="ui container1 background3">
       <FormProvider>
         <Header as='h1'>Search</Header>
         <Form submit={onSubmit} respond={onResponse} fields={[

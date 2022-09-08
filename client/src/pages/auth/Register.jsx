@@ -24,20 +24,28 @@ const Register = (props) => {
 
   return (
     <div className='background'>
-    <Container className="ui container1">
-      <Header>Register</Header>
-      <FormProvider>
-        <Form submit={onSubmit} respond={onResponse} fields={[
-          { name: 'username', required: true },
-          { name: 'email', required: true },
-          {
-            name: '', widths: 'equal', fields: [
-              { name: 'password', type: 'password', required: true },
-              { name: 'password_confirmation', type: 'password', required: true }
-            ]
-          }
-        ]} />
-      </FormProvider>
+      <Container className= "ui container1">
+      <div class="ui grid">
+        <div class="six wide column left floated">
+          <img className='ui image' src='/assets/11.png' />
+        </div>
+        <div class="ten wide column left floated">
+          <br />
+          <Header>Register</Header>
+          <FormProvider>
+            <Form submit={onSubmit} respond={onResponse} fields={[
+              { name: 'username', required: true },
+              { name: 'email', required: true },
+              {
+                name: '', widths: 'equal', fields: [
+                  { name: 'password', type: 'password', required: true },
+                  { name: 'password_confirmation', type: 'password', required: true }
+                ]
+              }
+            ]} />
+          </FormProvider>
+        </div>
+      </div>
     </Container>
     </div>
   )

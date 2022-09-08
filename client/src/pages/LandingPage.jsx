@@ -18,8 +18,8 @@ function LandingPage() {
         <h1 className="title"><T>page_title</T></h1>
         <p className="text"><T>page_description</T></p>
         <p>
-          <button className="btn" onClick={() => setLanguage("en")} style={{background: getLanguage() === "en" ? "#008000" : "#a7a7a7"}}>English</button>
-          <button className="btn" onClick={() => setLanguage("es")} style={{background: getLanguage() === "es" ? "#008000" : "#a7a7a7"}}>Spanish</button>
+          <button className="btn" onClick={() => setLanguage("en")} style={{background: getLanguage() === "en" ? "#053574" : "#a7a7a7"}}>English</button>
+          <button className="btn" onClick={() => setLanguage("es")} style={{background: getLanguage() === "es" ? "#053574" : "#a7a7a7"}}>Spanish</button>
         </p>
       </div>
       {/* content in each class has a T surrounding it to say its from tolgee */}

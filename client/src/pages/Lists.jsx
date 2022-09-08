@@ -69,11 +69,11 @@ const Lists = (props) => {
   const nextPage = async () => setPageNum(Math.min(pageNum + 1, totalPages))
   const prevPage = async () => setPageNum(pageNum - 1 || 1)
 
-  if (loading) return <div className="background5"><Loading /></div>
+  if (loading) return <div className="background3"><Loading /></div>
 
   return (
-    <div className="background5">
-      <Container>
+    <div className="background3">
+      <Container className="ui container1">
         <Header as='h1'>Book Lists!</Header>
         {display === 'search' && (
           <FormProvider>

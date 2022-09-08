@@ -1188,12 +1188,14 @@ body {
 }
 
 .ui.container1{
-  background-color: white;
   color: black;
   margin: 3%;
   border: 10px;
-
+  background-color:rgba(38, 47, 85, 0.8);
+  margin: 5%;
+  font-weight: bold;
 }
+
 
 @font-face {
   font-family: "PrStart";
@@ -1210,7 +1212,7 @@ body {
  * TODO: Make Background Dynamic
  */
 .background {
-  background: url("../public/assets/bg/1.png");
+  background: url("https://images2.alphacoders.com/705/705837.png");
   position: fixed;
   background-size: cover;
   background-repeat: no-repeat;
@@ -1222,30 +1224,6 @@ body {
 }
 
 .background2{
-  background: url("../public/assets/bg/1.png");
-  position: fixed;
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  overflow: auto;
-}
-
-.background3{
-  background: url("../public/assets/bg/1.png");
-  position: fixed;
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  overflow: auto;
-}
-
-.background4{
   background: url("../public/assets/bg/2.png");
   position: fixed;
   background-size: cover;
@@ -1257,7 +1235,7 @@ body {
   overflow: auto;
 }
 
-.background5{
+.background3{
   background: url("../public/assets/bg/3.png");
   position: fixed;
   background-size: cover;
@@ -1267,21 +1245,8 @@ body {
   top: 0;
   left: 0;
   overflow: auto;
-
 }
 
-.background6{
-  background: url("../public/assets/bg/3.png");
-  position: fixed;
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  overflow: auto;
-
-}
 
 /* Navigation and misc */
 #main-content {
@@ -1325,7 +1290,7 @@ body {
   left: 0px;
   width: 200px;
   height: 100%;
-  background: url("https://t4.ftcdn.net/jpg/02/15/41/59/360_F_215415983_iQF8mT8PiTOLz1uolJuHYlem0WLZxlxW.jpg");
+  background: url("https://i.pinimg.com/originals/49/49/40/494940db287a82ef6047819d94098ff7.jpg");
   position: fixed;
   background-size:auto;
   overflow: hidden;
