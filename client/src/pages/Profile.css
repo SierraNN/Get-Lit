@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500&display=swap');
 
 .hidden{
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .imageBorder{
@@ -21,7 +21,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  background: url('https://images7.alphacoders.com/120/1205979.png');
+  background: url('https://images.alphacoders.com/937/937990.jpg');
   position: fixed;
   background-size: cover;
   background-repeat: no-repeat;
@@ -29,12 +29,11 @@
 }
 
 .body{
-  
-    height: auto;
-    width: 75%;
-    display: flex;
-    justify-content: center;
-    margin-left: 200px;
+  height: auto;
+  width: 75%;
+  display: flex;
+  justify-content: center;
+  margin-left: 200px;
 }
 
 /* Navigation and misc */

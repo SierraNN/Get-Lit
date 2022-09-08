@@ -72,8 +72,8 @@ const Clubs = (props) => {
   if (loading) return <div className="background5"><Loading /></div>
 
   return (
-    <div className="background5">
-      <Container>
+    <div className="background3">
+      <Container className="ui container1">
         <Header as='h1'>Book Clubs!</Header>
         {display === 'search' && (
           <FormProvider>

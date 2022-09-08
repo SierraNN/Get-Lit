@@ -24,13 +24,11 @@ const Login = (props) => {
       <Container className= "ui container1">
       <div class="ui grid">
         <div class="six wide column left floated">
-        <img className='ui image' src='/assets/11.png' />
+        <img className='ui image' src='/assets/12.png' />
         </div>
         <div class="ten wide column right floated">
         <br />
-
         <br />
-        
           <Header>Login</Header>
           {message && <Message content={message} />}
             <FormProvider>
@@ -41,15 +39,11 @@ const Login = (props) => {
                 { content: 'Register', onClick: () => navigate('/register') }
               ]} />
               </FormProvider>
-              </div>
-              </div>
-      </Container>
-
       </div>
-      
-
-
-  )
+    </div>
+      </Container>
+      </div>
+    )
 }
 
 export default Login
