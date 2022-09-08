@@ -23,6 +23,8 @@ const ProfileImage = ({ user, spriteChoice = 0, editable = false }) => {
         "/assets/bg/e.png",
         "/assets/bg/f.png",
         "/assets/bg/g.png",
+        "/assets/Sprites/c.png",
+        "/assets/Sprites/d.png",
         // "/assets/Sprites/DarkElf/Character2_face2.png",
         // "/assets/Sprites/DarkElf/Character3_face2.png",
         // "/assets/Sprites/DarkElf/Character4_face2.png",
@@ -50,7 +52,7 @@ const ProfileImage = ({ user, spriteChoice = 0, editable = false }) => {
 
     const [updateSprite] = useMutation(UPDATE_SPRITE)
     const onClickForward = async () => {
-        let nextSprite = sprite === 4 ? 0 : sprite + 1
+        let nextSprite = sprite === 6 ? 0 : sprite + 1
         setSprite(nextSprite)
         const { data } = await updateSprite({ variables: { spriteChoice: nextSprite } })
         if (data?.updateSprite) updateProfile('SET_PROFILE', { spriteChoice: nextSprite })
