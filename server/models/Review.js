@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose')
 const CommentSchema = require('./Comment')
-const TagSchema = require('./Tag')
+const mongoosePaginate = require('mongoose-paginate-v2')
+const paginatedSearch = require('../utils/paginatedSearch')
+
 
 // const { CommentableSchema, CommentableModel } = require("./custom/Commentable")
 
@@ -27,10 +29,20 @@ const ReviewSchema = new Schema({
     ref: 'Book',
   },
   rating: Number,
-  comments: [CommentSchema]
+  comments: [CommentSchema],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    get(value) {
+      return value ? value.toLocaleString() : null
+    }
+  }
 }, {
   // schema options
 })
+
+ReviewSchema.plugin(mongoosePaginate)
+ReviewSchema.statics.search = paginatedSearch({ populate: ['book', 'creator', 'comments.author'] })
 
 const Review = new model('Review', ReviewSchema)
 

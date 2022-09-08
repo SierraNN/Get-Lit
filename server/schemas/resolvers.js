@@ -55,7 +55,7 @@ const resolvers = {
       return list
     },
     getReview: async (parent, { id }) => {
-      const review = await Review.findById(id).populate('creator')
+      const review = await Review.findById(id).populate(['book', 'comments.author', 'creator'])
       if (!review) throw new Error('List not found')
       return review
     },
@@ -75,6 +75,10 @@ const resolvers = {
     },
     getClubs: async (parent, { params = {} }) => {
       const results = await BookClub.search(params)
+      return results
+    },
+    getReviews: async (parent, { params = {} }) => {
+      const results = await Review.search(params)
       return results
     }
   },
@@ -218,7 +222,7 @@ const resolvers = {
         ...review,
         book: ID(review.book),
         creator: ID(user._id)
-      })
+      }).then(c => c.populate(['book', 'creator', 'comments.author']))
       if (created) {
         await User.findByIdAndUpdate(user._id, {
           $addToSet: { reviews: ID(created._id) }
@@ -226,7 +230,14 @@ const resolvers = {
       }
       return created
     },
-    /** CLUBS */
+    addCommentToReview: async (parent, { reviewId, comment }, { user }) => {
+      const list = await Review.findByIdAndUpdate(reviewId, {
+        $addToSet: { comments: { text: comment, author: ID(user._id) } }
+      }, { new: true }).populate({ path: "comments", populate: "author" })
+
+      if (!list) throw new AuthenticationError("List not found")
+      return list.comments
+    },    /** CLUBS */
     createClub: async (parent, { club }, { user }) => {
       if (!user) throw new AuthenticationError('Not logged in')
       const clubInfo = {

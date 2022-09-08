@@ -21,7 +21,6 @@ const UserImage = ({ user }) => {
     if (user) setThumbnail(imgList[user.spriteChoice])
   }, [user])
 
-  console.log(thumbnail)
   if (!info) return <Placeholder className='item'><Placeholder.Image /></Placeholder>
   const { _id, username, spriteChoice = 0 } = info
   return (
