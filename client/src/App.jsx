@@ -28,9 +28,11 @@ import ReviewDetails from './pages/ReviewDetails';
 import CreateList from './components/forms/CreateList';
 import ClubDetails from './pages/ClubDetails';
 import Clubs from './pages/Clubs';
+import Users from './pages/Users';
 import CreateReview from './components/forms/CreateReview';
 import CreateClub from './components/forms/CreateClub';
 import LandingPage from './pages/LandingPage';
+import UserDetails from './pages/UserDetails';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -79,6 +81,10 @@ function App() {
               <Route path="/clubs" element={<Outlet />}>
                 <Route index element={<Clubs />} />
                 <Route path=":clubId" element={<ClubDetails />} />
+              </Route>
+              <Route path="/users" element={<Outlet />}>
+                <Route index element={<Users />} />
+                <Route path=":userId" element={<Profile />} />
               </Route>
               <Route path="/" element={<GuestOnly />}>
                 {/** Redirected if already logged in  */}

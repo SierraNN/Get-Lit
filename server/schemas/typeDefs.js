@@ -7,12 +7,14 @@ const typeDefs = gql`
     _id: String
     username: String
     email: String
-    friends: [User]
+    bio: String
+    following: [User]
     books: [Book]
     lists: [BookList]
     reviews: [Review]
     clubs: [BookClub]
     tags: [Tag]
+    spriteChoice: Int
   }
   type Auth {
     token: String
@@ -56,6 +58,7 @@ const typeDefs = gql`
     link: String
     free: Boolean
   }
+
   type Review {
     _id: ID
     book: Book
@@ -73,6 +76,7 @@ const typeDefs = gql`
     suggestedTags: [String]
     rating: Int
   }
+
   type BookList {
     _id: ID
     creator: User
@@ -88,6 +92,7 @@ const typeDefs = gql`
     tags: [String]
     book: BookInfo
   }
+
   type BookClub {
     _id: ID
     creator: User
@@ -104,7 +109,7 @@ const typeDefs = gql`
     description: String
     tags: [String]
   }
-  
+
   input SearchParams {
     term: String
     type: String
@@ -124,15 +129,15 @@ const typeDefs = gql`
     totalPages: Int
     page: Int
   }
-  type ReviewResults {
-    totalDocs: Int
-    docs: [Review]
-    totalPages: Int
-    page: Int
-  }
   type UserResults {
     totalDocs: Int
     docs: [User]
+    totalPages: Int
+    page: Int
+  }
+  type ReviewResults {
+    totalDocs: Int
+    docs: [Review]
     totalPages: Int
     page: Int
   }
@@ -158,14 +163,21 @@ const typeDefs = gql`
   type Mutation {
     # auth
     addUser(username: String!, email: String!, password: String!): Auth
+    updateUserTags(tags: [String]): [Tag]
+    updateBio(bio: String): String
+    updateSprite(spriteChoice: Int): Int
     login(username: String!, password: String!): Auth
+    fetchUser(userId: ID): User
+    # following
+    addFollowing(followingId: ID): [User]
+    removeFollowing(followingId: ID): [User]
     # books
     saveBook(book: BookInfo): Book
     removeBook(bookId: ID): Boolean
     # lists
     createList(list: CreateList): BookList
-    addBookToList(listId: ID, book:BookInfo): BookList
-    addCommentToList(listId: ID, comment:String): [Comment]
+    addBookToList(listId: ID, book: BookInfo): BookList
+    addCommentToList(listId: ID, comment: String): [Comment]
     # reviews
     createReview(review: CreateReview): Review
     # lists

@@ -18,9 +18,11 @@ export const MY_PROFILE = gql`
   query Query {
     myProfile {
       _id
+      bio
       username
       email
-      friends {
+      spriteChoice
+      following {
         _id
         username
       }
@@ -151,37 +153,195 @@ export const GET_LISTS = gql`
     }
   }
 `;
-
-export const GET_CLUBS = gql`
-query Query($params: SearchParams) {
-  getClubs(params: $params) {
-    totalDocs
-    docs {
+export const GET_USER = gql`
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
       _id
-      creator {
+      username
+      spriteChoice
+      bio
+      following {
         _id
         username
       }
-      name
-      members {
+      books {
         _id
-        username
+        googleId
+        title
+        authors
+        thumbnail
+        description
       }
-      description
+      lists {
+        _id
+        name
+        description
+        books {
+          _id
+          googleId
+          title
+          thumbnail
+        }
+        tags {
+          _id
+          text
+        }
+        comments {
+          _id
+          text
+          author {
+            _id
+            username
+            email
+            following {
+              _id
+              username
+              email
+              spriteChoice
+            }
+            books {
+              _id
+              googleId
+              title
+              authors
+              thumbnail
+              description
+              categories
+              ebooks {
+                link
+                free
+              }
+            }
+            lists {
+              _id
+              creator {
+                _id
+                username
+                email
+                spriteChoice
+              }
+              name
+              description
+              comments {
+                _id
+                text
+                createdAt
+              }
+            }
+            reviews {
+              _id
+              book {
+                _id
+                googleId
+                title
+                authors
+                thumbnail
+                description
+                categories
+              }
+              reviewText
+              suggestedBooks {
+                _id
+                googleId
+                title
+                authors
+                thumbnail
+                description
+                categories
+              }
+              suggestedTags {
+                _id
+                text
+              }
+              rating
+            }
+            clubs {
+              _id
+              members {
+                _id
+                username
+                email
+                spriteChoice
+              }
+              name
+              description
+              posts {
+                _id
+                text
+                createdAt
+              }
+            }
+            tags {
+              _id
+              text
+            }
+            spriteChoice
+          }
+          createdAt
+          replies {
+            _id
+            text
+            createdAt
+          }
+        }
+      }
       tags {
         _id
         text
       }
-      posts {
+    }
+  }
+`;
+
+export const GET_USERS = gql`
+  query GetUsers($params: SearchParams) {
+    getUsers(params: $params) {
+      totalDocs
+      docs {
         _id
-        text
-        author {
+        username
+        following {
           _id
           username
         }
-        createdAt
+        spriteChoice
+      }
+      totalPages
+      page
+    }
+  }
+`;
+
+export const GET_CLUBS = gql`
+  query Query($params: SearchParams) {
+    getClubs(params: $params) {
+      totalDocs
+      docs {
+        _id
+        creator {
+          _id
+          username
+        }
+        name
+        members {
+          _id
+          username
+        }
+        description
+        tags {
+          _id
+          text
+        }
+        posts {
+          _id
+          text
+          author {
+            _id
+            username
+          }
+          createdAt
+        }
       }
     }
   }
-}
-`
+`;
