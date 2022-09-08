@@ -218,3 +218,16 @@ export const ADD_COMMENT_TO_LIST = gql`
     }
   }
 `
+export const ADD_COMMENT_TO_REVIEW = gql`
+  mutation Mutation($reviewId: ID, $comment: String) {
+    addCommentToReview(reviewId: $reviewId, comment: $comment) {
+      _id
+      text
+      author {
+        _id
+        username
+      }
+      createdAt
+    }
+  }
+`

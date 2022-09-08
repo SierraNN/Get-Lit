@@ -71,7 +71,7 @@ UserSchema.methods.isCorrectPassword = async function (password) {
 };
 
 UserSchema.statics.fullProfile = async function (userId) {
-  const user = await this.findById(userId).populate('following').populate('books').populate('lists').populate('clubs')
+  const user = await this.findById(userId).populate(['following', 'books', 'lists', 'reviews', 'clubs'])
   return user
 }
 

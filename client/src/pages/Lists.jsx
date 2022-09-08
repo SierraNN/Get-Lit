@@ -44,13 +44,11 @@ const Lists = (props) => {
       bookLists.results.set(docs)
       setPageNum(page)
       setTotalPages(totalPages)
-      console.log('data', data)
     }
   }, [data])
   useEffect(() => {
     const search = async () => {
       await refetch({ params: searchParams })
-      console.log('search', { searchParams })
       setFresh(true)
     }
     if (searchParams.term) search()

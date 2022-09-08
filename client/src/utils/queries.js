@@ -345,3 +345,72 @@ export const GET_CLUBS = gql`
     }
   }
 `;
+
+export const GET_REVIEW = gql`
+  query getReview($id: ID!) {
+    getReview(id: $id) {
+      _id
+      creator {
+        _id
+        username
+      }
+      rating
+      book {
+        _id
+        googleId
+        title
+        authors
+        thumbnail
+        description
+        categories
+        tags {
+          _id
+          text
+        }
+      }
+      comments {
+        _id
+        text
+        author {
+          _id
+          username
+        }
+        createdAt
+      }
+      createdAt
+    }
+  }
+`;
+
+export const GET_REVIEWS = gql`
+  query GetReviews($params: SearchParams) {
+    getReviews(params: $params) {
+      totalDocs
+      docs {
+        _id
+        rating
+        comments {
+          _id
+          author {
+            _id
+            username
+          }
+          createdAt
+          text
+        }
+        book {
+          _id
+          googleId
+          title
+          thumbnail
+        }
+        creator {
+          _id
+          username
+          spriteChoice
+        }
+        reviewText
+      }
+    }
+  }
+`;
