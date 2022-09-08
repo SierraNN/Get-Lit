@@ -21,7 +21,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  background: url('https://images2.alphacoders.com/705/705837.png');
+  background: url('https://images6.alphacoders.com/122/1224149.png');
   position: fixed;
   background-size: cover;
   background-repeat: no-repeat;
@@ -29,7 +29,6 @@
 }
 
 .body{
-  background-color:rgba(255, 255, 255, 0.5);
   height: auto;
   width: 75%;
   display: flex;

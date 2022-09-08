@@ -88,8 +88,8 @@ const Profile = () => {
   )
   return (
     <div className="background1">
-      <div className="right floated sixteen wide column body">          
-        <Segment >
+      <div className="right floated twelve wide column body">          
+        <Segment>
           <Title />
           <Divider clearing/>
           <GenresSelect />
