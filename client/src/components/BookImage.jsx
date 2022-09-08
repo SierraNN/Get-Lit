@@ -19,7 +19,7 @@ const BookImage = ({ book }) => {
   return (
     <Link to={`/books/${id}`} className={thumbnail ? 'item' : 'item   placeholder'}>
       {thumbnail
-        ? <Image className="ui image circular small" src={thumbnail} inline onClick={() => books.recent.updateById(book.id, book)} />
+        ? <Image className="ui image small" src={thumbnail} inline onClick={() => books.recent.updateById(book.id, book)} />
         : <>
           <Header as='h3'>{title}</Header>
           <Placeholder>

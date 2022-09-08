@@ -8,7 +8,7 @@ const ListOfLists = ({ headerText, list }) => {
   return (
     <>
       <Header>{headerText}</Header>
-      <List horizontal className="display-list">
+      <List horizontal className="display-list bookLists">
         {list && list.length ? list.map((item, i) => <ListImage key={i} list={item} />) : <ListItem content="No lists" />}
       </List>
     </>
