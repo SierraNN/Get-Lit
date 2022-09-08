@@ -1,10 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500);
 
-**{ background: url('../public/assets/BG_01.png');
-  position: fixed;
-  background-size:cover;
-  background-size:contain;
-}
 /* Sidebar */
 .entypo-note:before {
   content: "\266a";
