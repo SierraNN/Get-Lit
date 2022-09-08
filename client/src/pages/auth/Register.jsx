@@ -24,7 +24,13 @@ const Register = (props) => {
 
   return (
     <div className='background'>
-    <Container className="ui container1">
+      <Container className= "ui container1">
+      <div class="ui grid">
+        <div class="six wide column left floated">
+          <img className='ui image' src='/assets/11.png' />
+        </div>
+        <div class="ten wide column left floated">
+          <br />
       <Header>Register</Header>
       <FormProvider>
         <Form submit={onSubmit} respond={onResponse} fields={[
@@ -38,6 +44,8 @@ const Register = (props) => {
           }
         ]} />
       </FormProvider>
+      </div>
+      </div>
     </Container>
     </div>
   )
