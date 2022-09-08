@@ -1,14 +1,22 @@
 
-import { Button, Image, Container, Loader, Message } from "semantic-ui-react"
+import { Button, Image, Container, Loader, Message, Placeholder } from "semantic-ui-react"
 import React, { useEffect, useState } from "react";
 import { useProfile } from "../context/ProfileContext";
 import { useMutation } from "@apollo/client";
 import { UPDATE_SPRITE } from "../utils/mutations";
 
-const ProfileImage = ({ spriteChoice = 0, editable = false }) => {
+const ProfileImage = ({ user, spriteChoice = 0, editable = false }) => {
     const [profile, updateProfile] = useProfile()
+    const [loading, setLoading] = useState(user ? false : true)
+    const [sprite, setSprite] = useState()
 
-    const [sprite, setSprite] = useState(spriteChoice)
+    useEffect(() => {
+        if (!user && profile.spriteChoice !== undefined) {
+            setSprite(profile.spriteChoice)
+            setLoading(false)
+        }
+    }, [user, profile])
+
     const imgList = [
         "/assets/bg/a.jpg",
         "/assets/bg/b.png",
@@ -50,11 +58,18 @@ const ProfileImage = ({ spriteChoice = 0, editable = false }) => {
     return (
         <Container>
             <div>
-                <Image className=" profileImg circular medium ui image bordered centered"
-                    src={imgList[sprite]}
-                />
+                {!loading ? (
+                    <Image className=" profileImg circular medium ui image bordered centered"
+                        src={imgList[sprite]}
+                    />
+                ) : (
+                    <div className="ui placeholder profileImage">
+                        <div className="profileImg circular medium ui image bordered centered"></div>
+                    </div>
+                )}
+
             </div>
-            {editable && <Button className='2 left floated button' onClick={() => onClickForward()}>
+            {editable && <Button className='spriteBtn' onClick={() => onClickForward()}>
                 Next
             </Button>}
         </Container>

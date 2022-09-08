@@ -65,3 +65,34 @@ a.placeholder
       transform: translateY(-3px)
   .image
     max-width: 120px
+
+.ui.placeholder.profileImage
+  height: 300px
+  width: 300px
+  border-radius: 50%
+  border: 1px solid rgba(90,90,90,0.2)
+  margin: auto
+
+.ui.button.spriteBtn
+  position: absolute
+  bottom: 0
+
+.listThumbnails
+  max-width: 160px
+  display: flex
+  align-items: center
+  justify-items: center
+  flex-flow: row wrap
+  .image
+    transition: transform 400ms
+    &:nth-of-type(1), &:nth-of-type(2)
+      align-self: flex-end
+    &:nth-of-type(3), &:nth-of-type(4)
+      align-self: flex-start
+  &:hover
+    .image
+      &:nth-of-type(1), &:nth-of-type(2)
+        transform: rotate(3deg) scale(1.1)
+      &:nth-of-type(3), &:nth-of-type(4)
+        transform: rotate(-3deg) scale(1.1)
+    
