@@ -313,6 +313,38 @@ export const GET_USERS = gql`
   }
 `;
 
+export const GET_CLUB = gql`
+  query GetClub($id: ID!) {
+    getClub(id: $id) {
+      _id
+      creator {
+        _id
+        username
+        spriteChoice
+      }
+      members {
+        _id
+        username
+        spriteChoice
+      }
+      name
+      description
+      tags {
+        _id
+        text
+      }
+      posts {
+        _id
+        text
+        author {
+          _id
+          username
+        }
+        createdAt
+      }
+    }
+  }
+`;
 export const GET_CLUBS = gql`
   query Query($params: SearchParams) {
     getClubs(params: $params) {
