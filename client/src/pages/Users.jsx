@@ -73,7 +73,7 @@ const Lists = (props) => {
   if (loading) return <div className="background5"><Loading /></div>
 
   return (
-    <div className="background5">
+    <div className="background2">
       <Container>
         <Header as='h1'>Fellow Readers</Header>
         {display === 'search' && (

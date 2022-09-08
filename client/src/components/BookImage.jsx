@@ -8,6 +8,7 @@ const BookImage = ({ book }) => {
   const [info, setInfo] = useState(null)
 
   useEffect(() => {
+    // LOAD BOOK INFO IF NOT IN CACHE
     if (book.googleId) setInfo(books.recent.getById(book.googleId))
     else if (book.volumeInfo) setInfo(book)
   }, [book])
@@ -17,7 +18,7 @@ const BookImage = ({ book }) => {
 
   const { thumbnail } = imageLinks || {}
   return (
-    <Link to={`/books/${id}`} className={thumbnail ? 'item' : 'item   placeholder'}>
+    <Link to={`/books/${id}`} className={thumbnail ? 'item' : 'item placeholder'}>
       {thumbnail
         ? <Image className="ui image small" src={thumbnail} inline onClick={() => books.recent.updateById(book.id, book)} />
         : <>
