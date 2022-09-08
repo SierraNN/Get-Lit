@@ -11,8 +11,10 @@ export class Cache {
     return cache ? cache : this.defaultValue
   }
   set(value) {
-    if (typeof value !== 'string') value = JSON.stringify(value)
-    this.store.setItem(this.cacheName, value)
+    if (value !== undefined) {
+      if (typeof value !== 'string') value = JSON.stringify(value)
+      this.store.setItem(this.cacheName, value)
+    }
   }
   // Object cache functions
   getById(id) {
