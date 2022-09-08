@@ -31,20 +31,20 @@ const Register = (props) => {
         </div>
         <div class="ten wide column left floated">
           <br />
-      <Header>Register</Header>
-      <FormProvider>
-        <Form submit={onSubmit} respond={onResponse} fields={[
-          { name: 'username', required: true },
-          { name: 'email', required: true },
-          {
-            name: '', widths: 'equal', fields: [
-              { name: 'password', type: 'password', required: true },
-              { name: 'password_confirmation', type: 'password', required: true }
-            ]
-          }
-        ]} />
-      </FormProvider>
-      </div>
+          <Header>Register</Header>
+          <FormProvider>
+            <Form submit={onSubmit} respond={onResponse} fields={[
+              { name: 'username', required: true },
+              { name: 'email', required: true },
+              {
+                name: '', widths: 'equal', fields: [
+                  { name: 'password', type: 'password', required: true },
+                  { name: 'password_confirmation', type: 'password', required: true }
+                ]
+              }
+            ]} />
+          </FormProvider>
+        </div>
       </div>
     </Container>
     </div>
