@@ -44,28 +44,6 @@ const Profile = () => {
     //edit this so it renders dynamically
     <Container>
       <Header>Followers List</Header>
-      <div className="ui vertical list">
-        <div className="item">
-          <img className="ui mini circular image" src="" />
-          <div className="content">
-            <div className="ui sub header">Molly</div>
-          </div>
-        </div>
-        <br />
-        <div className="item">
-          <img className="ui mini circular image" src="" />
-          <div className="content">
-            <div className="ui sub header">Elyse</div>
-          </div>
-        </div>
-        <br />
-        <div className="item">
-          <img src="" className="ui mini circular image" />
-          <div className="content">
-            <div className="ui sub header">Eve</div>
-          </div>
-        </div>
-      </div>
     </Container>
   )
   const BioContainer = () => (
@@ -111,7 +89,7 @@ const Profile = () => {
   return (
     <div className="background1">
       <div className="right floated sixteen wide column body">          
-        <Segment>
+        <Segment >
           <Title />
           <Divider clearing/>
           <GenresSelect />

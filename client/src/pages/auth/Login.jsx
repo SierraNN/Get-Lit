@@ -28,9 +28,7 @@ const Login = (props) => {
         </div>
         <div class="ten wide column right floated">
         <br />
-
         <br />
-        
           <Header>Login</Header>
           {message && <Message content={message} />}
             <FormProvider>
@@ -41,15 +39,11 @@ const Login = (props) => {
                 { content: 'Register', onClick: () => navigate('/register') }
               ]} />
               </FormProvider>
-              </div>
-              </div>
-      </Container>
-
       </div>
-      
-
-
-  )
+    </div>
+      </Container>
+      </div>
+    )
 }
 
 export default Login

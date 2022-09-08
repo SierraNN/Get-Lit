@@ -37,11 +37,14 @@ const ProfileImage = () => {
 ]
 
     const onClickForward = () => {
-        if (sprite == 5){
-        setSprite(sprite-4)
-        } else {
+        if (sprite === 5){
+        setSprite(0)
+        } else (
+
             setSprite(sprite + 1)
-        }
+        ) 
+        console.log('catch')
+ 
     }
     return (
         <Container>
