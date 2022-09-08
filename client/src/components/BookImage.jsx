@@ -30,7 +30,8 @@ const BookImage = ({ book }) => {
 
   if (!info) {
     return <Placeholder.Image />
-  } else console.log('BOOKIMAGE', { info })
+  }
+
   const { id, volumeInfo: { title, authors, imageLinks } } = info
 
   const { thumbnail } = imageLinks || {}

@@ -74,7 +74,7 @@ const Lists = (props) => {
 
   return (
     <div className="background2">
-      <Container>
+      <Container className="container1">
         <Header as='h1'>Fellow Readers</Header>
         {display === 'search' && (
           <FormProvider>
