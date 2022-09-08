@@ -20,9 +20,10 @@
   }
   
   .hero .title{
-    color: green;
+    color: #053574;
     font-size: 3em;
     margin-bottom: .5em;
+    
   }
   
   .hero .text{
@@ -58,7 +59,7 @@
   }
   /* cards slide in late after book animation is finished */
   .choices-card{
-    background-color: rgba(114, 57, 16, 0.479);
+    background-color: rgba(90,90,90,.3);
     padding: 1em;
     border-radius: 5px;
     transform: translate(-100px, 100px);
@@ -94,7 +95,7 @@
     margin: 1em 0;
   }
   .choices-card .btn{
-    background:green;
+    background:#053574;
   }
 
   .card-image{
