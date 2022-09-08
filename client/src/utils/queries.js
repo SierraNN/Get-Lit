@@ -25,6 +25,7 @@ export const MY_PROFILE = gql`
       following {
         _id
         username
+        spriteChoice
       }
       books {
         _id
