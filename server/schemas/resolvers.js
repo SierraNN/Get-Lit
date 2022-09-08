@@ -60,6 +60,7 @@ const resolvers = {
       return review
     },
     getUser: async (parent, { id }) => {
+      if (id === 'null') throw new AuthenticationError('userId required')
       const found = await User.fullProfile(id)
       if (!found) throw new AuthenticationError('User not found')
       return found
@@ -108,18 +109,46 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    updateUserTags: async (parent, { tags }, { user }) => {
+      const updated = await User.findByIdAndUpdate(user._id, {
+        tags: tags.map(tag => ({ text: tag }))
+      }, { new: true })
+      if (!user) throw new AuthenticationError('Not logged in!')
+      return updated.tags
+    },
+    updateBio: async (parent, { bio }, { user }) => {
+      const updated = await User.findByIdAndUpdate(user._id, {
+        bio
+      }, { new: true })
+      if (!user) throw new AuthenticationError('Not logged in!')
+      return bio
+    },
+    updateSprite: async (parent, { spriteChoice }, { user }) => {
+      console.log({ spriteChoice })
+      const updated = await User.findByIdAndUpdate(user._id, {
+        spriteChoice
+      }, { new: true })
+      if (!user) throw new AuthenticationError('Not logged in!')
+      return spriteChoice
+    },
+    fetchUser: async (parent, { userId }) => {
+      const found = await User.fullProfile(userId)
+      if (!found) throw new AuthenticationError('User not found')
+      return found
+    },
     /** FOLLOWING */
     addFollowing: async (parent, { followingId }, { user }) => {
       const update = await User.findByIdAndUpdate(user._id, {
         $addToSet: { following: Types.ObjectId(followingId) }
-      }, { new: true })
-      return update
+      }, { new: true }).then(u => u.populate('following'))
+      return update.following
     },
     removeFollowing: async (parent, { followingId }, { user }) => {
+      console.log(followingId)
       const update = await User.findByIdAndUpdate(user._id, {
         $pull: { following: Types.ObjectId(followingId) }
-      }, { new: true })
-      return update
+      }, { new: true }).then(u => u.populate('following'))
+      return update.following
     },
     /** BOOKS */
     saveBook: async (parent, { book }, { user }) => {

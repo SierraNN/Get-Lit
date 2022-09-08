@@ -22,6 +22,8 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'SET_PROFILE':
       return { ...state, ...action.payload }
+    case 'UPDATE_TAGS':
+      return { ...state, tags: action.payload }
     case 'ADD_BOOK':
       const withBook = [...books, action.payload]
       bookCache.saved.set(withBook)
@@ -72,9 +74,9 @@ const ProfileProvider = ({ children }) => {
   useEffect(() => {
     if (!loading && data?.myProfile) {
       dispatch({ type: 'SET_PROFILE', payload: data.myProfile })
-      console.log({ profile: data.myProfile })
+      console.log({ profile })
     }
-  }, [loading, data])
+  }, [loading, data?.myProfile])
 
   return (
     <ProfileDispatchContext.Provider value={updateProfile} >

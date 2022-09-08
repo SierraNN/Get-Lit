@@ -23,6 +23,40 @@ export const ADD_USER = gql`
     }
   }
 `
+export const UPDATE_USER_TAGS = gql`
+  mutation UpdateUserTags($tags: [String]) {
+    updateUserTags(tags: $tags) {
+      _id
+      text
+    }
+  }
+`
+export const UPDATE_BIO = gql`
+  mutation UpdateBio($bio: String) {
+    updateBio(bio: $bio) 
+  }
+`
+export const UPDATE_SPRITE = gql`
+  mutation UpdateSprite($spriteChoice: Int) {
+    updateSprite(spriteChoice: $spriteChoice) 
+  }
+`
+export const ADD_FOLLOWING = gql`
+  mutation AddFollowing($followingId:ID) {
+    addFollowing(followingId: $followingId){
+      _id
+      username
+    }
+  }
+`
+export const REMOVE_FOLLOWING = gql`
+  mutation RemoveFollowing($followingId:ID) {
+    removeFollowing(followingId: $followingId){
+      _id
+      username
+    }
+  }
+`
 export const SAVE_BOOK = gql`
   mutation saveBook($book: BookInfo) {
     saveBook(book: $book) {

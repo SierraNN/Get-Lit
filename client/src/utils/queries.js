@@ -18,8 +18,10 @@ export const MY_PROFILE = gql`
   query Query {
     myProfile {
       _id
+      bio
       username
       email
+      spriteChoice
       following {
         _id
         username
@@ -157,6 +159,7 @@ export const GET_USER = gql`
       _id
       username
       spriteChoice
+      bio
       following {
         _id
         username
@@ -282,6 +285,10 @@ export const GET_USER = gql`
           }
         }
       }
+      tags {
+        _id
+        text
+      }
     }
   }
 `;
@@ -306,35 +313,35 @@ export const GET_USERS = gql`
 `;
 
 export const GET_CLUBS = gql`
-query Query($params: SearchParams) {
-  getClubs(params: $params) {
-    totalDocs
-    docs {
-      _id
-      creator {
+  query Query($params: SearchParams) {
+    getClubs(params: $params) {
+      totalDocs
+      docs {
         _id
-        username
-      }
-      name
-      members {
-        _id
-        username
-      }
-      description
-      tags {
-        _id
-        text
-      }
-      posts {
-        _id
-        text
-        author {
+        creator {
           _id
           username
         }
-        createdAt
+        name
+        members {
+          _id
+          username
+        }
+        description
+        tags {
+          _id
+          text
+        }
+        posts {
+          _id
+          text
+          author {
+            _id
+            username
+          }
+          createdAt
+        }
       }
     }
   }
-}
-`
+`;

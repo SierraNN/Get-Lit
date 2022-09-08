@@ -1,8 +1,12 @@
 
 import { Button, Image, Container, Loader, Message } from "semantic-ui-react"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useProfile } from "../context/ProfileContext";
+import { useMutation } from "@apollo/client";
+import { UPDATE_SPRITE } from "../utils/mutations";
 
 const ProfileImage = ({ spriteChoice = 0, editable = false }) => {
+    const [profile, updateProfile] = useProfile()
 
     const [sprite, setSprite] = useState(spriteChoice)
     const imgList = [
@@ -36,12 +40,12 @@ const ProfileImage = ({ spriteChoice = 0, editable = false }) => {
         // "/assets/Sprites/Halfling/Character8_face2.png"
     ]
 
-    const onClickForward = () => {
-        if (sprite == 4) {
-            setSprite(0)
-        } else {
-            setSprite(sprite + 1)
-        }
+    const [updateSprite] = useMutation(UPDATE_SPRITE)
+    const onClickForward = async () => {
+        let nextSprite = sprite === 4 ? 0 : sprite + 1
+        setSprite(nextSprite)
+        const { data } = await updateSprite({ variables: { spriteChoice: nextSprite } })
+        if (data?.updateSprite) updateProfile('SET_PROFILE', { spriteChoice: nextSprite })
     }
     return (
         <Container>
@@ -53,8 +57,6 @@ const ProfileImage = ({ spriteChoice = 0, editable = false }) => {
             {editable && <Button className='2 left floated button' onClick={() => onClickForward()}>
                 Next
             </Button>}
-
-            <br /><br />
         </Container>
     )
 

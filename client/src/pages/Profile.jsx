@@ -8,10 +8,12 @@ import ProfileBookLists from './ProfileBookList';
 import ProfileImage from '../components/ProfileImage'
 import { useProfile } from '../context/ProfileContext';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { GET_USER } from '../utils/queries';
 import BookImageList from '../components/BookImageList';
 import ListOfLists from '../components/lists/ListOfLists';
+import { ADD_FOLLOWING, REMOVE_FOLLOWING, UPDATE_BIO, UPDATE_USER_TAGS } from '../utils/mutations';
+import UserList from '../components/lists/UserList';
 
 const Genres = [
   { key: 'fantasy', text: 'Fantasy', value: 'fantasy' },
@@ -42,106 +44,129 @@ const Profile = () => {
 
   const { loading, data, refetch } = useQuery(GET_USER, {
     variables: {
-      id: userId || (profile && profile._id) || null
+      id: userId || (profile && profile._id) || "null"
     }
   })
 
   useEffect(() => {
-    if (userId) refetch({ id: userId })
-  }, [userId])
+    if (userId) {
+      refetch({ id: userId })
+      setIsOwnProfile(userId === profile?._id)
+    } else {
+      setIsOwnProfile(true)
+      if (profile?._id) refetch({ id: profile._id })
+    }
+  }, [userId, profile?._id])
+
   useEffect(() => {
-    if (data && data.getUser) {
+    if (isOwnProfile) setUserInfo(profile)
+  }, [profile, isOwnProfile])
+
+  useEffect(() => {
+    if (data && data?.getUser) {
       setUserInfo(data.getUser)
     }
   }, [data, data?.getUser])
 
+  const { _id, username, bio, following = [], books = [], lists = [], clubs = [] } = userInfo
 
+  const [updateUserTags] = useMutation(UPDATE_USER_TAGS)
+
+  const tags = (userInfo.tags || []).map(({ text }) => text)
   const GenresSelect = () => (
     <Segment raised>
-      <p>
+      <div>
         <i className='tag icon' />
         <Menu>
-          <Dropdown placeholder='Genres' fluid multiple selection options={Genres} />
+          <Dropdown disabled={!isOwnProfile} placeholder='Genres' value={tags} fluid multiple selection options={Genres}
+            onChange={(ev, { value }) => {
+              let update = async () => {
+                let { data, error } = await updateUserTags({
+                  variables: { tags: value }
+                })
+                console.log({ value, data, error })
+                if (data?.updateUserTags) {
+                  updateProfile('UPDATE_TAGS', data.updateUserTags)
+                  setUserInfo({ ...userInfo, tags: data.updateUserTags })
+                }
+              }
+              update()
+            }} />
         </Menu>
-      </p>
+      </div>
     </Segment>
   )
+
   const FriendsContainer = () => (
     //edit this so it renders dynamically
     <Container>
-      <Header>Followers List</Header>
-      <div className="ui vertical list">
-        <div className="item">
-          <img className="ui mini circular image" src="" />
-          <div className="content">
-            <div className="ui sub header">Molly</div>
-          </div>
-        </div>
-        <br />
-        <div className="item">
-          <img className="ui mini circular image" src="" />
-          <div className="content">
-            <div className="ui sub header">Elyse</div>
-          </div>
-        </div>
-        <br />
-        <div className="item">
-          <img src="" className="ui mini circular image" />
-          <div className="content">
-            <div className="ui sub header">Eve</div>
-          </div>
-        </div>
-      </div>
+      <Header>Following</Header>
+      <UserList list={following} />
     </Container>
   )
+
+  const [updateBio] = useMutation(UPDATE_BIO)
   const BioContainer = () => (
     <Container>
       <Header>Bio</Header>
-      <Bio />
+      <Bio initial={bio} save={async (value) => {
+        const { data } = await updateBio({ variables: { bio: value } })
+        if (data?.updateBio) updateProfile('SET_PROFILE', { bio: data.updateBio })
+      }} />
     </Container>
   )
   const FavoritesContainer = () => (
     //edit this so it renders dynamically
     <Container>
-      <Header>Favorites</Header>
-      <div className="ui vertical list">
-        <div className="ui sub">Insert Favorites Here</div>
-      </div>
-      <br />
-
+      <BookImageList headerText="Favorite Books" list={books} />
     </Container>
   )
   const BookListContainer = () => (
     //edit this so it renders dynamically
     <Container>
-      <Header>Book Lists</Header>
-      <div className="ui vertical list">
-        <ListOfLists list={userInfo.lists} />
-      </div>
-      <br />
-
+      <ListOfLists headerText="Book Lists" list={lists} />
     </Container>
   )
+
   const Title = () => (
     <Segment>
-      <Button className='right floated button' onClick={() => { console.log('add mutation') }}>
-        <i className="icon user"></i>
-        Follow
-      </Button>
-      <br /><br />
-      {/* <Divider className="ui vertical divider" color='brown' /> */}
-
       <ProfileImage spriteChoice={userInfo.spriteChoice} editable={isOwnProfile} />
     </Segment>
   )
 
-  const { _id, username, following, books, lists, clubs, tags } = userInfo
-  console.log({ userInfo })
+  const [isFollowing, setIsFollowing] = useState((profile.following || []).find(({ _id }) => userInfo._id) !== undefined)
+  const [addFollowing] = useMutation(ADD_FOLLOWING)
+  const [removeFollowing] = useMutation(REMOVE_FOLLOWING)
+  const handleFollowingClick = async () => {
+    if (isFollowing) {
+      const { data, error } = await removeFollowing({
+        variables: { followingId: userInfo._id }
+      })
+      if (data && data?.removeFollowing) {
+        updateProfile('SET_PROFILE', { following: data.removeFollowing })
+        setIsFollowing(false)
+      }
+    } else {
+      const { data, error } = await addFollowing({
+        variables: { followingId: userInfo._id }
+      })
+      if (data && data?.addFollowing) {
+        updateProfile('SET_PROFILE', { following: data.addFollowing })
+        setIsFollowing(true)
+      }
+    }
+  }
   return (
     <div className="background1">
       {/* <div className="right floated sixteen wide column body"> */}
       <Segment>
-        {username}
+        <Header as='h1'>
+          {username} {!isOwnProfile && <Button color={isFollowing ? "red" : "green"} style={{ marginLeft: '2rem' }} onClick={handleFollowingClick}>
+            <i className="icon user"></i>
+            {isFollowing ? 'Unfollow' : 'Follow'}
+          </Button>
+          }
+        </Header>
         <Title />
         <Divider clearing />
         <GenresSelect />
