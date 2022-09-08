@@ -21,7 +21,6 @@ const ProfileImage = ({ user, spriteChoice = 0, editable = false }) => {
         "/assets/bg/a.jpg",
         "/assets/bg/b.png",
         "/assets/bg/e.png",
-        "/assets/bg/f.png",
         "/assets/bg/g.png",
         "/assets/Sprites/c.png",
         "/assets/Sprites/d.png",
