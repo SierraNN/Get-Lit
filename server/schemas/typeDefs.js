@@ -102,6 +102,7 @@ const typeDefs = gql`
   input CreateClub {
     name: String
     description: String
+    tags: [String]
   }
   
   input SearchParams {

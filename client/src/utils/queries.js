@@ -151,3 +151,37 @@ export const GET_LISTS = gql`
     }
   }
 `;
+
+export const GET_CLUBS = gql`
+query Query($params: SearchParams) {
+  getClubs(params: $params) {
+    totalDocs
+    docs {
+      _id
+      creator {
+        _id
+        username
+      }
+      name
+      members {
+        _id
+        username
+      }
+      description
+      tags {
+        _id
+        text
+      }
+      posts {
+        _id
+        text
+        author {
+          _id
+          username
+        }
+        createdAt
+      }
+    }
+  }
+}
+`
