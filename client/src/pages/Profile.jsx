@@ -109,7 +109,7 @@ const Profile = () => {
   const BioContainer = () => (
     <Container>
       <Header>Bio</Header>
-      <Bio initial={bio} save={async (value) => {
+      <Bio isOwnProfile={isOwnProfile} initial={bio} save={async (value) => {
         const { data } = await updateBio({ variables: { bio: value } })
         if (data?.updateBio) updateProfile('SET_PROFILE', { bio: data.updateBio })
       }} />
@@ -121,6 +121,7 @@ const Profile = () => {
       <BookImageList headerText="Favorite Books" list={books} />
     </Container>
   )
+  console.log({ lists })
   const BookListContainer = () => (
     //edit this so it renders dynamically
     <Container>
