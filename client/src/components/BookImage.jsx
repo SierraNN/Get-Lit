@@ -12,7 +12,6 @@ const BookImage = ({ book }) => {
   const fetchGoogleData = async (googleId) => {
     try {
       const { data: book } = await bookByGoogleId(googleId)
-      console.log({ book })
       books.recent.updateById(googleId, book)
       setInfo(book)
     } catch (error) {
