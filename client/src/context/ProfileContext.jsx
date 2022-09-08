@@ -9,6 +9,8 @@ import bookCache from "../utils/books";
 import bookListCache from "../utils/bookLists"
 import { MY_PROFILE } from "../utils/queries";
 import { useAuth } from './AuthContext';
+import clubCache from "../utils/clubs"
+
 
 const ProfileContext = createContext()
 const ProfileDispatchContext = createContext()
@@ -40,6 +42,18 @@ const reducer = (state, action) => {
       const filteredLists = lists.filter(({ _id }) => _id !== action.payload._id)
       filteredLists.push(action.payload)
       return { ...state, lists: filteredLists }
+    case 'ADD_CLUB':
+      const withClub = [...clubs, action.payload]
+      clubCache.saved.set(withClub)
+      return { ...state, clubs: withClub }
+    case 'REMOVE_CLUB':
+      const noClub = clubs.filter(({ _id }) => _id !== action.payload)
+      clubCache.saved.set(noClub)
+      return { ...state, clubs: noClub }
+    case 'UPDATE_CLUB':
+      const filteredClubs = clubs.filter(({ _id }) => _id !== action.payload._id)
+      filteredClubs.push(action.payload)
+      return { ...state, clubs: filteredClubs }
     default:
       return state
   }

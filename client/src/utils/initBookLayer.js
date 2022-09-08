@@ -28,10 +28,10 @@ export function init() {
         ease: "back.out(1.7)"
         })
 // next movements are all rotations to the model
-        gsap.to(camera.rotation, {
-        z: 2,
-        duration: 1
-        })
+        // gsap.to(camera.rotation, {
+        // z: 6.5,
+        // duration: 1
+        // })
 
         gsap.to(model.rotation, {
         x: 2.5,
@@ -39,8 +39,9 @@ export function init() {
         delay: 1
         })
 
+
         gsap.to(model.rotation, {
-        y: Math.PI * 3,
+        y: Math.PI * 7,
         duration: 2,
         delay: 1
         })
