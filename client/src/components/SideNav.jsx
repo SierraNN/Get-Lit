@@ -15,7 +15,7 @@ const SideNav = (props) => {
 
       <Link to="/books">
         <span className="hovertext" data-hover="Books">
-          <Menu.Item><Icon name="book icon" /></Menu.Item>
+          <Menu.Item><Icon name="book" /></Menu.Item>
         </span>
       </Link>
 

@@ -1,14 +1,13 @@
 import { useMutation, useQuery } from "@apollo/client"
 import { useEffect } from "react"
 import { useState } from "react"
-import { Link, useParams } from "react-router-dom"
-import { Button, Container, Header, Label, List, Segment } from "semantic-ui-react"
+import { useParams } from "react-router-dom"
+import { Header, Label, List, Segment } from "semantic-ui-react"
 import Loading from "../components/Loading"
 import { useProfile } from "../context/ProfileContext"
 import { GET_CLUB } from "../utils/queries"
-import BookImageList from "../components/BookImageList"
 import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
-import { ADD_COMMENT_TO_LIST, ADD_POST_TO_CLUB } from '../utils/mutations';
+import { ADD_POST_TO_CLUB } from '../utils/mutations';
 import UserList from "../components/lists/UserList"
 
 
