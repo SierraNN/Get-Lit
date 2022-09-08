@@ -12,7 +12,6 @@ const BookImage = ({ book }) => {
   const fetchGoogleData = async (googleId) => {
     try {
       const { data: book } = await bookByGoogleId(googleId)
-      console.log({ book })
       books.recent.updateById(googleId, book)
       setInfo(book)
     } catch (error) {
@@ -31,7 +30,8 @@ const BookImage = ({ book }) => {
 
   if (!info) {
     return <Placeholder.Image />
-  } else console.log('BOOKIMAGE', { info })
+  }
+
   const { id, volumeInfo: { title, authors, imageLinks } } = info
 
   const { thumbnail } = imageLinks || {}

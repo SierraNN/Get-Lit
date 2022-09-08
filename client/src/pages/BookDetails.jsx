@@ -61,35 +61,38 @@ const BookDetails = (props) => {
   const { volumeInfo: info } = book
 
   return (
-    <Container className="ui container1">
-      <Header as='h1' content={info.title} />
-      <Button icon="angle left" content="Back" onClick={() => navigate(-1)} />
-      <Segment.Group>
-        <Segment basic className="flex">
-          <Image inline src={info?.imageLinks?.thumbnail} />
-          <div className="stretch">
-            <Header content="Categories" />
-            <Label.Group>
-              {info.categories && info.categories.map((cat, i) => <Label key={i} content={cat} />)}
-            </Label.Group>
+    <div className="background3">
+      <Container className="ui container1">
+        <Header as='h1' content={info.title} />
+        <Button icon="angle left" content="Back" onClick={() => navigate(-1)} />
+        <Segment.Group>
+          <Segment basic className="flex">
+            <Image inline src={info?.imageLinks?.thumbnail} />
+            <div className="stretch">
+              <Header content="Categories" />
+              <Label.Group>
+                {info.categories && info.categories.map((cat, i) => <Label key={i} content={cat} />)}
+              </Label.Group>
 
-          </div>
-          {auth &&
-            <Button.Group vertical>
-              {alreadySaved()
-                ? <Button color='red' icon='trash' onClick={handleRemove} content="Remove from Profile" />
-                : <Button color="blue" icon='save' onClick={handleSave} content="Save Book" />}
-              <AddToListButton book={book} />
-              <Button color='teal' icon='pencil' content="Write a Review" onClick={() => navigate(`/books/${book.id}/reviews/new`)} />
-            </Button.Group>
-          }
+            </div>
+            {auth &&
+              <Button.Group vertical>
+                {alreadySaved()
+                  ? <Button color='red' icon='trash' onClick={handleRemove} content="Remove from Profile" />
+                  : <Button color="blue" icon='save' onClick={handleSave} content="Save Book" />}
+                <AddToListButton book={book} />
+                <Button color='teal' icon='pencil' content="Write a Review" onClick={() => navigate(`/books/${book.id}/reviews/new`)} />
+              </Button.Group>
+            }
 
-        </Segment>
-        <Segment>
-          {info.description}
-        </Segment>
-      </Segment.Group>
-    </Container>
+          </Segment>
+          <Segment>
+            {info.description}
+          </Segment>
+        </Segment.Group>
+      </Container>
+
+    </div>
   )
 }
 
