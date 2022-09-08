@@ -1184,12 +1184,14 @@ body {
 
 .ui.container1{
   color: black;
-  border: 10px;
-  border-radius: 25px;
   background-color:rgba(38, 47, 85, 0.8);
   margin: 5%;
   font-weight: bold;
   padding: 20px;
+
+  border-radius: 25px;
+  padding: 20px;
+
 
 }
 
