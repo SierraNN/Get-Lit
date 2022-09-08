@@ -20,7 +20,7 @@
   }
   
   .hero .title{
-    color: #6699CC;
+    color: #053574;
     font-size: 3em;
     margin-bottom: .5em;
     
@@ -59,7 +59,7 @@
   }
   /* cards slide in late after book animation is finished */
   .choices-card{
-    background-color: #4889F0;
+    background-color: rgba(90,90,90,.3);
     padding: 1em;
     border-radius: 5px;
     transform: translate(-100px, 100px);
@@ -95,7 +95,7 @@
     margin: 1em 0;
   }
   .choices-card .btn{
-    background:green;
+    background:#053574;
   }
 
   .card-image{

@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose')
 const CommentSchema = require('../Comment')
 const TagSchema = require('../Tag')
+const mongoosePaginate = require('mongoose-paginate-v2')
+const paginatedSearch = require('../../utils/paginatedSearch')
 
 const ID = Schema.Types.ObjectId
 const BookClubSchema = new Schema({
@@ -34,6 +36,8 @@ const BookClubSchema = new Schema({
 }, {
   // schema options
 })
+BookClubSchema.plugin(mongoosePaginate)
+BookClubSchema.statics.search = paginatedSearch({populate:["creator","members","posts.author",]})
 
 const BookClub = model('BookClub', BookClubSchema)
 

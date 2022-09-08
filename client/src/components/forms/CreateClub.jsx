@@ -1,17 +1,46 @@
+import { useMutation } from "@apollo/client"
+import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
+import { useEffect } from "react";
+import { useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom";
+import { Container, Header, TextArea } from "semantic-ui-react"
+import { useProfile } from "../../context/ProfileContext";
+import { CREATE_CLUB } from '../../utils/mutations';
 
-import { FormProvider, useForm } from '@codewizard-dt/use-form-hook';
-
-const CreateClub = (props) => {
+const ClubListForm = (props) => {
   const { Form } = useForm()
+  const [profile, updateProfile] = useProfile()
+  const navigate = useNavigate()
+  const [createClub] = useMutation(CREATE_CLUB)
+  const onSubmit = async (clubInfo) => {
+    const club = { ...clubInfo }
+    if (club.tags === '') club.tags = []
+    else club.tags = club.tags.split(',')
+    return createClub({
+      variables: { club }
+    })
+  }
+  const onResponse = async ({ data }) => {
+    console.log(data.createClub)
+    if (data?.createClub) {
+      updateProfile('ADD_CLUB', data.createClub)
+      navigate(`/clubs/${data.createClub._id}`)
+    }
+  }
+
   return (
-    <FormProvider>
-      <Form fields={[
-        { name: 'name' },
-        { name: 'description' },
-        { name: 'tags', control: 'textarea', label: 'Tags (comma separated)' }
-      ]} />
-    </FormProvider>
+    <Container>
+      <FormProvider>
+        <Header as='h1'>New Book Club</Header>
+        <Form submit={onSubmit} respond={onResponse} fields={[
+          { name: 'name', required: true },
+          { name: 'description', control: TextArea },
+          { name: 'tags', label: 'Tags (comma separated)' }
+        ]} submitBtnText="Create Book Club" />
+      </FormProvider>
+
+    </Container>
   )
 }
 
-export default CreateClub
+export default ClubListForm
