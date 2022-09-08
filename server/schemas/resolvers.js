@@ -68,17 +68,14 @@ const resolvers = {
       const results = await BookList.search(params)
       return results
     },
-<<<<<<< HEAD
     getUsers: async (parent, { params = {} }) => {
       const results = await User.search(params)
       return results
     },
-=======
     getClubs: async (parent, { params = {} }) => {
       const results = await BookClub.search(params)
       return results
     }
->>>>>>> main
   },
   Mutation: {
     /** AUTH */

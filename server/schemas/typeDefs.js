@@ -125,30 +125,18 @@ const typeDefs = gql`
     totalPages: Int
     page: Int
   }
-<<<<<<< HEAD
   type UserResults {
     totalDocs: Int
     docs: [User]
     totalPages: Int
     page: Int
   }
-=======
->>>>>>> main
   type ReviewResults {
     totalDocs: Int
     docs: [Review]
     totalPages: Int
     page: Int
   }
-<<<<<<< HEAD
-=======
-  type UserResults {
-    totalDocs: Int
-    docs: [User]
-    totalPages: Int
-    page: Int
-  }
->>>>>>> main
 
   type Query {
     user(username: String!): User
