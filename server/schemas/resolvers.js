@@ -67,6 +67,10 @@ const resolvers = {
     getLists: async (parent, { params = {} }) => {
       const results = await BookList.search(params)
       return results
+    },
+    getClubs: async (parent, { params = {} }) => {
+      const results = await BookClub.search(params)
+      return results
     }
   },
   Mutation: {
@@ -179,11 +183,13 @@ const resolvers = {
     /** CLUBS */
     createClub: async (parent, { club }, { user }) => {
       if (!user) throw new AuthenticationError('Not logged in')
-      const created = await BookClub.create({
+      const clubInfo = {
         ...club,
+        tags: club.tags.map(tag => ({ text: tag })),
         creator: ID(user._id),
         members: [ID(user._id)]
-      })
+      }
+      const created = await BookClub.create(clubInfo)
       if (created) {
         await User.findByIdAndUpdate(user._id, {
           $addToSet: { clubs: ID(created._id) }
