@@ -4,7 +4,6 @@ import './Profile.css';
 import { Dropdown } from 'semantic-ui-react';
 import React, { Component, useEffect, useState } from 'react';
 import Bio from './Bio';
-import ProfileBookLists from './ProfileBookList';
 import ProfileImage from '../components/ProfileImage'
 import { useProfile } from '../context/ProfileContext';
 import { useParams } from 'react-router-dom';
