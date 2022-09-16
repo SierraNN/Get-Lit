@@ -6,10 +6,10 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_SPRITE } from "../utils/mutations";
 
 export const imgList = [
-    "/assets/bg/a.jpg",
-    "/assets/bg/b.png",
-    "/assets/bg/e.png",
-    "/assets/bg/g.png",
+    "/assets/Sprites/a.jpg",
+    "/assets/Sprites/b.png",
+    "/assets/Sprites/e.png",
+    "/assets/Sprites/g.png",
     "/assets/Sprites/c.png",
     "/assets/Sprites/d.png"
 ]
