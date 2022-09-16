@@ -42,29 +42,31 @@ const ReviewDetails = (props) => {
   }
 
   return (
-    <Container className="ui container1 background3">
-      <Header as='h1' content={book?.title} subheader={"Review - " + creator.username} />
-      <Segment>
-        <Header>Description</Header>
-        {description}
-        <Label.Group>
-          {book?.tags.map(({ text }, i) => <Label key={i} content={text} />)}
-        </Label.Group>
-      </Segment>
-      <Segment>
-        <List>
-          {review.comments.map((comment, i) => <List.Item key={i} >
-            {comment.text}<Label content={comment.author.username} detail={comment.createdAt} />
-          </List.Item>)}
-        </List>
+    <div className="background3">
+      <Container className="container1 ">
+        <Header as='h1' content={book?.title} subheader={"Review - " + creator.username} />
+        <Segment>
+          <Header>Description</Header>
+          {description}
+          <Label.Group>
+            {book?.tags.map(({ text }, i) => <Label key={i} content={text} />)}
+          </Label.Group>
+        </Segment>
+        <Segment>
+          <List className="comment-list">
+            {review.comments.map((comment, i) => <List.Item key={i} >
+              {comment.text}<Label content={comment.author.username} detail={comment.createdAt} />
+            </List.Item>)}
+          </List>
 
-        <FormProvider>
-          <Form submit={onSubmit} fields={[
-            { name: "text", label: 'Comment on this review:', control: "textarea", required: true }
-          ]} />
-        </FormProvider>
-      </Segment>
-    </Container>
+          <FormProvider>
+            <Form submit={onSubmit} fields={[
+              { name: "text", label: 'Comment on this review:', control: "textarea", required: true }
+            ]} />
+          </FormProvider>
+        </Segment>
+      </Container>
+    </div>
   )
 }
 

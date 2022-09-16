@@ -97,6 +97,9 @@ const Reviews = (props) => {
         {display === 'profile' && (
           <>
             <Button icon="search" color="green" content="Search for Reviews" onClick={() => setDisplay('search')} />
+            <Link to="/reviews/new" state={{}}>
+              <Button icon="plus" color="teal" content="New Review" />
+            </Link>
           </>
 
         )}

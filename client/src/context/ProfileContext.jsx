@@ -20,6 +20,8 @@ export const useProfile = () => [useContext(ProfileContext), useContext(ProfileD
 const reducer = (state, action) => {
   const { books = [], lists = [], reviews = [], clubs = [], following = [] } = state
   switch (action.type) {
+    case 'CLEAR_PROFILE':
+      return {}
     case 'SET_PROFILE':
       return { ...state, ...action.payload }
     case 'UPDATE_TAGS':

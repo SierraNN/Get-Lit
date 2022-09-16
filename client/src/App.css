@@ -1192,17 +1192,6 @@ body {
   padding: 20px;
 }
 
-@font-face {
-  font-family: "PrStart";
-  src: local("PrStart"),
-   url("./font/PrStart.ttf") format("truetype");
-  font-weight: bold;
-  }
-
-  .font-face-ps {
-    font-family: "PrStart";
-   }
-
 /* Parallax Background
  * TODO: Make Background Dynamic
  */
@@ -1245,7 +1234,6 @@ body {
 
 /* Navigation and misc */
 #main-content {
-  
   position: absolute;
   top: 0px;
   left: 55px;
