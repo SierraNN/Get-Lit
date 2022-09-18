@@ -5,7 +5,7 @@ import { Button, Container, Dropdown, Header, Message } from "semantic-ui-react"
 import ClubList from "../components/lists/ClubList"
 import { useAuth } from "../context/AuthContext"
 import { useProfile } from "../context/ProfileContext"
-import clubCache from "../utils/clubs"
+import clubCache from "../utils/clubCache"
 import { GET_CLUBS } from "../utils/queries"
 import Loading from '../components/Loading';
 import { Link } from "react-router-dom"

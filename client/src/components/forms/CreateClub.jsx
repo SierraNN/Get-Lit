@@ -29,7 +29,7 @@ const ClubListForm = (props) => {
   }
 
   return (
-    <Container>
+    <Container className="background3">
       <FormProvider>
         <Header as='h1'>New Book Club</Header>
         <Form submit={onSubmit} respond={onResponse} fields={[

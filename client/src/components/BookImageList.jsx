@@ -1,12 +1,14 @@
 import { Header, List, ListItem } from "semantic-ui-react"
 import BookImage from "./BookImage"
+import BookLink from "./BookLink"
 
-const BookImageList = ({ headerText, list }) => {
+const BookImageList = ({ headerText, list, onImageClick = 'link' }) => {
+  const renderBookImage = (book, i) => onImageClick === 'link' ? <BookLink key={i} book={book} /> : <BookImage key={i} book={book} action={onImageClick} />
   return (
     <>
       <Header>{headerText}</Header>
-      <List horizontal className="display-list">
-        {list && list.length ? list.map((item, i) => <BookImage key={i} book={item} />) : <ListItem content="No books" />}
+      <List horizontal className="display-list books">
+        {list && list.length ? list.map(renderBookImage) : <ListItem content="No books" />}
       </List>
     </>
   )

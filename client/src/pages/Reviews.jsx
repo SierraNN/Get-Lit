@@ -5,19 +5,19 @@ import { Button, Container, Dropdown, Header, Message } from "semantic-ui-react"
 import ReviewList from "../components/lists/ReviewList"
 import { useAuth } from "../context/AuthContext"
 import { useProfile } from "../context/ProfileContext"
-import bookReviews from "../utils/reviews"
+import reviewCache from "../utils/reviewCache"
 import { GET_REVIEWS } from "../utils/queries"
 import Loading from '../components/Loading';
 import { Link } from "react-router-dom"
 
-const cachedResults = bookReviews.results.get()
+const cachedResults = reviewCache.results.get()
 
 const Reviews = (props) => {
 
 
   const [auth] = useAuth()
   const [profile] = useProfile()
-  const myReviews = auth ? profile.lists : null
+  const myReviews = auth ? profile.reviews : null
   const { Form } = useForm()
   const [results, setResults] = useState(cachedResults)
   const [searchParams, setSearchParams] = useState({})
@@ -29,7 +29,7 @@ const Reviews = (props) => {
 
 
   useEffect(() => {
-    if (display === 'search') setResults(bookReviews.results.get())
+    if (display === 'search') setResults(reviewCache.results.get())
     else if (display === 'profile') setResults(myReviews)
   }, [display, myReviews])
 
@@ -41,11 +41,13 @@ const Reviews = (props) => {
     if (data && data.getReviews) {
       let { docs, page, totalDocs, totalPages } = data.getReviews
       setResults(docs)
-      bookReviews.results.set(docs)
+      reviewCache.results.set(docs)
+      console.log({ reviews: docs })
       setPageNum(page)
       setTotalPages(totalPages)
     }
   }, [data])
+
   useEffect(() => {
     const search = async () => {
       await refetch({ params: searchParams })
@@ -97,6 +99,9 @@ const Reviews = (props) => {
         {display === 'profile' && (
           <>
             <Button icon="search" color="green" content="Search for Reviews" onClick={() => setDisplay('search')} />
+            <Link to="/reviews/new" state={{}}>
+              <Button icon="plus" color="teal" content="New Review" />
+            </Link>
           </>
 
         )}

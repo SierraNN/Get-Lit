@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Icon, Menu } from 'semantic-ui-react'
 import { useAuth } from '../context/AuthContext';
+import { useProfile } from '../context/ProfileContext';
 
 const SideNav = (props) => {
   const [auth, setAuth] = useAuth()
+  const [profile, updateProfile] = useProfile()
 
   return (
     <Menu id="main-navigation" vertical>
@@ -15,7 +17,7 @@ const SideNav = (props) => {
 
       <Link to="/books">
         <span className="hovertext" data-hover="Books">
-          <Menu.Item><Icon name="file alternate" /></Menu.Item>
+          <Menu.Item><Icon name="book" /></Menu.Item>
         </span>
       </Link>
 
@@ -38,19 +40,19 @@ const SideNav = (props) => {
       </Link>
       <Link to="/users">
         <span className="hovertext" data-hover="Users">
-          <Menu.Item><Icon name="users" /></Menu.Item>
+          <Menu.Item><Icon name="user" /></Menu.Item>
         </span>
       </Link>
       {auth
         ? <>
           <Link to="/profile">
             <span className="hovertext" data-hover="Profile">
-              <Menu.Item><Icon name="user" /></Menu.Item>
+              <Menu.Item><Icon name="user circle" /></Menu.Item>
             </span>
           </Link>
           <Link to="/login">
             <span className="hovertext" data-hover="Logout">
-              <Menu.Item onClick={() => setAuth(null)}><Icon name="sign out" /></Menu.Item>
+              <Menu.Item onClick={() => { setAuth(null); updateProfile('CLEAR_PROFILE') }}><Icon name="sign out" /></Menu.Item>
             </span>
           </Link>
         </>
@@ -63,30 +65,6 @@ const SideNav = (props) => {
         </>}
     </Menu>
   )
-  // return (
-  //   <div id="main-navigation">
-  //     <ul>
-  //       <li>
-  //         <a href="javascript:void(0)" className="wattpad-logo">Home</a>
-  //       </li>
-  //       <li>
-  //         <a href="javascript:void(0)" className="entypo-layout">Dashboard</a>
-  //       </li>
-  //       <li>
-  //         <a href="javascript:void(0)" className="entypo-map">Discover</a>
-  //       </li>
-  //       <li>
-  //         <a href="javascript:void(0)" className="entypo-users">My Friends</a>
-  //       </li>
-  //       <li>
-  //         <a href="javascript:void(0)" className="entypo-archive">My Books</a>
-  //       </li>
-  //       <li>
-  //         <a href="javascript:void(0)" className="entypo-mail">Share</a>
-  //       </li>
-  //     </ul>
-  //   </div>
-  // )
 }
 
 export default SideNav

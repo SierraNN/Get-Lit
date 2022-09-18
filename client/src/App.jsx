@@ -95,6 +95,7 @@ function App() {
                 {/** Redirected if not logged in */}
                 <Route path="profile" element={<Profile />} />
                 <Route path="lists/new" element={<CreateList />} />
+                <Route path="reviews/new" element={<CreateReview />} />
                 <Route path="books/:bookId/reviews/new" element={<CreateReview />} />
                 <Route path="clubs/new" element={<CreateClub />} />
               </Route>

@@ -2,15 +2,9 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Header, Image, List, Placeholder } from "semantic-ui-react"
-import userCache from "../../utils/users"
+import userCache from "../../utils/userCache"
 
-const imgList = [
-  "/assets/bg/a.jpg",
-  "/assets/bg/b.png",
-  "/assets/bg/e.png",
-  "/assets/bg/f.png",
-  "/assets/bg/g.png",
-]
+import { imgList } from "../ProfileImage"
 
 const UserImage = ({ user }) => {
   const [info, setInfo] = useState(null)

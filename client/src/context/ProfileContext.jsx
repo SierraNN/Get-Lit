@@ -5,11 +5,12 @@ import { useState } from "react";
 import { useReducer } from "react";
 import { createContext } from "react";
 import AuthService from '../utils/auth'
-import bookCache from "../utils/books";
-import bookListCache from "../utils/bookLists"
+import bookCache from "../utils/bookCache";
+import bookListCache from "../utils/listCache"
 import { MY_PROFILE } from "../utils/queries";
 import { useAuth } from './AuthContext';
-import clubCache from "../utils/clubs"
+import clubCache from "../utils/clubCache"
+import reviewCache from "../utils/clubCache"
 
 
 const ProfileContext = createContext()
@@ -20,6 +21,8 @@ export const useProfile = () => [useContext(ProfileContext), useContext(ProfileD
 const reducer = (state, action) => {
   const { books = [], lists = [], reviews = [], clubs = [], following = [] } = state
   switch (action.type) {
+    case 'CLEAR_PROFILE':
+      return {}
     case 'SET_PROFILE':
       return { ...state, ...action.payload }
     case 'UPDATE_TAGS':
@@ -56,6 +59,18 @@ const reducer = (state, action) => {
       const filteredClubs = clubs.filter(({ _id }) => _id !== action.payload._id)
       filteredClubs.push(action.payload)
       return { ...state, clubs: filteredClubs }
+    case 'ADD_REVIEW':
+      const withReview = [...reviews, action.payload]
+      reviewCache.saved.set(withReview)
+      return { ...state, reviews: withReview }
+    case 'REMOVE_REVIEW':
+      const noReview = reviews.filter(({ _id }) => _id !== action.payload)
+      reviewCache.saved.set(noReview)
+      return { ...state, reviews: noReview }
+    case 'UPDATE_REVIEW':
+      const filteredReviews = reviews.filter(({ _id }) => _id !== action.payload._id)
+      filteredReviews.push(action.payload)
+      return { ...state, reviews: filteredReviews }
     default:
       return state
   }

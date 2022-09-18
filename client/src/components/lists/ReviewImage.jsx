@@ -2,7 +2,9 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Header, Image, Label, Placeholder } from "semantic-ui-react"
-import reviewCache from "../../utils/reviews"
+import reviewCache from "../../utils/reviewCache"
+import bookCache from "../../utils/bookCache"
+import { imgList } from '../ProfileImage';
 
 const ReviewImage = ({ review }) => {
   const [info, setInfo] = useState(null)
@@ -12,34 +14,31 @@ const ReviewImage = ({ review }) => {
   }, [review])
 
   if (!info) return <Placeholder.Image />
-  const { _id, book, creator } = info
-  // console.log('REVIEW', info)
-
+  const { _id, book, creator, reviewTitle, reviewText } = info
+  if (book === null) {
+    console.log({ review: info })
+    console.trace('Book missing')
+  }
   const renderBookThumbnail = () => {
     const thumbnail = book?.thumbnail || null
-    if (!thumbnail) return (
-      <Placeholder>
-        <Placeholder.Paragraph>
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-        </Placeholder.Paragraph>
-      </Placeholder>
-    )
+    if (!thumbnail) {
+      return (
+        <Placeholder>
+          <Placeholder.Paragraph>
+            <Placeholder.Line />
+            <Placeholder.Line />
+            <Placeholder.Line />
+            <Placeholder.Line />
+            <Placeholder.Line />
+            <Placeholder.Line />
+          </Placeholder.Paragraph>
+        </Placeholder>
+      )
+    }
     else return (
       <Image src={thumbnail} />
     )
   }
-  const imgList = [
-    "/assets/bg/a.jpg",
-    "/assets/bg/b.png",
-    "/assets/bg/e.png",
-    "/assets/bg/f.png",
-    "/assets/bg/g.png",
-  ]
   const renderUserIcon = () => {
     let sprite = creator?.spriteChoice || null
     return sprite !== null && <Label className="creatorLabel">

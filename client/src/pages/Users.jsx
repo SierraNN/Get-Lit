@@ -5,7 +5,7 @@ import { Button, Container, Dropdown, Header, Message } from "semantic-ui-react"
 // import ListOfLists from "../components/lists/ListOfLists"
 import { useAuth } from "../context/AuthContext"
 import { useProfile } from "../context/ProfileContext"
-import userCache from "../utils/users"
+import userCache from "../utils/userCache"
 import { GET_USERS } from "../utils/queries"
 import Loading from '../components/Loading';
 import { Link } from "react-router-dom"
@@ -14,8 +14,6 @@ import UserList from "../components/lists/UserList"
 const cachedResults = userCache.results.get()
 
 const Lists = (props) => {
-
-
   const [auth] = useAuth()
   const [profile, updateProfile] = useProfile()
   const following = auth ? profile.following : null
@@ -73,8 +71,8 @@ const Lists = (props) => {
   if (loading) return <div className="background5"><Loading /></div>
 
   return (
-    <div className="background5">
-      <Container>
+    <div className="background2">
+      <Container className="container1">
         <Header as='h1'>Fellow Readers</Header>
         {display === 'search' && (
           <FormProvider>

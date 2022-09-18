@@ -231,3 +231,16 @@ export const ADD_COMMENT_TO_REVIEW = gql`
     }
   }
 `
+export const ADD_POST_TO_CLUB = gql`
+  mutation Mutation($clubId: ID, $post: String) {
+    addPostToClub(clubId: $clubId, post: $post) {
+      _id
+      text
+      author {
+        _id
+        username
+      }
+      createdAt
+    }
+  }
+`

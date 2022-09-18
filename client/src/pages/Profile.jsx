@@ -4,7 +4,6 @@ import './Profile.css';
 import { Dropdown } from 'semantic-ui-react';
 import React, { Component, useEffect, useState } from 'react';
 import Bio from './Bio';
-import ProfileBookLists from './ProfileBookList';
 import ProfileImage from '../components/ProfileImage'
 import { useProfile } from '../context/ProfileContext';
 import { useParams } from 'react-router-dom';
@@ -14,6 +13,7 @@ import BookImageList from '../components/BookImageList';
 import ListOfLists from '../components/lists/ListOfLists';
 import { ADD_FOLLOWING, REMOVE_FOLLOWING, UPDATE_BIO, UPDATE_USER_TAGS } from '../utils/mutations';
 import UserList from '../components/lists/UserList';
+import { useAuth } from '../context/AuthContext';
 
 const Genres = [
   { key: 'fantasy', text: 'Fantasy', value: 'fantasy' },
@@ -37,6 +37,7 @@ const Genres = [
 ]
 
 const Profile = () => {
+  const [auth] = useAuth()
   const [profile, updateProfile] = useProfile()
   const [isOwnProfile, setIsOwnProfile] = useState(false)
   const [userInfo, setUserInfo] = useState({})
@@ -121,7 +122,6 @@ const Profile = () => {
       <BookImageList headerText="Favorite Books" list={books} />
     </Container>
   )
-  console.log({ lists })
   const BookListContainer = () => (
     //edit this so it renders dynamically
     <Container>
@@ -131,7 +131,7 @@ const Profile = () => {
 
   const Title = () => (
     <Segment>
-      <ProfileImage spriteChoice={userInfo.spriteChoice} editable={isOwnProfile} />
+      <ProfileImage spriteChoice={userInfo.spriteChoice} isOwnProfile={isOwnProfile} />
     </Segment>
   )
 
@@ -159,10 +159,9 @@ const Profile = () => {
   }
   return (
     <div className="background1">
-      {/* <div className="right floated sixteen wide column body"> */}
-      <Segment>
+      <Segment className='profile'>
         <Header as='h1'>
-          {username} {!isOwnProfile && <Button color={isFollowing ? "red" : "green"} style={{ marginLeft: '2rem' }} onClick={handleFollowingClick}>
+          {username} {auth && !isOwnProfile && <Button color={isFollowing ? "red" : "green"} style={{ marginLeft: '2rem' }} onClick={handleFollowingClick}>
             <i className="icon user"></i>
             {isFollowing ? 'Unfollow' : 'Follow'}
           </Button>
@@ -176,7 +175,6 @@ const Profile = () => {
         <Segment color='brown'><BookListContainer /></Segment>
         <Segment color='brown'><FavoritesContainer /></Segment>
       </Segment>
-      {/* </div> */}
     </div>
   )
 }

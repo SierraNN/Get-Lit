@@ -2,15 +2,12 @@ import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
 import { useEffect, useState } from "react"
 import { Container, Dropdown, Header, Message, Button } from 'semantic-ui-react'
 import BookImageList from "../components/BookImageList"
-import books from "../utils/books"
+import bookCache from "../utils/bookCache"
 import { bookSearch } from "../utils/google"
 import { useAuth } from '../context/AuthContext';
-import { useQuery } from '@apollo/client';
-import { MY_BOOKS } from '../utils/queries';
-import { useLocation } from "react-router-dom"
 import { useProfile } from "../context/ProfileContext"
 
-const cachedResults = books.results.get()
+const cachedResults = bookCache.results.get()
 
 const Books = (props) => {
   const [auth] = useAuth()
@@ -39,7 +36,7 @@ const Books = (props) => {
     if (data) {
       setFresh(true)
       setResults(data.items)
-      books.results.set(data.items)
+      bookCache.results.set(data.items)
     }
   }
 
@@ -51,7 +48,7 @@ const Books = (props) => {
       if (term && type) {
         let { data } = await bookSearch({ term, type, pageSize, pageNum })
         setResults(data.items)
-        books.results.set(data.items)
+        bookCache.results.set(data.items)
       }
     }
     search()
@@ -61,7 +58,7 @@ const Books = (props) => {
   const [display, setDisplay] = useState('search')
 
   useEffect(() => {
-    if (display === 'search') setResults(books.results.get())
+    if (display === 'search') setResults(bookCache.results.get())
     else if (display === 'profile') setResults(myBooks)
   }, [display])
 

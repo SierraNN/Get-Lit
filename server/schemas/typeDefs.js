@@ -63,6 +63,7 @@ const typeDefs = gql`
     _id: ID
     book: Book
     creator: User
+    reviewTitle: String
     reviewText: String
     suggestedBooks: [Book]
     suggestedTags: [Tag]
@@ -71,11 +72,10 @@ const typeDefs = gql`
     createdAt: String
   }
   input CreateReview {
-    book: ID
+    book: BookInfo
+    reviewTitle: String
     reviewText: String
-    suggestedBooks: [ID]
-    suggestedTags: [String]
-    rating: Int
+    rating: Float
   }
 
   type BookList {
@@ -182,7 +182,7 @@ const typeDefs = gql`
     # reviews
     createReview(review: CreateReview): Review
     addCommentToReview(reviewId: ID, comment: String): [Comment]
-    # lists
+    # clubs
     createClub(club: CreateClub): BookClub
     addPostToClub(clubId: ID, post: String): [Comment]
   }

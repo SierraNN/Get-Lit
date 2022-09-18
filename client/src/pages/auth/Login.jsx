@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 const Login = (props) => {
   const { Form } = useForm()
-  const [auth, setAuth] = useAuth()
+  const [auth, setAuth] = useAuth() // eslint-disable-line
   const [login] = useMutation(LOGIN)
   const { state } = useLocation()
   const message = state && state.message
@@ -21,16 +21,16 @@ const Login = (props) => {
   }
   return (
     <div className='background'>
-      <Container className= "ui container1">
-      <div class="ui grid">
-        <div class="six wide column left floated">
-        <img className='ui image' src='/assets/12.png' />
-        </div>
-        <div class="ten wide column right floated">
-        <br />
-        <br />
-          <Header>Login</Header>
-          {message && <Message content={message} />}
+      <Container className="ui container1">
+        <div class="ui grid">
+          <div class="six wide column left floated">
+            <img alt='logo' className='ui image' src='/assets/12.png' />
+          </div>
+          <div class="ten wide column right floated">
+            <br />
+            <br />
+            <Header>Login</Header>
+            {message && <Message content={message} />}
             <FormProvider>
               <Form submit={onSubmit} respond={onResponse} fields={[
                 { name: 'username', required: true },
@@ -38,12 +38,12 @@ const Login = (props) => {
               ]} buttons={[
                 { content: 'Register', onClick: () => navigate('/register') }
               ]} />
-              </FormProvider>
-      </div>
-    </div>
+            </FormProvider>
+          </div>
+        </div>
       </Container>
-      </div>
-    )
+    </div>
+  )
 }
 
 export default Login

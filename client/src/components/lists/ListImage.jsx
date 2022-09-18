@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Header, Image, Placeholder } from "semantic-ui-react"
-import bookLists from "../../utils/bookLists"
+import listCache from "../../utils/listCache"
 
 const ListImage = ({ list }) => {
   const [info, setInfo] = useState(null)
@@ -18,7 +18,7 @@ const ListImage = ({ list }) => {
 
   const renderImage = () => {
     const thumbnails = books ? books.slice(0, 3).map(({ thumbnail }) => thumbnail) : null
-    console.log('BOOKS', thumbnails)
+    console.log('BOOKS', { books })
     let size
     switch (thumbnails.length) {
       case 2:
@@ -49,7 +49,7 @@ const ListImage = ({ list }) => {
 
   return (
     <Link to={`/lists/${_id}`} className="item">
-      <div onClick={() => bookLists.recent.updateById(list._id, list)} >
+      <div onClick={() => listCache.recent.updateById(list._id, list)} >
         <Header as="h3" content={name} />
         {renderImage()}
       </div>

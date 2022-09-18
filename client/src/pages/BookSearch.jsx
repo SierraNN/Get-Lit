@@ -2,10 +2,10 @@ import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
 import { useState } from "react"
 import { Card, Container, Dropdown, Header, Message } from 'semantic-ui-react'
 import BookImageList from "../components/BookImageList"
-import books from "../utils/books"
+import bookCache from "../utils/bookCache"
 import { bookSearch } from "../utils/google"
 
-const cachedResults = books.results.get()
+const cachedResults = bookCache.results.get()
 
 const BookSearch = (props) => {
   const { Form } = useForm()
@@ -25,7 +25,7 @@ const BookSearch = (props) => {
     if (data) {
       // setResultCount(data.totalItems)
       setResults(data.items)
-      books.results.set(data.items)
+      bookCache.results.set(data.items)
     }
   }
   return (

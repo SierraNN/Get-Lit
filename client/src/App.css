@@ -1,10 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500);
 
-**{ background: url('../public/assets/BG_01.png');
-  position: fixed;
-  background-size:cover;
-  background-size:contain;
-}
 /* Sidebar */
 .entypo-note:before {
   content: "\266a";
@@ -1187,26 +1182,15 @@ body {
   padding: 0;
 }
 
-.ui.container1{
+.ui.container1 {
   color: black;
-  margin: 3%;
-  border: 10px;
-  background-color:rgba(38, 47, 85, 0.8);
+  background-color: rgba(38, 47, 85, 0.8);
   margin: 5%;
   font-weight: bold;
+  padding: 20px;
+  border-radius: 25px;
+  padding: 20px;
 }
-
-
-@font-face {
-  font-family: "PrStart";
-  src: local("PrStart"),
-   url("./font/PrStart.ttf") format("truetype");
-  font-weight: bold;
-  }
-
-  .font-face-ps {
-    font-family: "PrStart";
-   }
 
 /* Parallax Background
  * TODO: Make Background Dynamic
@@ -1250,7 +1234,6 @@ body {
 
 /* Navigation and misc */
 #main-content {
-  
   position: absolute;
   top: 0px;
   left: 55px;
@@ -1267,12 +1250,12 @@ body {
   content: attr(data-hover);
   visibility: hidden;
   opacity: 0;
-  width: 140px;
+  width: min-content;
   background-color: rgb(255, 255, 255);
   color: rgb(16, 76, 36);
   text-align: center;
   border-radius: 5px;
-  padding: 5px 0;
+  padding: 5px 10px;
   transition: opacity 1s ease-in-out;
   position: absolute;
   z-index: 1;

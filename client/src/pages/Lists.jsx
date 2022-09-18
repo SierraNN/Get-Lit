@@ -5,12 +5,12 @@ import { Button, Container, Dropdown, Header, Message } from "semantic-ui-react"
 import ListOfLists from "../components/lists/ListOfLists"
 import { useAuth } from "../context/AuthContext"
 import { useProfile } from "../context/ProfileContext"
-import bookLists from "../utils/bookLists"
+import listCache from "../utils/listCache"
 import { GET_LISTS } from "../utils/queries"
 import Loading from '../components/Loading';
 import { Link } from "react-router-dom"
 
-const cachedResults = bookLists.results.get()
+const cachedResults = listCache.results.get()
 
 const Lists = (props) => {
 
@@ -29,7 +29,7 @@ const Lists = (props) => {
 
 
   useEffect(() => {
-    if (display === 'search') setResults(bookLists.results.get())
+    if (display === 'search') setResults(listCache.results.get())
     else if (display === 'profile') setResults(myLists)
   }, [display, myLists])
 
@@ -41,7 +41,7 @@ const Lists = (props) => {
     if (data && data.getLists) {
       let { docs, page, totalDocs, totalPages } = data.getLists
       setResults(docs)
-      bookLists.results.set(docs)
+      listCache.results.set(docs)
       setPageNum(page)
       setTotalPages(totalPages)
     }

@@ -10,7 +10,8 @@
   + *
     padding-top: 1rem
     padding-left: calc(120px + 1rem)
-    .ui.header
+    padding-right: 1rem
+    .ui.header, .sub.header 
       color: white
       text-shadow: 1px 1px 3px black
 
@@ -18,24 +19,28 @@
   .ui.dropdown
     background-color: white
     min-width: max-content
+  .field>label
+    color: white
+
 
 .ui.horizontal.list.display-list
   display: flex
   flex-flow: row wrap
   align-items: center
-  // align-content: flex-start
   justify-content: flex-start
   // justify-items: flex-start
   gap: 1rem
   transition: transform 400ms
-  > a, > .ui.item
+  > a, > .item
     margin: 0
+    cursor: pointer
     .header
       margin-bottom: 0.5rem
     &:hover
       transform: translateY(-3px)
 
 .ui.segment
+  background: rgba(255,255,255,0.8)
   &.flex
     display: flex
     flex-flow: row wrap
@@ -46,6 +51,17 @@
       align-items: flex-start
       .button
         flex-grow: 0
+  .header, .sub.header 
+    color: black
+    text-shadow: none
+
+  .ui.form
+    .field>label
+      color: black
+
+.ui.segment.profile
+  max-width: 600px
+  margin: 0 auto
 
 a.placeholder 
   width: 128px
@@ -62,10 +78,22 @@ a.placeholder
     border: 1px solid rgba(255,255,255,0.4)
     transition: transform 400ms
     min-width: 120px
+    max-width: 240px
     &:hover
       transform: translateY(-3px)
   .image
     max-width: 120px
+  &.books
+    .item
+      background: transparent
+      border-width: 0px
+      width: 150px
+    .image
+      max-width: 150px
+      min-width: 150px 
+      max-height: 200px
+      min-height: 200px
+
 
 .ui.placeholder.profileImage
   height: 300px
@@ -99,7 +127,7 @@ a.placeholder
 
 .ui.label.creatorLabel
   position: absolute
-  bottom: 0.5rem  
+  bottom: -0.5rem  
   right: 0
   display: flex
   align-items: center
@@ -110,3 +138,8 @@ a.placeholder
     transform: translateX(-50%) scale(1.4)
     margin: -1rem
     height: 3em
+
+
+.ui.list.comment-list
+  .label
+    margin-left: 10px

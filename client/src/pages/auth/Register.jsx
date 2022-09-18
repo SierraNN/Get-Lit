@@ -5,7 +5,7 @@ import { useAuth } from "../../context/AuthContext"
 import { ADD_USER } from "../../utils/mutations"
 
 const Register = (props) => {
-  const [auth, setAuth] = useAuth()
+  const [auth, setAuth] = useAuth() // eslint-disable-line
   const { Form } = useForm()
   const [addUser] = useMutation(ADD_USER)
 
@@ -24,29 +24,29 @@ const Register = (props) => {
 
   return (
     <div className='background'>
-      <Container className= "ui container1">
-      <div class="ui grid">
-        <div class="six wide column left floated">
-          <img className='ui image' src='/assets/11.png' />
+      <Container className="ui container1">
+        <div class="ui grid">
+          <div class="six wide column left floated">
+            <img alt='logo' className='ui image' src='/assets/12.png' />
+          </div>
+          <div class="ten wide column left floated">
+            <br />
+            <Header>Register</Header>
+            <FormProvider>
+              <Form submit={onSubmit} respond={onResponse} fields={[
+                { name: 'username', required: true },
+                { name: 'email', required: true },
+                {
+                  name: '', widths: 'equal', fields: [
+                    { name: 'password', type: 'password', required: true },
+                    { name: 'password_confirmation', type: 'password', required: true }
+                  ]
+                }
+              ]} />
+            </FormProvider>
+          </div>
         </div>
-        <div class="ten wide column left floated">
-          <br />
-          <Header>Register</Header>
-          <FormProvider>
-            <Form submit={onSubmit} respond={onResponse} fields={[
-              { name: 'username', required: true },
-              { name: 'email', required: true },
-              {
-                name: '', widths: 'equal', fields: [
-                  { name: 'password', type: 'password', required: true },
-                  { name: 'password_confirmation', type: 'password', required: true }
-                ]
-              }
-            ]} />
-          </FormProvider>
-        </div>
-      </div>
-    </Container>
+      </Container>
     </div>
   )
 }
