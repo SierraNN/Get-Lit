@@ -3,29 +3,29 @@ import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
 import { useEffect } from "react";
 import { useState } from "react"
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Container, Header, TextArea } from "semantic-ui-react"
+import { Container, Header, Segment, TextArea } from "semantic-ui-react"
 import bookCache from "../../utils/books";
 import { useProfile } from "../../context/ProfileContext";
 import { CREATE_REVIEW } from '../../utils/mutations';
 
-const ClubListForm = (props) => {
+const CreateReview = (props) => {
   const { Form } = useForm()
   const [profile, updateProfile] = useProfile()
   const navigate = useNavigate()
   const [createReview] = useMutation(CREATE_REVIEW)
-  const [book, setBook] = useState({})
+  const [book, setBook] = useState()
   const { bookId } = useParams()
 
   useEffect(() => {
     setBook(bookCache.recent.getById(bookId))
   }, [bookId])
 
-  const onSubmit = async (clubInfo) => {
-    const club = { ...clubInfo }
-    if (club.tags === '') club.tags = []
-    else club.tags = club.tags.split(',')
+  const onSubmit = async (reviewInfo) => {
+    const review = { ...reviewInfo }
+    if (review.tags === '') review.tags = []
+    else review.tags = review.tags.split(',')
     return createReview({
-      variables: { club }
+      variables: { review }
     })
   }
   const onResponse = async ({ data }) => {
@@ -35,6 +35,8 @@ const ClubListForm = (props) => {
       navigate(`/reviews/${data.createReview._id}`)
     }
   }
+
+
 
   return (
     <div className="background3">
@@ -54,4 +56,4 @@ const ClubListForm = (props) => {
   )
 }
 
-export default ClubListForm
+export default CreateReview

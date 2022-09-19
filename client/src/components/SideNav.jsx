@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Icon, Menu } from 'semantic-ui-react'
 import { useAuth } from '../context/AuthContext';
+import { useProfile } from '../context/ProfileContext';
 
 const SideNav = (props) => {
   const [auth, setAuth] = useAuth()
+  const [profile, updateProfile] = useProfile()
 
   return (
     <Menu id="main-navigation" vertical>
@@ -50,7 +52,7 @@ const SideNav = (props) => {
           </Link>
           <Link to="/login">
             <span className="hovertext" data-hover="Logout">
-              <Menu.Item onClick={() => setAuth(null)}><Icon name="sign out" /></Menu.Item>
+              <Menu.Item onClick={() => { setAuth(null); updateProfile('CLEAR_PROFILE') }}><Icon name="sign out" /></Menu.Item>
             </span>
           </Link>
         </>

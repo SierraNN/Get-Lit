@@ -58,7 +58,7 @@ const ListDetails = (props) => {
         {isCreator && <Link to="/books"><Button content="add book" color="green" icon="plus" /></Link>}
       </Segment>
       <Segment>
-        <List>
+        <List className="comment-list">
           {list.comments.map((comment, i) => <List.Item key={i} >
             {comment.text}<Label content={comment.author.username} detail={comment.createdAt} />
           </List.Item>)}
