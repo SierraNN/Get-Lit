@@ -16,6 +16,7 @@ const Books = (props) => {
   const [results, setResults] = useState(cachedResults)
   const [searchParams, setSearchParams] = useState({})
   const [fresh, setFresh] = useState(false)
+  const [totalPages, setTotalPages] = useState(1)
   // const { state } = useLocation()
 
   const myBooks = auth ? profile.books : null
@@ -33,7 +34,9 @@ const Books = (props) => {
     }
   }
   const onResponse = async ({ data, error }) => {
-    if (data) {
+    if (data && data.items) {
+      console.log(data)
+      setTotalPages(data.totalItems / pageSize)
       setFresh(true)
       setResults(data.items)
       bookCache.results.set(data.items)
@@ -68,7 +71,7 @@ const Books = (props) => {
         <Header as='h1'>Books!</Header>
         {display === 'search' && (
           <FormProvider>
-            <Form submit={onSubmit} respond={onResponse} fields={[
+            <Form submitBtnText="Search" submit={onSubmit} respond={onResponse} fields={[
               { name: 'term', useLabel: false, width: '12' },
               {
                 name: 'type', useLabel: false, control: Dropdown, options: [
@@ -82,7 +85,7 @@ const Books = (props) => {
           </FormProvider>
         )}
         {display === 'profile' && <Button icon="search" color="green" content="Search for Books" onClick={() => setDisplay('search')} />}
-        {fresh && <div>
+        {fresh && totalPages > 1 && <div>
           <Button.Group floated="right">
             <Button icon="angle left" onClick={prevPage} />
             <Button content={pageNum} onClick={null} />
@@ -90,12 +93,13 @@ const Books = (props) => {
           </Button.Group>
         </div>}
 
-        {results
-          ? <BookImageList headerText={display === 'search' ? 'Search Results' : 'Your Books'} list={results} />
-          : results && <Message>No results</Message>
+        {
+          results
+            ? <BookImageList headerText={display === 'search' ? 'Search Results' : 'Your Books'} list={results} />
+            : results && <Message>No results</Message>
         }
-      </Container>
-    </div>
+      </Container >
+    </div >
   )
 }
 

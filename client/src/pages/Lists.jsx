@@ -75,7 +75,7 @@ const Lists = (props) => {
         <Header as='h1'>Book Lists!</Header>
         {display === 'search' && (
           <FormProvider>
-            <Form submit={onSubmit} fields={[
+            <Form submitBtnText="Search" submit={onSubmit} fields={[
               { name: 'term', useLabel: false, width: '12' },
               {
                 name: 'type', useLabel: false, control: Dropdown, options: [
@@ -86,7 +86,7 @@ const Lists = (props) => {
                 ], width: '4'
               }
             ]} buttons={auth ? [{ content: 'My Lists', color: 'green', onClick: () => setDisplay('profile') }] : []} />
-            {fresh && <div>
+            {fresh && totalPages > 1 && <div>
               <Button.Group floated="right">
                 <Button icon="angle left" onClick={prevPage} />
                 <Button content={pageNum} onClick={null} />

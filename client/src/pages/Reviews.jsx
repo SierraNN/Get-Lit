@@ -38,18 +38,19 @@ const Reviews = (props) => {
   })
 
   useEffect(() => {
-    if (data && data.getReviews) {
+    if (!loading && data && data.getReviews) {
       let { docs, page, totalDocs, totalPages } = data.getReviews
-      setResults(docs)
+      setResults([...docs])
       reviewCache.results.set(docs)
-      console.log({ reviews: docs })
+      console.log('get reviews', { reviews: docs })
       setPageNum(page)
       setTotalPages(totalPages)
     }
-  }, [data])
+  }, [loading, data])
 
   useEffect(() => {
     const search = async () => {
+      console.log('refetch')
       await refetch({ params: searchParams })
       setFresh(true)
     }
@@ -77,7 +78,7 @@ const Reviews = (props) => {
         <Header as='h1'>Book Reviews!</Header>
         {display === 'search' && (
           <FormProvider>
-            <Form submitBtnText="Search Reviews" submit={onSubmit} fields={[
+            <Form submitBtnText="Search" submit={onSubmit} fields={[
               { name: 'term', useLabel: false, width: '12' },
               {
                 name: 'type', useLabel: false, control: Dropdown, options: [
@@ -87,7 +88,7 @@ const Reviews = (props) => {
                 ], width: '4'
               }
             ]} buttons={auth ? [{ content: 'My Reviews', color: 'green', onClick: () => setDisplay('profile') }] : []} />
-            {fresh && <div>
+            {fresh && totalPages > 1 && <div>
               <Button.Group floated="right">
                 <Button icon="angle left" onClick={prevPage} />
                 <Button content={pageNum} onClick={null} />

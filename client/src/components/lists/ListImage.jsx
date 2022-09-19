@@ -18,7 +18,6 @@ const ListImage = ({ list }) => {
 
   const renderImage = () => {
     const thumbnails = books ? books.slice(0, 3).map(({ thumbnail }) => thumbnail) : null
-    console.log('BOOKS', { books })
     let size
     switch (thumbnails.length) {
       case 2:

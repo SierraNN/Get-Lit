@@ -44,13 +44,11 @@ const Clubs = (props) => {
       clubCache.results.set(docs)
       setPageNum(page)
       setTotalPages(totalPages)
-      console.log('data', data)
     }
   }, [data])
   useEffect(() => {
     const search = async () => {
       await refetch({ params: searchParams })
-      console.log('search', { searchParams })
       setFresh(true)
     }
     if (searchParams.term) search()
@@ -77,7 +75,7 @@ const Clubs = (props) => {
         <Header as='h1'>Book Clubs!</Header>
         {display === 'search' && (
           <FormProvider>
-            <Form submit={onSubmit} fields={[
+            <Form submitBtnText="Search" submit={onSubmit} fields={[
               { name: 'term', useLabel: false, width: '12' },
               {
                 name: 'type', useLabel: false, control: Dropdown, options: [
@@ -88,7 +86,7 @@ const Clubs = (props) => {
                 ], width: '4'
               }
             ]} buttons={auth ? [{ content: 'My Clubs', color: 'green', onClick: () => setDisplay('profile') }] : []} />
-            {fresh && <div>
+            {fresh && totalPages > 1 && <div>
               <Button.Group floated="right">
                 <Button icon="angle left" onClick={prevPage} />
                 <Button content={pageNum} onClick={null} />

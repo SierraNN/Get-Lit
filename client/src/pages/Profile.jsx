@@ -1,8 +1,8 @@
 import { Container } from 'semantic-ui-react';
-import { Divider, Header, Segment, Modal, Columns, Button, Icon, Menu } from 'semantic-ui-react';
+import { Divider, Header, Segment, Button, Menu } from 'semantic-ui-react';
 import './Profile.css';
 import { Dropdown } from 'semantic-ui-react';
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Bio from './Bio';
 import ProfileImage from '../components/ProfileImage'
 import { useProfile } from '../context/ProfileContext';
@@ -20,20 +20,20 @@ const Genres = [
   { key: 'dystopian', text: 'Dystopian', value: 'dystopian' },
   { key: 'design', text: 'Science Fiction', value: 'design' },
   { key: 'ember', text: 'Action & Adventure', value: 'ember' },
-  { key: 'html', text: 'Mystery', value: 'html' },
-  { key: 'ia', text: 'Thriller & Suspense', value: 'ia' },
-  { key: 'javascript', text: 'Horror', value: 'javascript' },
-  { key: 'mech', text: 'Historical Fiction', value: 'mech' },
-  { key: 'meteor', text: 'Romance', value: 'meteor' },
-  { key: 'node', text: 'Womens Fiction', value: 'node' },
-  { key: 'plumbing', text: 'LGBTQ+', value: 'plumbing' },
-  { key: 'python', text: 'Contemporary Fiction', value: 'python' },
-  { key: 'rails', text: 'Literary Fiction', value: 'rails' },
-  { key: 'react', text: 'Graphic Novel', value: 'react' },
-  { key: 'repair', text: 'Young Adult', value: 'repair' },
-  { key: 'ruby', text: 'Memoir & Autobiography', value: 'ruby' },
-  { key: 'ui', text: 'Biography', value: 'ui' },
-  { key: 'ux', text: 'True Crime', value: 'ux' },
+  { key: 'mystery', text: 'Mystery', value: 'mystery' },
+  { key: 'suspense', text: 'Thriller & Suspense', value: 'suspense' },
+  { key: 'hrrrot', text: 'Horror', value: 'horrot' },
+  { key: 'historical fiction', text: 'Historical Fiction', value: 'historical fiction' },
+  { key: 'romance', text: 'Romance', value: 'romance' },
+  { key: 'womens fiction', text: 'Womens Fiction', value: 'womens fiction' },
+  { key: 'lgbtq', text: 'LGBTQ+', value: 'lgbtq' },
+  { key: 'contemp fiction', text: 'Contemporary Fiction', value: 'contemp fiction' },
+  { key: 'literary fiction', text: 'Literary Fiction', value: 'literary fiction' },
+  { key: 'graphic novel', text: 'Graphic Novel', value: 'graphic novel' },
+  { key: 'young adult', text: 'Young Adult', value: 'young adult' },
+  { key: 'memoir', text: 'Memoir & Autobiography', value: 'memoir' },
+  { key: 'biography', text: 'Biography', value: 'biography' },
+  { key: 'true crime', text: 'True Crime', value: 'true crime' },
 ]
 
 const Profile = () => {
@@ -69,6 +69,10 @@ const Profile = () => {
     }
   }, [data, data?.getUser])
 
+  useEffect(() => {
+    if (userInfo?._id) setIsFollowing((profile.following || []).find(({ _id }) => _id === userInfo._id) !== undefined)
+  }, [userInfo])
+
   const { _id, username, bio, following = [], books = [], lists = [], clubs = [] } = userInfo
 
   const [updateUserTags] = useMutation(UPDATE_USER_TAGS)
@@ -85,7 +89,6 @@ const Profile = () => {
                 let { data, error } = await updateUserTags({
                   variables: { tags: value }
                 })
-                console.log({ value, data, error })
                 if (data?.updateUserTags) {
                   updateProfile('UPDATE_TAGS', data.updateUserTags)
                   setUserInfo({ ...userInfo, tags: data.updateUserTags })
@@ -135,7 +138,7 @@ const Profile = () => {
     </Segment>
   )
 
-  const [isFollowing, setIsFollowing] = useState((profile.following || []).find(({ _id }) => userInfo._id) !== undefined)
+  const [isFollowing, setIsFollowing] = useState((profile.following || []).find(({ _id }) => _id === userInfo._id) !== undefined)
   const [addFollowing] = useMutation(ADD_FOLLOWING)
   const [removeFollowing] = useMutation(REMOVE_FOLLOWING)
   const handleFollowingClick = async () => {

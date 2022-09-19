@@ -19,8 +19,6 @@ export class Cache {
   // Object cache functions
   getById(id) {
     let cache = this.get()
-    let item = cache[id]
-    if (!item) console.log(`NOT CACHED ${this.cacheName}:${id}`)
     return cache[id]
   }
   updateById(id, value) {

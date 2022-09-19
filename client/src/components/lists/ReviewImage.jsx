@@ -10,15 +10,14 @@ const ReviewImage = ({ review }) => {
   const [info, setInfo] = useState(null)
 
   useEffect(() => {
-    setInfo(review)
+    if (review && review.book) {
+      console.log({ review })
+      setInfo(review)
+    }
   }, [review])
 
   if (!info) return <Placeholder.Image />
   const { _id, book, creator, reviewTitle, reviewText } = info
-  if (book === null) {
-    console.log({ review: info })
-    console.trace('Book missing')
-  }
   const renderBookThumbnail = () => {
     const thumbnail = book?.thumbnail || null
     if (!thumbnail) {
@@ -50,7 +49,7 @@ const ReviewImage = ({ review }) => {
   return (
     <Link to={`/reviews/${_id}`} className="item">
       <div onClick={() => reviewCache.recent.updateById(review._id, review)} >
-        <Header as="h3" content={book?.title} />
+        <Header as="h3" content={reviewTitle} />
         {renderBookThumbnail()}
         {renderUserIcon()}
       </div>

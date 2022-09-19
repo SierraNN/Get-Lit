@@ -28,7 +28,6 @@ const bookSearch = async (req, res) => {
 const fetchBook = async (req, res) => {
   const { googleId } = req.params
   const url = `/volumes/${googleId}?key=${API_KEY}`
-  console.log({ googleId })
   try {
     const { data } = await googleBooks.get(url)
     res.json({ data })

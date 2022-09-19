@@ -13,7 +13,6 @@ const BookListForm = (props) => {
   const [profile, updateProfile] = useProfile()
   const navigate = useNavigate()
   const { state } = useLocation()
-  console.log(state)
   const [createList] = useMutation(CREATE_LIST)
   const onSubmit = async (listInfo) => {
     const list = { ...listInfo }
@@ -25,7 +24,6 @@ const BookListForm = (props) => {
     })
   }
   const onResponse = async ({ data }) => {
-    console.log(data.createList)
     if (data?.createList) {
       updateProfile('ADD_LIST', data.createList)
       navigate(`/lists/${data.createList._id}`)

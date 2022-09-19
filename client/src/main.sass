@@ -72,6 +72,8 @@ a.placeholder
   color: white
 
 .display-list
+  .header 
+    padding: 0 5px
   .item
     background: rgba(255,255,255,0.2)
     border-radius: 5px
@@ -82,17 +84,26 @@ a.placeholder
     &:hover
       transform: translateY(-3px)
   .image
-    max-width: 120px
   &.books
     .item
       background: transparent
       border-width: 0px
-      width: 150px
     .image
       max-width: 150px
       min-width: 150px 
       max-height: 200px
       min-height: 200px
+  &.reviews
+    .item
+      width: 150px
+    .image
+      width: 100%
+  &.users
+    .image
+      max-width: 120px
+
+
+
 
 
 .ui.placeholder.profileImage
@@ -143,3 +154,9 @@ a.placeholder
 .ui.list.comment-list
   .label
     margin-left: 10px
+
+.ui.list>a.item i.icon.followingIcon
+  position: absolute
+  top: 0.5rem
+  right: 5px
+  color: white

@@ -21,7 +21,6 @@ const ClubListForm = (props) => {
     })
   }
   const onResponse = async ({ data }) => {
-    console.log(data.createClub)
     if (data?.createClub) {
       updateProfile('ADD_CLUB', data.createClub)
       navigate(`/clubs/${data.createClub._id}`)

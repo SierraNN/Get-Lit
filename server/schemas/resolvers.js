@@ -44,7 +44,6 @@ const resolvers = {
       return found.clubs
     },
     getBook: async (parent, { id }) => {
-      console.log(id)
       const book = await Book.findById(id)
       return book
     },
@@ -86,7 +85,7 @@ const resolvers = {
     },
     getReviews: async (parent, { params = {} }) => {
       const results = await Review.search(params)
-      console.log(results.map(({ book }) => book))
+      console.log({ reviews: results.docs.map(({ book }) => book) })
       return results
     }
   },
@@ -136,7 +135,6 @@ const resolvers = {
       return bio
     },
     updateSprite: async (parent, { spriteChoice }, { user }) => {
-      console.log({ spriteChoice })
       const updated = await User.findByIdAndUpdate(user._id, {
         spriteChoice
       }, { new: true })
@@ -156,7 +154,6 @@ const resolvers = {
       return update.following
     },
     removeFollowing: async (parent, { followingId }, { user }) => {
-      console.log(followingId)
       const update = await User.findByIdAndUpdate(user._id, {
         $pull: { following: Types.ObjectId(followingId) }
       }, { new: true }).then(u => u.populate('following'))
@@ -181,7 +178,6 @@ const resolvers = {
     /** LISTS */
     createList: async (parent, { list }, { user }) => {
       let book = list.book ? await Book.findOne({ googleId: list.book.googleId }) || await Book.create(list.book) : null
-      console.log({ body: list.book, doc: book })
       if (!user) throw new AuthenticationError('Not logged in')
 
       const listInfo = {

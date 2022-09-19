@@ -1,24 +1,35 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { Header, Image, List, Placeholder } from "semantic-ui-react"
+import { Header, Icon, Image, List, Placeholder } from "semantic-ui-react"
+import { useProfile } from "../../context/ProfileContext"
 import userCache from "../../utils/userCache"
 
 import { imgList } from "../ProfileImage"
 
 const UserImage = ({ user }) => {
-  const [info, setInfo] = useState(null)
+  const [profile] = useProfile()
+  const [userInfo, setUserInfo] = useState(null)
   const [thumbnail, setThumbnail] = useState(imgList[0])
+  const [isFollowing, setIsFollowing] = useState((profile?.following || []).find(({ _id }) => _id === userInfo?._id) !== undefined)
 
   useEffect(() => {
-    setInfo(user)
+    setUserInfo({ ...user })
     if (user) setThumbnail(imgList[user.spriteChoice])
   }, [user])
 
-  if (!info) return <Placeholder className='item'><Placeholder.Image /></Placeholder>
-  const { _id, username, spriteChoice = 0 } = info
+  useEffect(() => {
+    if (userInfo?._id) setIsFollowing((profile.following || []).find(({ _id }) => _id === userInfo._id) !== undefined)
+  }, [userInfo, profile, profile.following])
+
+  if (!userInfo) return <Placeholder className='item'><Placeholder.Image /></Placeholder>
+
+  const { _id, username } = userInfo
+  if (!username) console.log(username, { user, userInfo })
+
   return (
-    <Link to={`/users/${_id}`} className={thumbnail ? 'item' : 'item   placeholder'}>
+    <Link to={`/users/${_id}`} className={thumbnail ? 'item' : 'item placeholder'}>
+      {isFollowing && <Icon className="followingIcon" name='heart' />}
       {thumbnail
         ?
         <>

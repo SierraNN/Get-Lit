@@ -89,7 +89,6 @@ const ProfileProvider = ({ children }) => {
   useEffect(() => {
     if (!loading && data?.myProfile) {
       dispatch({ type: 'SET_PROFILE', payload: data.myProfile })
-      console.log({ profile })
     }
   }, [loading, data?.myProfile])
 

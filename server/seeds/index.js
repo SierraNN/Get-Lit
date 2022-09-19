@@ -10,7 +10,7 @@ async function userSeed() {
     { username: 'celia', email: 'celia@example.com', password: 'password' },
     { username: 'malik', email: 'malik@example.com', password: 'password' },
     { username: 'diane', email: 'diane@example.com', password: 'password' },
-  ]).then(() => console.log('Users seeded'))
+  ]).then(() => console.log('Users seeded')).catch(e => console.log(e))
   process.exit(0)
 }
 

@@ -21,9 +21,7 @@ const BookSearch = (props) => {
     }
   }
   const onResponse = async ({ data, error }) => {
-    // console.log(data)
     if (data) {
-      // setResultCount(data.totalItems)
       setResults(data.items)
       bookCache.results.set(data.items)
     }

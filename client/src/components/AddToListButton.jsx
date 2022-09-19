@@ -29,7 +29,6 @@ const AddToListButton = ({ book }) => {
       }
     })
     if (data && data.addBookToList) {
-      console.log(data)
       const list = data.addBookToList
       updateProfile("UPDATE_LIST", list)
 

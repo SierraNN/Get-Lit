@@ -27,13 +27,13 @@ const CreateReview = (props) => {
     const review = { ...reviewInfo }
     if (review.rating !== '') review.rating = Number(review.rating)
     review.book = bookData(book)
-    console.log(review)
+    console.log('create review sumbit', { review })
     return createReview({
       variables: { review }
     })
   }
   const onResponse = async ({ data }) => {
-    console.log(data.createReview)
+    console.log('create review response', { data })
     if (data?.createReview) {
       updateProfile('ADD_REVIEW', data.createReview)
       navigate(`/reviews/${data.createReview._id}`)

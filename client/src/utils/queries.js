@@ -445,6 +445,7 @@ export const GET_REVIEWS = gql`
           username
           spriteChoice
         }
+        reviewTitle
         reviewText
       }
     }
