@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { Header, Icon, Image, List, Placeholder } from "semantic-ui-react"
+import { Header, Icon, Image, Label, List, Placeholder } from "semantic-ui-react"
 import { useProfile } from "../../context/ProfileContext"
 import userCache from "../../utils/userCache"
 
@@ -27,22 +27,18 @@ const UserImage = ({ user }) => {
   const { _id, username } = userInfo
   if (!username) console.log(username, { user, userInfo })
 
+
+
   return (
     <Link to={`/users/${_id}`} className={thumbnail ? 'item' : 'item placeholder'}>
-      {isFollowing && <Icon className="followingIcon" name='heart' />}
+      <Header as='h3'>{username}{isFollowing && <Icon className="followingIcon" size="small" name='heart' />}</Header>
       {thumbnail
-        ?
-        <>
-          <Header as='h3'>{username}</Header>
-          <Image src={thumbnail} inline onClick={() => userCache.recent.updateById(user._id, user)} />
-        </>
-        : <>
-          <Header as='h3'>{username}</Header>
-          <Placeholder>
-            <Placeholder.Image>
-            </Placeholder.Image>
-          </Placeholder>
-        </>
+        ? <Image src={thumbnail} onClick={() => userCache.recent.updateById(user._id, user)} />
+        : <Placeholder>
+          <Placeholder.Image>
+          </Placeholder.Image>
+        </Placeholder>
+
       }
 
     </Link>

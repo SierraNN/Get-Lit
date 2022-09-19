@@ -15,15 +15,15 @@ class QueryService {
     this.previousData = previousData
     this.cache = new Cache(`${name}Query`, [])
   }
-  async refetch(...args) {
-    return this.query(...args).then(response => {
+  async refetch(params = {}) {
+    return this.query({ variables: { params } }).then(response => {
       console.log('REFETCH', response)
-      this.cacheResponse()
+      this.cacheResponse(response)
       return response
     })
   }
-  cacheResponse() {
-    this.cache.set(this.getQueryData())
+  cacheResponse({ data }) {
+    if (data) this.cache.set(data)
   }
   getDocs() {
     return this.getQueryData()?.docs || []

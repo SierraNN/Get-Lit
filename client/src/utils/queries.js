@@ -165,6 +165,7 @@ export const GET_USER = gql`
       following {
         _id
         username
+        spriteChoice
       }
       books {
         _id

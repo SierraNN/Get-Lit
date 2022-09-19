@@ -22,11 +22,11 @@ const Login = (props) => {
   return (
     <div className='background'>
       <Container className="ui container1">
-        <div class="ui grid">
-          <div class="six wide column left floated">
+        <div className="ui grid">
+          <div className="six wide column left floated">
             <img alt='logo' className='ui image' src='/assets/12.png' />
           </div>
-          <div class="ten wide column right floated">
+          <div className="ten wide column right floated">
             <br />
             <br />
             <Header>Login</Header>

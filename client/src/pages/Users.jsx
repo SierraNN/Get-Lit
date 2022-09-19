@@ -9,6 +9,7 @@ import { GET_USERS } from "../utils/queries"
 import Loading from '../components/Loading';
 import UserList from "../components/lists/UserList"
 import { useSearch } from "../context/SearchContext"
+import { useNavigate } from "react-router-dom"
 
 // const cachedResults = userCache.results.get()
 
@@ -17,46 +18,51 @@ const Users = (props) => {
   const [profile, updateProfile] = useProfile()
   const { Form } = useForm()
   const { users } = useSearch()
-  const [searchParams, setSearchParams] = useState({})
-  const [fresh, setFresh] = useState(false)
+  const [params, setParams] = useState({})
   const [display, setDisplay] = useState('search')
-  const [pageNum, setPageNum] = useState(users.getPage())
-  const [totalPages, setTotalPages] = useState(users.getTotalPages())
   const [pageSize] = useState(20)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    users.refetch()
-  }, [])
+    users.refetch(params)
+  }, [users.refetch, params])
 
-  useEffect(() => {
-    let data = users.getQueryData()
-    if (!users.loading && data) {
-      let { page, totalPages } = data
-      setPageNum(page)
-      setTotalPages(totalPages)
-    }
-  }, [users.loading, users.data])
-
-  useEffect(() => {
-    if (searchParams.term) {
-      users.refetch({ variables: { params: searchParams } })
-      setFresh(true)
-    }
-  }, [searchParams])
-
-  const onSubmit = async ({ term, type }) => {
+  const onSubmit = async ({ params: { term, type } }) => {
     if (term === '') {
-      return { errors: { term: 'Please enter a search term' } }
+      setParams({ pageNum: 1, pageSize })
     } else {
-      setPageNum(1)
-      setSearchParams({ term, type, pageNum: 1, pageSize })
+      setParams({ term, type, pageNum: 1, pageSize })
     }
   }
 
-  const nextPage = async () => setPageNum(Math.min(pageNum + 1, totalPages))
-  const prevPage = async () => setPageNum(pageNum - 1 || 1)
+  const nextPage = async () => setParams({ ...params, pageNum: users.getPage() + 1 })
+  const prevPage = async () => setParams({ ...params, pageNum: users.getPage() - 1 })
 
-  if (users.loading) return <div className="background5"><Loading /></div>
+  const headerText = () => {
+    let text
+    if (display === 'search') {
+      if (!params.term) text = `Showing all users`
+      else text = `Showing results for "${params.term}"`
+    } else {
+      text = "Showing users you follow"
+    }
+    return text
+  }
+  const ListHeader = () => {
+    return <Header as='h2'>
+      {headerText()}
+      {params.term && <Button className="clear-results" negative content={params.term} icon="x" compact onClick={() => setParams({ ...params, term: undefined })} />}
+      {display === 'search' && <ListNav />}
+    </Header>
+  }
+  const ListNav = () => {
+    return users.getTotalPages() > 1 && <Button.Group className="list-nav-btns">
+      <Button icon="angle left" disabled={users.getPage() === 1} onClick={prevPage} />
+      <Button className="page" content={`pg ${users.getPage()}`} onClick={null} />
+      <Button className="total-pages" content={`/ ${users.getTotalPages()}`} onClick={null} />
+      <Button icon="angle right" disabled={users.getPage() === users.getTotalPages()} onClick={nextPage} />
+    </Button.Group>
+  }
 
   return (
     <div className="background2">
@@ -65,31 +71,31 @@ const Users = (props) => {
         {display === 'search' && (
           <FormProvider>
             <Form submitBtnText="Search" submit={onSubmit} fields={[
-              { name: 'term', useLabel: false, width: '12', initial: searchParams.term },
               {
-                name: 'type', useLabel: false, control: Dropdown, options: [
-                  { text: 'Search username', value: 'username' },
-                  { text: 'Genres', value: 'tags' },
-                ], width: '4'
+                name: 'params', fields: [
+                  { name: 'term', useLabel: false, width: '12', initial: params.term },
+                  {
+                    name: 'type', useLabel: false, control: Dropdown, options: [
+                      { text: 'Username', value: 'username' },
+                      { text: 'Genres', value: 'tags' },
+                    ], width: '4'
+                  }
+                ]
               }
-            ]} buttons={auth ? [{ content: 'Following', color: 'green', onClick: () => setDisplay('profile') }] : []} />
-            {fresh && totalPages > 1 && <div>
-              <Button.Group floated="right">
-                <Button icon="angle left" onClick={prevPage} />
-                <Button content={pageNum} onClick={null} />
-                <Button icon="angle right" onClick={nextPage} />
-              </Button.Group>
-            </div>}
+            ]} buttons={auth ? [
+              { content: 'Following', icon: 'heart', color: 'green', onClick: () => setDisplay('profile') },
+              { content: 'Your Profile', icon: 'user circle', color: 'teal', onClick: () => { navigate("/profile") } }
+            ] : []} />
           </FormProvider>
         )}
         {display === 'profile' && (
           <>
             <Button icon="search" color="green" content="Search for Users" onClick={() => setDisplay('search')} />
           </>
-
         )}
 
-        <UserList list={display === 'search' ? users.getDocs() : profile?.following} />
+        <UserList header={<ListHeader />} list={display === 'search' ? users.getDocs() : profile?.following} />
+
       </Container>
     </div>
   )

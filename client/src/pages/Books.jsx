@@ -57,7 +57,6 @@ const Books = (props) => {
     search()
   }, [pageNum, pageSize, searchParams])
 
-  // const displayToggle = myBooks !== null
   const [display, setDisplay] = useState('search')
 
   useEffect(() => {

@@ -27,7 +27,7 @@ const Genres = [
   { key: 'romance', text: 'Romance', value: 'romance' },
   { key: 'womens fiction', text: 'Womens Fiction', value: 'womens fiction' },
   { key: 'lgbtq', text: 'LGBTQ+', value: 'lgbtq' },
-  { key: 'contemp fiction', text: 'Contemporary Fiction', value: 'contemp fiction' },
+  { key: 'contemporary fiction', text: 'Contemporary Fiction', value: 'contemporary fiction' },
   { key: 'literary fiction', text: 'Literary Fiction', value: 'literary fiction' },
   { key: 'graphic novel', text: 'Graphic Novel', value: 'graphic novel' },
   { key: 'young adult', text: 'Young Adult', value: 'young adult' },
@@ -45,12 +45,13 @@ const Profile = () => {
 
   const { loading, data, refetch } = useQuery(GET_USER, {
     variables: {
-      id: userId || (profile && profile._id) || "null"
+      id: userId || profile?._id
     }
   })
 
   useEffect(() => {
     if (userId) {
+      console.log(userId, profile?._id)
       refetch({ id: userId })
       setIsOwnProfile(userId === profile?._id)
     } else {
@@ -65,6 +66,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (data && data?.getUser) {
+      console.log(data.getUser)
       setUserInfo(data.getUser)
     }
   }, [data, data?.getUser])
@@ -100,6 +102,7 @@ const Profile = () => {
       </div>
     </Segment>
   )
+
 
   const FriendsContainer = () => (
     //edit this so it renders dynamically

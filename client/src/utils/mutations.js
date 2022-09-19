@@ -46,6 +46,7 @@ export const ADD_FOLLOWING = gql`
     addFollowing(followingId: $followingId){
       _id
       username
+      spriteChoice
     }
   }
 `

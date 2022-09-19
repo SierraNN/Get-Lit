@@ -31,7 +31,6 @@ const UserSchema = new Schema({
   },
   spriteChoice: {
     type: Number,
-    default: 0,
     get: function (value) {
       return value || 0
     }

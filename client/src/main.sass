@@ -71,7 +71,7 @@ a.placeholder
 #LandingPage
   color: white
 
-.display-list
+.ui.horizontal.list.display-list
   .header 
     padding: 0 5px
   .item
@@ -100,11 +100,9 @@ a.placeholder
       width: 100%
   &.users
     .image
+      display: block
+      margin: 0 auto
       max-width: 120px
-
-
-
-
 
 .ui.placeholder.profileImage
   height: 300px
@@ -155,8 +153,33 @@ a.placeholder
   .label
     margin-left: 10px
 
-.ui.list>a.item i.icon.followingIcon
+.ui.list>a.item 
+  i.icon.followingIcon
+    margin: 0 0 0 0.5rem
+    color: rgba(255,255,255,0.7)
+    font-size: 1.2rem
+    position: relative
+    bottom: 2px
+    transition: color 200ms
+  &:hover
+    i.icon.followingIcon
+      color: white
+
+.ui.buttons.list-nav-btns
   position: absolute
-  top: 0.5rem
-  right: 5px
-  color: white
+  right: 0
+  .button:first-child
+    border-right: 1px solid rgb(210,210,210)
+  .button:last-child
+    border-left: 1px solid rgb(210,210,210)
+  .page
+    padding-right: 0.2rem
+    padding-left: 1rem
+    &:hover, &:active, &:focus
+      background: #e0e1e2 none
+  .total-pages
+    padding-left: 0.2rem
+    padding-right: 1rem
+    color: rgba(0,0,0,.4)
+    &:hover, &:active, &:focus
+      background: #e0e1e2 none

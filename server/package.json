@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/SierraNN/Get-Lit#readme",
   "dependencies": {
+    "@faker-js/faker": "^7.5.0",
     "apollo-server-express": "^3.10.2",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
