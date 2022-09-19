@@ -9,17 +9,15 @@ import reviewCache from "../utils/reviewCache"
 import { GET_REVIEWS } from "../utils/queries"
 import Loading from '../components/Loading';
 import { Link } from "react-router-dom"
+import { useSearch } from "../context/SearchContext"
 
-const cachedResults = reviewCache.results.get()
 
 const Reviews = (props) => {
-
-
   const [auth] = useAuth()
   const [profile] = useProfile()
-  const myReviews = auth ? profile.reviews : null
+  // const myReviews = auth ? profile.reviews : null
   const { Form } = useForm()
-  const [results, setResults] = useState(cachedResults)
+  const { reviews } = useSearch()
   const [searchParams, setSearchParams] = useState({})
   const [fresh, setFresh] = useState(false)
   const [display, setDisplay] = useState('search')
@@ -27,34 +25,28 @@ const Reviews = (props) => {
   const [totalPages, setTotalPages] = useState(1)
   const [pageSize] = useState(20)
 
+  useEffect(() => {
+    reviews.refetch()
+  }, [])
+
+  // const { loading, data, refetch } = useQuery(GET_REVIEWS, {
+  //   variables: { ...searchParams }
+  // })
 
   useEffect(() => {
-    if (display === 'search') setResults(reviewCache.results.get())
-    else if (display === 'profile') setResults(myReviews)
-  }, [display, myReviews])
-
-  const { loading, data, refetch } = useQuery(GET_REVIEWS, {
-    variables: { ...searchParams }
-  })
-
-  useEffect(() => {
-    if (!loading && data && data.getReviews) {
-      let { docs, page, totalDocs, totalPages } = data.getReviews
-      setResults([...docs])
-      reviewCache.results.set(docs)
-      console.log('get reviews', { reviews: docs })
+    let data = reviews.getQueryData()
+    if (!reviews.loading && data) {
+      let { page, totalPages } = data
       setPageNum(page)
       setTotalPages(totalPages)
     }
-  }, [loading, data])
+  }, [reviews.loading, reviews.data])
 
   useEffect(() => {
-    const search = async () => {
-      console.log('refetch')
-      await refetch({ params: searchParams })
+    if (searchParams.term) {
+      reviews.refetch({ variables: { params: searchParams } })
       setFresh(true)
     }
-    if (searchParams.term) search()
   }, [searchParams])
 
   const onSubmit = async ({ term, type }) => {
@@ -63,14 +55,13 @@ const Reviews = (props) => {
     } else {
       setPageNum(1)
       setSearchParams({ term, type, pageNum: 1, pageSize })
-      return { data }
     }
   }
 
   const nextPage = async () => setPageNum(Math.min(pageNum + 1, totalPages))
   const prevPage = async () => setPageNum(pageNum - 1 || 1)
 
-  if (loading) return <div className="background3"><Loading /></div>
+  if (reviews.loading) return <div className="background3"><Loading /></div>
 
   return (
     <div className="background3">
@@ -106,10 +97,9 @@ const Reviews = (props) => {
           </>
 
         )}
-        {results
-          ? <ReviewList list={results} />
-          : results && <Message>No results</Message>
-        }
+
+        <ReviewList list={display === 'search' ? reviews.getDocs() : profile?.reviews} />
+
       </Container>
     </div>
   )

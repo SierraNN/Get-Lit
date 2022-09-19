@@ -77,6 +77,7 @@ const resolvers = {
     },
     getUsers: async (parent, { params = {} }) => {
       const results = await User.search(params)
+      console.log(params)
       return results
     },
     getClubs: async (parent, { params = {} }) => {

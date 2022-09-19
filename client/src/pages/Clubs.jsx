@@ -9,17 +9,14 @@ import clubCache from "../utils/clubCache"
 import { GET_CLUBS } from "../utils/queries"
 import Loading from '../components/Loading';
 import { Link } from "react-router-dom"
+import { useSearch } from "../context/SearchContext"
 
-const cachedResults = clubCache.results.get()
 
 const Clubs = (props) => {
-
-
   const [auth] = useAuth()
   const [profile, updateProfile] = useProfile()
-  const myClubs = auth ? profile.clubs : null
   const { Form } = useForm()
-  const [results, setResults] = useState(cachedResults)
+  const { clubs } = useSearch()
   const [searchParams, setSearchParams] = useState({})
   const [fresh, setFresh] = useState(false)
   const [display, setDisplay] = useState('search')
@@ -27,31 +24,32 @@ const Clubs = (props) => {
   const [totalPages, setTotalPages] = useState(1)
   const [pageSize] = useState(20)
 
+  useEffect(() => {
+    clubs.refetch()
+  }, [])
+
+  // useEffect(() => {
+  //   if (display === 'search') setResults(clubCache.results.get())
+  //   else if (display === 'profile') setResults(myClubs)
+  // }, [display, myClubs])
+
+  // const { loading, data, refetch } = useQuery(GET_CLUBS, {
+  //   variables: { ...searchParams }
+  // })
 
   useEffect(() => {
-    if (display === 'search') setResults(clubCache.results.get())
-    else if (display === 'profile') setResults(myClubs)
-  }, [display, myClubs])
-
-  const { loading, data, refetch } = useQuery(GET_CLUBS, {
-    variables: { ...searchParams }
-  })
-
-  useEffect(() => {
-    if (data && data.getClubs) {
-      let { docs, page, totalDocs, totalPages } = data.getClubs
-      setResults(docs)
-      clubCache.results.set(docs)
+    let data = clubs.getQueryData()
+    if (!clubs.loading && data) {
+      let { docs, page, totalDocs, totalPages } = data
       setPageNum(page)
       setTotalPages(totalPages)
     }
-  }, [data])
+  }, [clubs.loading, clubs.data])
+
   useEffect(() => {
-    const search = async () => {
-      await refetch({ params: searchParams })
-      setFresh(true)
+    if (searchParams.term) {
+      clubs.refetch({ variables: { params: searchParams } })
     }
-    if (searchParams.term) search()
   }, [searchParams])
 
   const onSubmit = async ({ term, type }) => {
@@ -60,14 +58,13 @@ const Clubs = (props) => {
     } else {
       setPageNum(1)
       setSearchParams({ term, type, pageNum: 1, pageSize })
-      return { data }
     }
   }
 
   const nextPage = async () => setPageNum(Math.min(pageNum + 1, totalPages))
   const prevPage = async () => setPageNum(pageNum - 1 || 1)
 
-  if (loading) return <div className="background5"><Loading /></div>
+  if (clubs.loading) return <div className="background5"><Loading /></div>
 
   return (
     <div className="background3">
@@ -105,10 +102,8 @@ const Clubs = (props) => {
           </>
 
         )}
-        {results
-          ? <ClubList list={results} />
-          : results && <Message>No results</Message>
-        }
+        <ClubList list={display === 'search' ? clubs.getDocs() : profile?.clubs} />
+
       </Container>
     </div>
   )

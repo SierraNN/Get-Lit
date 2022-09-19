@@ -1,25 +1,19 @@
-import { useQuery } from "@apollo/client"
 import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
 import { useEffect, useState } from "react"
 import { Button, Container, Dropdown, Header, Message } from "semantic-ui-react"
 import ListOfLists from "../components/lists/ListOfLists"
 import { useAuth } from "../context/AuthContext"
 import { useProfile } from "../context/ProfileContext"
-import listCache from "../utils/listCache"
-import { GET_LISTS } from "../utils/queries"
 import Loading from '../components/Loading';
 import { Link } from "react-router-dom"
-
-const cachedResults = listCache.results.get()
+import { useSearch } from "../context/SearchContext"
 
 const Lists = (props) => {
-
-
   const [auth] = useAuth()
   const [profile] = useProfile()
-  const myLists = auth ? profile.lists : null
+  // const myLists = auth ? profile.lists : null
   const { Form } = useForm()
-  const [results, setResults] = useState(cachedResults)
+  const { lists } = useSearch()
   const [searchParams, setSearchParams] = useState({})
   const [fresh, setFresh] = useState(false)
   const [display, setDisplay] = useState('search')
@@ -27,31 +21,24 @@ const Lists = (props) => {
   const [totalPages, setTotalPages] = useState(1)
   const [pageSize] = useState(20)
 
+  useEffect(() => {
+    lists.refetch()
+  }, [])
 
   useEffect(() => {
-    if (display === 'search') setResults(listCache.results.get())
-    else if (display === 'profile') setResults(myLists)
-  }, [display, myLists])
-
-  const { loading, data, refetch } = useQuery(GET_LISTS, {
-    variables: { ...searchParams }
-  })
-
-  useEffect(() => {
-    if (data && data.getLists) {
-      let { docs, page, totalDocs, totalPages } = data.getLists
-      setResults(docs)
-      listCache.results.set(docs)
+    let data = lists.getQueryData()
+    if (!lists.loading && data) {
+      let { page, totalPages } = data
       setPageNum(page)
       setTotalPages(totalPages)
     }
-  }, [data])
+  }, [lists.loading, lists.data])
+
   useEffect(() => {
-    const search = async () => {
-      await refetch({ params: searchParams })
+    if (searchParams.term) {
+      lists.refetch({ variables: { params: searchParams } })
       setFresh(true)
     }
-    if (searchParams.term) search()
   }, [searchParams])
 
   const onSubmit = async ({ term, type }) => {
@@ -60,14 +47,13 @@ const Lists = (props) => {
     } else {
       setPageNum(1)
       setSearchParams({ term, type, pageNum: 1, pageSize })
-      return { data }
     }
   }
 
   const nextPage = async () => setPageNum(Math.min(pageNum + 1, totalPages))
   const prevPage = async () => setPageNum(pageNum - 1 || 1)
 
-  if (loading) return <div className="background3"><Loading /></div>
+  if (lists.loading) return <div className="background3"><Loading /></div>
 
   return (
     <div className="background3">
@@ -105,10 +91,8 @@ const Lists = (props) => {
           </>
 
         )}
-        {results
-          ? <ListOfLists list={results} />
-          : results && <Message>No results</Message>
-        }
+        <ListOfLists list={display === 'search' ? lists.getDocs() : profile?.lists} />
+
       </Container>
     </div>
   )

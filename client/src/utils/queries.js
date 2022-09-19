@@ -115,6 +115,7 @@ export const GET_LISTS = gql`
   query GetLists($params: SearchParams) {
     getLists(params: $params) {
       totalDocs
+      pageSize
       docs {
         _id
         name
@@ -308,6 +309,7 @@ export const GET_USERS = gql`
         spriteChoice
       }
       totalPages
+      pageSize
       page
     }
   }
@@ -349,6 +351,7 @@ export const GET_CLUBS = gql`
   query Query($params: SearchParams) {
     getClubs(params: $params) {
       totalDocs
+      pageSize
       docs {
         _id
         creator {
@@ -422,6 +425,7 @@ export const GET_REVIEWS = gql`
   query GetReviews($params: SearchParams) {
     getReviews(params: $params) {
       totalDocs
+      pageSize
       docs {
         _id
         rating

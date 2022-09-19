@@ -123,24 +123,28 @@ const typeDefs = gql`
     docs: [BookList]
     totalPages: Int
     page: Int
+    pageSize: Int
   }
   type ClubResults {
     totalDocs: Int
     docs: [BookClub]
     totalPages: Int
     page: Int
+    pageSize: Int
   }
   type UserResults {
     totalDocs: Int
     docs: [User]
     totalPages: Int
     page: Int
+    pageSize: Int
   }
   type ReviewResults {
     totalDocs: Int
     docs: [Review]
     totalPages: Int
     page: Int
+    pageSize: Int
   }
 
   type Query {

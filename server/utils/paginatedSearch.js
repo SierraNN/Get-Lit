@@ -18,7 +18,7 @@ function paginatedSearch({ defaultType = 'name', populate = [] }) {
       page: pageNum,
       limit: pageSize
     })
-    return pages
+    return { ...pages, pageSize }
   }
 }
 
