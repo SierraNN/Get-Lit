@@ -23,21 +23,6 @@
     color: white
 
 
-.ui.horizontal.list.display-list
-  display: flex
-  flex-flow: row wrap
-  align-items: center
-  justify-content: flex-start
-  // justify-items: flex-start
-  gap: 1rem
-  transition: transform 400ms
-  > a, > .item
-    margin: 0
-    cursor: pointer
-    .header
-      margin-bottom: 0.5rem
-    &:hover
-      transform: translateY(-3px)
 
 .ui.segment
   background: rgba(255,255,255,0.8)
@@ -46,7 +31,7 @@
     flex-flow: row wrap
     gap: 0.5rem
     .stretch
-      flex-grow: 1
+      flex: 1 1 0
     .ui.buttons
       align-items: flex-start
       .button
@@ -59,9 +44,14 @@
     .field>label
       color: black
 
-.ui.segment.profile
-  max-width: 600px
-  margin: 0 auto
+.ui.segment
+  &.profile
+    max-width: 600px
+    margin: 0 auto
+  &:not(.basic)
+    .ui.header
+      color: rgb(38, 47, 85) !important
+      text-shadow: none !important
 
 a.placeholder 
   width: 128px
@@ -71,39 +61,115 @@ a.placeholder
 #LandingPage
   color: white
 
+.ui.label.creatorLabel
+  transform: translateY(-25%)
+  display: flex
+  align-items: center
+  border: 1px solid rgb(200,200,200)
+  .ui.image.labelSprite
+    display: inline-block
+    background: rgb(200,200,200)
+    transform: translateX(-50%) scale(1.4)
+    margin: -1rem 0
+    height: 3em
+
+
 .ui.horizontal.list.display-list
+  display: flex
+  flex-flow: row wrap
+  align-items: center
+  justify-content: flex-start
+  gap: 1rem
+  transition: transform 400ms
+  > a, > .item
+    margin: 0
+    cursor: pointer
+    .header
+      margin-bottom: 0.5rem
+    &:hover
+      transform: translateY(-3px)
   .header 
     padding: 0 5px
   .item
+    position: relative
     background: rgba(255,255,255,0.2)
     border-radius: 5px
     border: 1px solid rgba(255,255,255,0.4)
     transition: transform 400ms
     min-width: 120px
     max-width: 240px
+    &.empty
+      padding: 0.5rem !important
     &:hover
       transform: translateY(-3px)
+  &:after
+    content: ' '
+    display: block
+    flex: 20 1 auto
   .image
   &.books
     .item
       background: transparent
       border-width: 0px
     .image
-      max-width: 150px
-      min-width: 150px 
-      max-height: 200px
-      min-height: 200px
+      width: 150px
+      height: 200px
   &.reviews
     .item
       width: 150px
-    .image
-      width: 100%
+      background: transparent
+      border-width: 0px
+    .image:not(.labelSprite)
+      display: block
+      margin: auto
+    .creatorLabel
+      position: absolute
+      bottom: 200px
+      right: 0
+      transform: translateY(-25%)
+  &.lists
+    align-items: flex-start
+    .header
+      max-width: 160px
+    .creatorLabel
+      position: absolute
+      bottom: 0
+      right: 0
+      transform: translateY(50%)
+      z-index: 1
   &.users
+    .item
+      flex-grow: 1
     .image
       display: block
       margin: 0 auto
       max-width: 120px
 
+.ui.list.comment-list
+  .comment
+    display: flex
+    align-items: center
+    gap: 2rem
+    .content 
+      flex-grow: 1
+  .ui.label.creatorLabel
+    transform: unset
+    display: inline-block
+    padding-left: 1.5rem
+    margin-left: 1rem
+    .labelSprite
+      position: relative
+      left: -0.5rem
+  .comment-buttons
+    margin-left: -1rem
+    .button
+      box-shadow: unset !important
+      padding-left: 0.5rem
+      padding-right: 0.5rem
+    .edit
+    .trash
+
+  
 .ui.placeholder.profileImage
   height: 300px
   width: 300px
@@ -115,7 +181,7 @@ a.placeholder
   position: absolute
   bottom: 0
 
-.listThumbnails
+.multiThumbnail
   max-width: 160px
   display: flex
   align-items: center
@@ -134,26 +200,11 @@ a.placeholder
       &:nth-of-type(3), &:nth-of-type(4)
         transform: rotate(-3deg) scale(1.1)
 
-.ui.label.creatorLabel
-  position: absolute
-  bottom: -0.5rem  
-  right: 0
-  display: flex
-  align-items: center
-  border: 1px solid rgb(200,200,200)
-  .ui.image.labelSprite
-    display: inline-block
-    background: rgb(200,200,200)
-    transform: translateX(-50%) scale(1.4)
-    margin: -1rem
-    height: 3em
-
-
 .ui.list.comment-list
   .label
     margin-left: 10px
 
-.ui.list>a.item 
+.ui.list > a.item 
   i.icon.followingIcon
     margin: 0 0 0 0.5rem
     color: rgba(255,255,255,0.7)
@@ -183,3 +234,22 @@ a.placeholder
     color: rgba(0,0,0,.4)
     &:hover, &:active, &:focus
       background: #e0e1e2 none
+
+.ui.header
+  >.image:not(.icon), > img
+    &.book-image
+      min-width: 150px
+  
+.club-details, .profile
+  .ui.horizontal.list.display-list
+    &.users .item
+      border: 1px solid rgb(190,190,190)
+      i.icon.heart
+        color: rgb(190,190,190)
+  .ui.labels .label
+    border: 1px solid rgb(190,190,190)
+  
+
+.ui.button:disabled, .ui.buttons .disabled.button, .ui.disabled.active.button, .ui.disabled.button, .ui.disabled.button:hover
+  opacity: 0.7 !important
+

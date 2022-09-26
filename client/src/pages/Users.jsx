@@ -1,57 +1,52 @@
-import { useQuery } from "@apollo/client"
 import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
 import { useEffect, useState } from "react"
-import { Button, Container, Dropdown, Header, Message } from "semantic-ui-react"
+import { Button, Container, Dropdown, Header } from "semantic-ui-react"
 import { useAuth } from "../context/AuthContext"
 import { useProfile } from "../context/ProfileContext"
-import userCache from "../utils/userCache"
-import { GET_USERS } from "../utils/queries"
-import Loading from '../components/Loading';
 import UserList from "../components/lists/UserList"
 import { useSearch } from "../context/SearchContext"
 import { useNavigate } from "react-router-dom"
 
-// const cachedResults = userCache.results.get()
-
 const Users = (props) => {
   const [auth] = useAuth()
-  const [profile, updateProfile] = useProfile()
+  const [profile] = useProfile()
   const { Form } = useForm()
   const { users } = useSearch()
-  const [params, setParams] = useState({})
+  const [params, setParams] = useState()
   const [display, setDisplay] = useState('search')
   const [pageSize] = useState(20)
   const navigate = useNavigate()
 
   useEffect(() => {
-    users.refetch(params)
+    if (params) users.refetch(params)
+    else if (!users.getCachedDocs()) users.refetch(params)
   }, [users.refetch, params])
 
   const onSubmit = async ({ params: { term, type } }) => {
     if (term === '') {
-      setParams({ pageNum: 1, pageSize })
+      setParams({ page: 1, pageSize })
     } else {
-      setParams({ term, type, pageNum: 1, pageSize })
+      setParams({ term, type, page: 1, pageSize })
     }
   }
 
-  const nextPage = async () => setParams({ ...params, pageNum: users.getPage() + 1 })
-  const prevPage = async () => setParams({ ...params, pageNum: users.getPage() - 1 })
+  const nextPage = async () => setParams({ ...params, page: users.getPage() + 1 })
+  const prevPage = async () => setParams({ ...params, page: users.getPage() - 1 })
 
   const headerText = () => {
     let text
     if (display === 'search') {
-      if (!params.term) text = `Showing all users`
-      else text = `Showing results for "${params.term}"`
+      if (!params?.term) text = `Showing all users`
+      else text = `Showing results for "${params?.term}"`
     } else {
-      text = "Showing users you follow"
+      text = "Showing your friends"
     }
     return text
   }
   const ListHeader = () => {
     return <Header as='h2'>
       {headerText()}
-      {params.term && <Button className="clear-results" negative content={params.term} icon="x" compact onClick={() => setParams({ ...params, term: undefined })} />}
+      {params?.term && <Button className="clear-results" negative content={params?.term} icon="x" compact onClick={() => setParams({ ...params, term: undefined })} />}
       {display === 'search' && <ListNav />}
     </Header>
   }
@@ -73,7 +68,7 @@ const Users = (props) => {
             <Form submitBtnText="Search" submit={onSubmit} fields={[
               {
                 name: 'params', fields: [
-                  { name: 'term', useLabel: false, width: '12', initial: params.term },
+                  { name: 'term', useLabel: false, width: '12', initial: params?.term },
                   {
                     name: 'type', useLabel: false, control: Dropdown, options: [
                       { text: 'Username', value: 'username' },
@@ -83,7 +78,7 @@ const Users = (props) => {
                 ]
               }
             ]} buttons={auth ? [
-              { content: 'Following', icon: 'heart', color: 'green', onClick: () => setDisplay('profile') },
+              { content: 'Friends', icon: 'heart', color: 'green', onClick: () => setDisplay('profile') },
               { content: 'Your Profile', icon: 'user circle', color: 'teal', onClick: () => { navigate("/profile") } }
             ] : []} />
           </FormProvider>
@@ -93,6 +88,7 @@ const Users = (props) => {
             <Button icon="search" color="green" content="Search for Users" onClick={() => setDisplay('search')} />
           </>
         )}
+
 
         <UserList header={<ListHeader />} list={display === 'search' ? users.getDocs() : profile?.following} />
 

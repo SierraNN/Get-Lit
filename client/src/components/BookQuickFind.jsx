@@ -12,7 +12,7 @@ const BookQuickFind = ({ onBookClick }) => {
     if (term === '') {
       return { errors: { term: 'Please enter a search term' } }
     } else {
-      return bookSearch({ term, type: 'all', pageNum: 1 })
+      return bookSearch({ term, type: 'all', page: 1 })
     }
   }
   const onResponse = async ({ data, error }) => {
@@ -30,7 +30,7 @@ const BookQuickFind = ({ onBookClick }) => {
         ]} />
       </FormProvider>
       {results
-        ? <BookImageList headerText={'Quick Find Results'} list={results} onImageClick={onBookClick} />
+        ? <BookImageList header={'Quick Find Results'} list={results} onImageClick={onBookClick} />
         : results && <Message>No results</Message>}
     </div>
   )

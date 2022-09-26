@@ -21,7 +21,7 @@ const Reviews = (props) => {
   const [searchParams, setSearchParams] = useState({})
   const [fresh, setFresh] = useState(false)
   const [display, setDisplay] = useState('search')
-  const [pageNum, setPageNum] = useState(1)
+  const [page, setPageNum] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [pageSize] = useState(20)
 
@@ -54,12 +54,12 @@ const Reviews = (props) => {
       return { errors: { term: 'Please enter a search term' } }
     } else {
       setPageNum(1)
-      setSearchParams({ term, type, pageNum: 1, pageSize })
+      setSearchParams({ term, type, page: 1, pageSize })
     }
   }
 
-  const nextPage = async () => setPageNum(Math.min(pageNum + 1, totalPages))
-  const prevPage = async () => setPageNum(pageNum - 1 || 1)
+  const nextPage = async () => setPageNum(Math.min(page + 1, totalPages))
+  const prevPage = async () => setPageNum(page - 1 || 1)
 
   if (reviews.loading) return <div className="background3"><Loading /></div>
 
@@ -82,7 +82,7 @@ const Reviews = (props) => {
             {fresh && totalPages > 1 && <div>
               <Button.Group floated="right">
                 <Button icon="angle left" onClick={prevPage} />
-                <Button content={pageNum} onClick={null} />
+                <Button content={page} onClick={null} />
                 <Button icon="angle right" onClick={nextPage} />
               </Button.Group>
             </div>}

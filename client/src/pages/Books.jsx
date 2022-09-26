@@ -21,7 +21,7 @@ const Books = (props) => {
 
   const myBooks = auth ? profile.books : null
 
-  const [pageNum, setPageNum] = useState(1)
+  const [page, setPageNum] = useState(1)
   const [pageSize] = useState(20)
 
   const onSubmit = async ({ term, type }) => {
@@ -30,7 +30,7 @@ const Books = (props) => {
     } else {
       setSearchParams({ term, type })
       setPageNum(1)
-      return bookSearch({ term, type, pageSize, pageNum: 1 })
+      return bookSearch({ term, type, pageSize, page: 1 })
     }
   }
   const onResponse = async ({ data, error }) => {
@@ -43,19 +43,19 @@ const Books = (props) => {
     }
   }
 
-  const nextPage = async () => setPageNum(pageNum + 1)
-  const prevPage = async () => setPageNum(pageNum - 1 || 1)
+  const nextPage = async () => setPageNum(page + 1)
+  const prevPage = async () => setPageNum(page - 1 || 1)
   useEffect(() => {
     let search = async function () {
       const { term, type } = searchParams
       if (term && type) {
-        let { data } = await bookSearch({ term, type, pageSize, pageNum })
+        let { data } = await bookSearch({ term, type, pageSize, page })
         setResults(data.items)
         bookCache.results.set(data.items)
       }
     }
     search()
-  }, [pageNum, pageSize, searchParams])
+  }, [page, pageSize, searchParams])
 
   const [display, setDisplay] = useState('search')
 
@@ -87,14 +87,14 @@ const Books = (props) => {
         {fresh && totalPages > 1 && <div>
           <Button.Group floated="right">
             <Button icon="angle left" onClick={prevPage} />
-            <Button content={pageNum} onClick={null} />
+            <Button content={page} onClick={null} />
             <Button icon="angle right" onClick={nextPage} />
           </Button.Group>
         </div>}
 
         {
           results
-            ? <BookImageList headerText={display === 'search' ? 'Search Results' : 'Your Books'} list={results} />
+            ? <BookImageList header={display === 'search' ? 'Search Results' : 'Your Books'} list={results} />
             : results && <Message>No results</Message>
         }
       </Container >

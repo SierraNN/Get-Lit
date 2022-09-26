@@ -17,54 +17,54 @@ const Clubs = (props) => {
   const [profile, updateProfile] = useProfile()
   const { Form } = useForm()
   const { clubs } = useSearch()
-  const [searchParams, setSearchParams] = useState({})
-  const [fresh, setFresh] = useState(false)
+  const [params, setParams] = useState({})
   const [display, setDisplay] = useState('search')
-  const [pageNum, setPageNum] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
+  const [page, setPageNum] = useState(1)
   const [pageSize] = useState(20)
+  const [totalPages, setTotalPages] = useState(1)
 
   useEffect(() => {
     clubs.refetch()
-  }, [])
-
-  // useEffect(() => {
-  //   if (display === 'search') setResults(clubCache.results.get())
-  //   else if (display === 'profile') setResults(myClubs)
-  // }, [display, myClubs])
-
-  // const { loading, data, refetch } = useQuery(GET_CLUBS, {
-  //   variables: { ...searchParams }
-  // })
-
-  useEffect(() => {
-    let data = clubs.getQueryData()
-    if (!clubs.loading && data) {
-      let { docs, page, totalDocs, totalPages } = data
-      setPageNum(page)
-      setTotalPages(totalPages)
-    }
-  }, [clubs.loading, clubs.data])
-
-  useEffect(() => {
-    if (searchParams.term) {
-      clubs.refetch({ variables: { params: searchParams } })
-    }
-  }, [searchParams])
+  }, [clubs.refetch, params])
 
   const onSubmit = async ({ term, type }) => {
     if (term === '') {
-      return { errors: { term: 'Please enter a search term' } }
+      setParams({ page: 1, pageSize })
     } else {
-      setPageNum(1)
-      setSearchParams({ term, type, pageNum: 1, pageSize })
+      setParams({ term, type, page: 1, pageSize })
     }
   }
 
-  const nextPage = async () => setPageNum(Math.min(pageNum + 1, totalPages))
-  const prevPage = async () => setPageNum(pageNum - 1 || 1)
+  const nextPage = async () => setParams({ ...params, page: clubs.getPage() + 1 })
+  const prevPage = async () => setParams({ ...params, page: clubs.getPage() - 1 })
 
-  if (clubs.loading) return <div className="background5"><Loading /></div>
+  const headerText = () => {
+    let text
+    if (display === 'search') {
+      if (!params.term) text = `Showing all Book Clubs`
+      else text = `Showing results for "${params.term}"`
+    } else {
+      text = "Showing Book Clubs you've joined or own"
+    }
+    return text
+  }
+  const ListHeader = () => {
+    return <Header as='h2'>
+      {headerText()}
+      {params.term && <Button className="clear-results" negative content={params.term} icon="x" compact onClick={() => setParams({ ...params, term: undefined })} />}
+      {display === 'search' && <ListNav />}
+    </Header>
+  }
+  const ListNav = () => {
+    return clubs.getTotalPages() > 1 && <Button.Group className="list-nav-btns">
+      <Button icon="angle left" disabled={clubs.getPage() === 1} onClick={prevPage} />
+      <Button className="page" content={`pg ${clubs.getPage()}`} onClick={null} />
+      <Button className="total-pages" content={`/ ${clubs.getTotalPages()}`} onClick={null} />
+      <Button icon="angle right" disabled={clubs.getPage() === clubs.getTotalPages()} onClick={nextPage} />
+    </Button.Group>
+  }
+
+
 
   return (
     <div className="background3">
@@ -73,23 +73,20 @@ const Clubs = (props) => {
         {display === 'search' && (
           <FormProvider>
             <Form submitBtnText="Search" submit={onSubmit} fields={[
-              { name: 'term', useLabel: false, width: '12' },
               {
-                name: 'type', useLabel: false, control: Dropdown, options: [
-                  { text: 'Search club name', value: 'name' },
-                  { text: 'By description', value: 'description' },
-                  { text: 'By tags', value: 'tags' },
-                  { text: 'By creator', value: 'creator' },
-                ], width: '4'
+                name: 'params', fields: [
+                  { name: 'term', useLabel: false, width: '12' },
+                  {
+                    name: 'type', useLabel: false, control: Dropdown, options: [
+                      { text: 'By club name', value: 'name' },
+                      { text: 'By description', value: 'description' },
+                      { text: 'By tags', value: 'tags' },
+                      { text: 'By creator', value: 'creator' },
+                    ], width: '4'
+                  }
+                ]
               }
             ]} buttons={auth ? [{ content: 'My Clubs', color: 'green', onClick: () => setDisplay('profile') }] : []} />
-            {fresh && totalPages > 1 && <div>
-              <Button.Group floated="right">
-                <Button icon="angle left" onClick={prevPage} />
-                <Button content={pageNum} onClick={null} />
-                <Button icon="angle right" onClick={nextPage} />
-              </Button.Group>
-            </div>}
           </FormProvider>
         )}
         {display === 'profile' && (
@@ -98,11 +95,9 @@ const Clubs = (props) => {
             <Link to="/clubs/new">
               <Button icon="plus" color="teal" content="New Club" />
             </Link>
-
           </>
-
         )}
-        <ClubList list={display === 'search' ? clubs.getDocs() : profile?.clubs} />
+        <ClubList header={<ListHeader />} list={display === 'search' ? clubs.getDocs() : profile?.clubs} />
 
       </Container>
     </div>

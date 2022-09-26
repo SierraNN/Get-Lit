@@ -31,17 +31,18 @@ const BookListForm = (props) => {
   }
 
   return (
-    <Container className="background3">
-      <FormProvider>
-        <Header as='h1'>New Book List</Header>
-        <Form submit={onSubmit} respond={onResponse} fields={[
-          { name: 'name', required: true },
-          { name: 'description', control: TextArea },
-          { name: 'tags', label: 'Tags (comma separated)' }
-        ]} submitBtnText="Create List" />
-      </FormProvider>
-
-    </Container>
+    <div className="background3">
+      <Container className="container1">
+        <FormProvider>
+          <Header as='h1'>New Book List</Header>
+          <Form submit={onSubmit} respond={onResponse} fields={[
+            { name: 'name', required: true },
+            { name: 'description', control: TextArea },
+            { name: 'tags', label: 'Tags (comma separated)' }
+          ]} submitBtnText="Create List" />
+        </FormProvider>
+      </Container>
+    </div>
   )
 }
 

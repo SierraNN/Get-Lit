@@ -50,8 +50,6 @@ const CreateReview = (props) => {
 
   const handleClick = (book) => {
     navigate(`/books/${book.id}/reviews/new`)
-    // setBook(book)
-    // console.log(book)
   }
 
   const renderForm = () => {
@@ -59,7 +57,10 @@ const CreateReview = (props) => {
 
     return <>
       <Header as='h2' content={title} subheader={authors.join(', ')} image={<BookImage book={book} action={null} />} />
-      <Segment content={description} />
+      <Segment >
+        <Header as='h3' content="Book Description" />
+        {description}
+      </Segment>
       <Form submit={onSubmit} respond={onResponse} fields={[
         { name: 'reviewTitle', label: 'Review Title', required: true },
         { name: 'reviewText', label: 'Your Review', control: TextArea, required: true },

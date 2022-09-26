@@ -62,8 +62,8 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
-        <ProfileProvider>
-          <SearchProvider>
+        <SearchProvider>
+          <ProfileProvider>
             <BrowserRouter>
               <SideNav />
               <Routes>
@@ -105,8 +105,8 @@ function App() {
               </Routes>
             </BrowserRouter>
 
-          </SearchProvider>
-        </ProfileProvider>
+          </ProfileProvider>
+        </SearchProvider>
       </AuthProvider>
     </ApolloProvider>
   );

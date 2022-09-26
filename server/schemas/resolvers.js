@@ -1,4 +1,4 @@
-const { AuthenticationError } = require("apollo-server-express");
+const { AuthenticationError, UserInputError } = require("apollo-server-express");
 const { User, Book, BookList, BookClub, Review } = require('../models')
 const { signToken } = require("../utils/auth");
 const { Types } = require('mongoose');
@@ -66,7 +66,7 @@ const resolvers = {
       return review
     },
     getUser: async (parent, { id }) => {
-      if (id === 'null') throw new AuthenticationError('userId required')
+      if (id === 'null') throw new AuthenticationError('id required')
       const found = await User.fullProfile(id)
       if (!found) throw new AuthenticationError('User not found')
       return found
@@ -77,7 +77,6 @@ const resolvers = {
     },
     getUsers: async (parent, { params = {} }) => {
       const results = await User.search(params)
-      console.log(params)
       return results
     },
     getClubs: async (parent, { params = {} }) => {
@@ -86,7 +85,6 @@ const resolvers = {
     },
     getReviews: async (parent, { params = {} }) => {
       const results = await Review.search(params)
-      console.log({ reviews: results.docs.map(({ book }) => book) })
       return results
     }
   },
@@ -121,6 +119,8 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+
+    /** PROFILE */
     updateUserTags: async (parent, { tags }, { user }) => {
       const updated = await User.findByIdAndUpdate(user._id, {
         tags: tags.map(tag => ({ text: tag }))
@@ -142,12 +142,6 @@ const resolvers = {
       if (!user) throw new AuthenticationError('Not logged in!')
       return spriteChoice
     },
-    fetchUser: async (parent, { userId }) => {
-      const found = await User.fullProfile(userId)
-      if (!found) throw new AuthenticationError('User not found')
-      return found
-    },
-    /** FOLLOWING */
     addFollowing: async (parent, { followingId }, { user }) => {
       const update = await User.findByIdAndUpdate(user._id, {
         $addToSet: { following: Types.ObjectId(followingId) }
@@ -160,9 +154,9 @@ const resolvers = {
       }, { new: true }).then(u => u.populate('following'))
       return update.following
     },
-    /** BOOKS */
     saveBook: async (parent, { book }, { user }) => {
-      const saved = await Book.create(book)
+      let saved = await Book.find({ googleId: book.googleId })
+      if (!saved) saved = await Book.create(book)
       const update = await User.findByIdAndUpdate(user._id, {
         $addToSet: { books: Types.ObjectId(saved._id) }
       }, { new: true })
@@ -176,6 +170,30 @@ const resolvers = {
       if (!removed) throw new AuthenticationError('User not found')
       return true
     },
+    joinClub: async (parent, { id }, { user }) => {
+      let userUpdate = await User.findByIdAndUpdate(user._id, {
+        $addToSet: { clubs: ID(id) }
+      }, { new: true })
+      if (!userUpdate) throw new AuthenticationError('User not found')
+      let clubUpdate = await BookClub.findByIdAndUpdate(id, {
+        $addToSet: { members: ID(user._id) }
+      }, { new: true })
+      if (!clubUpdate) throw new UserInputError('Club not found')
+
+      return true
+    },
+    leaveClub: async (parent, { id }, { user }) => {
+      let userUpdate = await User.findByIdAndUpdate(user._id, {
+        $pull: { clubs: ID(id) }
+      }, { new: true })
+      if (!userUpdate) throw new AuthenticationError('User not found')
+      let clubUpdate = await BookClub.findByIdAndUpdate(id, {
+        $pull: { members: ID(user._id) }
+      }, { new: true })
+      if (!clubUpdate) throw new UserInputError('Club not found')
+      return true
+    },
+
     /** LISTS */
     createList: async (parent, { list }, { user }) => {
       let book = list.book ? await Book.findOne({ googleId: list.book.googleId }) || await Book.create(list.book) : null
@@ -269,7 +287,7 @@ const resolvers = {
         $addToSet: { posts: { text: post, author: ID(user._id) } }
       }, { new: true }).populate({ path: "posts", populate: "author" })
 
-      if (!club) throw new AuthenticationError("List not found")
+      if (!club) throw new AuthenticationError("Club not found")
       return club.posts
     },
   }

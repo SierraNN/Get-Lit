@@ -24,29 +24,31 @@ const Register = (props) => {
 
   return (
     <div className='background'>
-      <Container className="ui container1">
-        <div className="ui grid">
-          <div className="six wide column left floated">
-            <img alt='logo' className='ui image' src='/assets/12.png' />
+      <div className="ui container1">
+        <div id="Register" className="ui stackable grid">
+          <div className="six wide column ">
+            <img alt='logo' className='ui image' src='/assets/logo/get-lit-transparent.png' />
           </div>
-          <div className="ten wide column left floated">
-            <br />
-            <Header>Register</Header>
-            <FormProvider>
-              <Form submit={onSubmit} respond={onResponse} fields={[
-                { name: 'username', required: true },
-                { name: 'email', required: true },
-                {
-                  name: '', widths: 'equal', fields: [
-                    { name: 'password', type: 'password', required: true },
-                    { name: 'password_confirmation', type: 'password', required: true }
-                  ]
-                }
-              ]} />
-            </FormProvider>
+          <div className="ten wide column ">
+            <div className="form-wrap">
+              <Header>Register</Header>
+              <FormProvider>
+                <Form submit={onSubmit} respond={onResponse} fields={[
+                  { name: 'username', required: true },
+                  { name: 'email', required: true },
+                  {
+                    name: '', widths: 'equal', fields: [
+                      { name: 'password', type: 'password', required: true },
+                      { name: 'password_confirmation', type: 'password', required: true }
+                    ]
+                  }
+                ]} />
+              </FormProvider>
+
+            </div>
           </div>
         </div>
-      </Container>
+      </div>
     </div>
   )
 }

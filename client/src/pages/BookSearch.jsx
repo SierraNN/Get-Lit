@@ -11,13 +11,13 @@ const BookSearch = (props) => {
   const { Form } = useForm()
   const [results, setResults] = useState(cachedResults)
   // const [resultCount, setResultCount] = useState(null)
-  const [pageNum, setPageNum] = useState(1)
+  const [page, setPageNum] = useState(1)
   // const [loading, setLoading] = useState(false)
   const onSubmit = async ({ term, type }) => {
     if (term === '') {
       return { errors: { term: 'Please enter a search term' } }
     } else {
-      return bookSearch({ term, type, pageNum })
+      return bookSearch({ term, type, page })
     }
   }
   const onResponse = async ({ data, error }) => {

@@ -12,6 +12,7 @@ const ClubListForm = (props) => {
   const [profile, updateProfile] = useProfile()
   const navigate = useNavigate()
   const [createClub] = useMutation(CREATE_CLUB)
+
   const onSubmit = async (clubInfo) => {
     const club = { ...clubInfo }
     if (club.tags === '') club.tags = []
@@ -28,17 +29,18 @@ const ClubListForm = (props) => {
   }
 
   return (
-    <Container className="background3">
-      <FormProvider>
-        <Header as='h1'>New Book Club</Header>
-        <Form submit={onSubmit} respond={onResponse} fields={[
-          { name: 'name', required: true },
-          { name: 'description', control: TextArea },
-          { name: 'tags', label: 'Tags (comma separated)' }
-        ]} submitBtnText="Create Book Club" />
-      </FormProvider>
-
-    </Container>
+    <div className="background3">
+      <Container className="container1">
+        <FormProvider>
+          <Header as='h1'>New Book Club</Header>
+          <Form submit={onSubmit} respond={onResponse} fields={[
+            { name: 'name', required: true },
+            { name: 'description', control: TextArea, required: true },
+            { name: 'tags', label: 'Tags (comma separated)' }
+          ]} submitBtnText="Create Book Club" />
+        </FormProvider>
+      </Container>
+    </div>
   )
 }
 

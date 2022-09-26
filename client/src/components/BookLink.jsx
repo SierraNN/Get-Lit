@@ -6,7 +6,7 @@ import { Header, Image, Placeholder } from "semantic-ui-react"
 import bookCache from "../utils/bookCache"
 import { bookByGoogleId } from "../utils/google"
 
-const BookLink = ({ book, action }) => {
+const BookLink = ({ book }) => {
   const [info, setInfo] = useState(null)
 
   const fetchGoogleData = async (googleId) => {

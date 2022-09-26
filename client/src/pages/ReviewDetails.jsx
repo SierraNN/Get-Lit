@@ -10,6 +10,9 @@ import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
 import { ADD_COMMENT_TO_REVIEW } from '../utils/mutations';
 import BookImage from "../components/BookImage"
 import BookLink from "../components/BookLink"
+import ProfileImage from "../components/ProfileImage"
+import UserImage from "../components/lists/UserImage"
+import UserAvatar from "../components/UserAvatar"
 
 const ReviewDetails = (props) => {
   const { reviewId, bookId } = useParams()
@@ -26,6 +29,7 @@ const ReviewDetails = (props) => {
   useEffect(() => {
     if (reviewId) refetch()
   }, [reviewId, profile.reviews])
+
   useEffect(() => {
     setComments(review?.comments || [])
   }, [review])
@@ -52,9 +56,14 @@ const ReviewDetails = (props) => {
     <div className="background3">
       <Container className="container1 ">
         <Header as='h1' content={book.title} />
-        <BookLink book={book} />
-        <Header as='h2' content={reviewTitle} subheader={"Review by " + creator.username} />
-
+        <Header as='h2'>
+          <BookImage book={book} />
+          <Header.Content>
+            {reviewTitle}
+            <Header.Subheader content={"Review by " + creator.username} />
+            <UserAvatar user={creator} size="tiny" />
+          </Header.Content>
+        </Header>
         <Segment>
           {reviewText}
         </Segment>

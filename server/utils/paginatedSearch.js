@@ -1,5 +1,5 @@
 function paginatedSearch({ defaultType = 'name', populate = [] }) {
-  return async function ({ term, type = defaultType, pageSize = 20, pageNum = 1 }) {
+  return async function ({ term, type = defaultType, pageSize = 20, page = 1 }) {
     let query = {}
     if (term) query[type] = term
 
@@ -15,7 +15,7 @@ function paginatedSearch({ defaultType = 'name', populate = [] }) {
 
     const pages = await this.paginate(query, {
       populate,
-      page: pageNum,
+      page: page,
       limit: pageSize
     })
     return { ...pages, pageSize }

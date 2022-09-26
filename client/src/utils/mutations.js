@@ -1,5 +1,9 @@
 import { gql } from "@apollo/client";
+import { COMMENT_FIELDS } from "./fragments";
 
+/**
+ * AUTH mutations
+ */
 export const LOGIN = gql`
   mutation login($username:String!,$password:String!) {
     login(username: $username, password: $password) {
@@ -23,6 +27,10 @@ export const ADD_USER = gql`
     }
   }
 `
+
+/**
+ * PROFILE mutations
+ */
 export const UPDATE_USER_TAGS = gql`
   mutation UpdateUserTags($tags: [String]) {
     updateUserTags(tags: $tags) {
@@ -73,6 +81,16 @@ export const SAVE_BOOK = gql`
 export const REMOVE_BOOK = gql`
   mutation removeBook($bookId: ID) {
     removeBook(bookId: $bookId)
+  }
+`
+export const JOIN_CLUB = gql`
+  mutation joinClub($id: ID) {
+    joinClub(id: $id) 
+  }
+`
+export const LEAVE_CLUB = gql`
+  mutation leaveClub($id: ID) {
+    leaveClub(id: $id)
   }
 `
 
@@ -166,6 +184,7 @@ export const CREATE_CLUB = gql`
     }
   }
 `
+
 export const ADD_BOOK_TO_LIST = gql`
   mutation AddBookToList($listId: ID, $book: BookInfo) {
     addBookToList(listId: $listId, book: $book) {
@@ -219,6 +238,7 @@ export const ADD_COMMENT_TO_LIST = gql`
     }
   }
 `
+
 export const ADD_COMMENT_TO_REVIEW = gql`
   mutation Mutation($reviewId: ID, $comment: String) {
     addCommentToReview(reviewId: $reviewId, comment: $comment) {
@@ -233,15 +253,10 @@ export const ADD_COMMENT_TO_REVIEW = gql`
   }
 `
 export const ADD_POST_TO_CLUB = gql`
+  ${COMMENT_FIELDS}
   mutation Mutation($clubId: ID, $post: String) {
     addPostToClub(clubId: $clubId, post: $post) {
-      _id
-      text
-      author {
-        _id
-        username
-      }
-      createdAt
+      ...CommentFields
     }
   }
 `

@@ -1,16 +1,15 @@
 import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { useContext } from "react";
-import { useState } from "react";
 import { useReducer } from "react";
 import { createContext } from "react";
-import AuthService from '../utils/auth'
 import bookCache from "../utils/bookCache";
 import bookListCache from "../utils/listCache"
 import { MY_PROFILE } from "../utils/queries";
 import { useAuth } from './AuthContext';
 import clubCache from "../utils/clubCache"
 import reviewCache from "../utils/clubCache"
+import { useFetch } from "./SearchContext";
 
 
 const ProfileContext = createContext()
@@ -79,6 +78,7 @@ const reducer = (state, action) => {
 const ProfileProvider = ({ children }) => {
   const [auth] = useAuth()
   const [profile, dispatch] = useReducer(reducer, {})
+  const { user } = useFetch()
   const { loading, data, refetch } = useQuery(MY_PROFILE)
   const updateProfile = (type, payload) => dispatch({ type, payload })
 
@@ -88,7 +88,9 @@ const ProfileProvider = ({ children }) => {
 
   useEffect(() => {
     if (!loading && data?.myProfile) {
-      dispatch({ type: 'SET_PROFILE', payload: data.myProfile })
+      let profile = data.myProfile
+      user.updateCacheById(profile._id, profile)
+      dispatch({ type: 'SET_PROFILE', payload: profile })
     }
   }, [loading, data?.myProfile])
 

@@ -114,7 +114,7 @@ const typeDefs = gql`
   input SearchParams {
     term: String
     type: String
-    pageNum: Int
+    page: Int
     pageSize: Int
   }
 
@@ -167,18 +167,20 @@ const typeDefs = gql`
 
   type Mutation {
     # auth
+    login(username: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
+    # PROFILE
     updateUserTags(tags: [String]): [Tag]
     updateBio(bio: String): String
     updateSprite(spriteChoice: Int): Int
-    login(username: String!, password: String!): Auth
-    fetchUser(userId: ID): User
-    # following
     addFollowing(followingId: ID): [User]
     removeFollowing(followingId: ID): [User]
-    # books
     saveBook(book: BookInfo): Book
     removeBook(bookId: ID): Boolean
+    joinClub(id: ID): Boolean
+    leaveClub(id: ID): Boolean
+
+    # following
     # lists
     createList(list: CreateList): BookList
     addBookToList(listId: ID, book: BookInfo): BookList

@@ -54,7 +54,7 @@ const ListDetails = (props) => {
         </Label.Group>
       </Segment>
       <Segment>
-        <BookImageList headerText="Books in List" list={list.books} />
+        <BookImageList header="Books in List" list={list.books} />
         {isCreator && <Link to="/books"><Button content="add book" color="green" icon="plus" /></Link>}
       </Segment>
       <Segment>

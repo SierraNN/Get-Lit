@@ -6,7 +6,7 @@ import { Header, Image, List, Placeholder } from "semantic-ui-react"
 import bookCache from "../utils/bookCache"
 import { bookByGoogleId } from "../utils/google"
 
-const BookImage = ({ book, action, size = 'small' }) => {
+const BookImage = ({ book, action, size = 'small', ...imageProps }) => {
   const [info, setInfo] = useState(null)
 
   const fetchGoogleData = async (googleId) => {
@@ -26,6 +26,9 @@ const BookImage = ({ book, action, size = 'small' }) => {
       if (cached) setInfo(cached)
       else fetchGoogleData(book.googleId)
     } else if (book.volumeInfo) setInfo(book)
+    else {
+      console.error('Book info missing')
+    }
   }, [book])
 
   if (!info) {
@@ -40,6 +43,21 @@ const BookImage = ({ book, action, size = 'small' }) => {
   }
 
   const { thumbnail } = imageLinks || {}
+  return thumbnail
+    ? <Image {...imageProps} className={`ui image book-image ${size}`} src={thumbnail} inline onClick={handleClick} />
+    : <>
+      <Placeholder>
+        <Header as='h3'>{title}</Header>
+        <Placeholder.Paragraph>
+          <Placeholder.Line />
+          <Placeholder.Line />
+          <Placeholder.Line />
+          <Placeholder.Line />
+          <Placeholder.Line />
+          <Placeholder.Line />
+        </Placeholder.Paragraph>
+      </Placeholder>
+    </>
   return <List.Item>
     {thumbnail
       ? <Image className={`ui image ${size}`} src={thumbnail} inline onClick={handleClick} />
@@ -57,22 +75,6 @@ const BookImage = ({ book, action, size = 'small' }) => {
         </Placeholder>
       </>}
   </List.Item>
-  return thumbnail
-    ? <Image className="ui image clickable small" src={thumbnail} inline onClick={handleClick} />
-    : <>
-      <Header as='h3'>{title}</Header>
-      <Placeholder>
-        <Placeholder.Paragraph>
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-        </Placeholder.Paragraph>
-      </Placeholder>
-    </>
-
 }
 
 export default BookImage

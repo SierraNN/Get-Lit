@@ -63,8 +63,7 @@ const BookDetails = (props) => {
   return (
     <div className="background3">
       <Container className="ui container1">
-        <Header as='h1' content={info.title} />
-        <Button icon="angle left" content="Back" onClick={() => navigate(-1)} />
+        <Header as='h1' content={info.title} subheader={`By ${info.authors.join(', ')}`} />
         <Segment.Group>
           <Segment basic className="flex">
             <Image inline src={info?.imageLinks?.thumbnail} />
