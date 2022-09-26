@@ -7,7 +7,10 @@ const SideNav = (props) => {
   const [auth, setAuth] = useAuth()
   const [profile, updateProfile] = useProfile()
 
+
   return (
+    <div>
+
     <Menu id="main-navigation" vertical>
       <Link to="/">
         <span className="hovertext" data-hover="Home">
@@ -43,6 +46,7 @@ const SideNav = (props) => {
           <Menu.Item><Icon name="user" /></Menu.Item>
         </span>
       </Link>
+      
       {auth
         ? <>
           <Link to="/profile">
@@ -64,6 +68,7 @@ const SideNav = (props) => {
           </Link>
         </>}
     </Menu>
+    </div>
   )
 }
 

@@ -1159,19 +1159,7 @@
 .zocial-youtube:before {
   content: "U";
 }
-* {
-  font-family: 'Roboto Mono', monospace;
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
-  -ms-transition: all 0.2s ease-out;
-  -o-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  position: relative;
-  
-}
+
 [class*="entypo-"]:before {
   font-family: 'entypo', sans-serif;
 }
@@ -1179,20 +1167,12 @@
   font-family: 'zocial', sans-serif;
 }
 
-/* Body "Theme" */
-body {
-  margin: 0;
-  padding: 0;
-}
-
 .ui.container1 {
   color: black;
   background-color: rgba(38, 47, 85, 0.8);
-  margin: 5%;
   font-weight: bold;
-  padding: 20px;
   border-radius: 25px;
-  padding: 20px;
+  margin: 50px;
 }
 
 /* Parallax Background
@@ -1374,26 +1354,16 @@ body {
 }
 }
 
-/* For mobile phones: */
-[class*="col-"] {
-  width: 100%;
-}
-
 @media only screen and (max-width: 600px) {
-
-  body {
-    margin: 20px;
-    padding: 0;
-  }
 
   .ui.container1 {
     color: black;
     background-color: rgba(38, 47, 85, 0.8);
-    margin: 5%;
+    margin-left: 25% !important;
     font-weight: bold;
     padding: 20px;
     border-radius: 25px;
-    
+
   }
   
   .background {
