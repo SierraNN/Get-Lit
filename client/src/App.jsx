@@ -33,6 +33,7 @@ import CreateReview from './components/forms/CreateReview';
 import CreateClub from './components/forms/CreateClub';
 import LandingPage from './pages/LandingPage';
 import UserDetails from './pages/UserDetails';
+import useMediaQuery from "./hooks/useMediaQuery";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -58,12 +59,14 @@ const client = new ApolloClient({
 
 
 function App() {
+  const isDesktop = useMediaQuery('(min-width: 960px)');
   return (
     <ApolloProvider client={client}>
+      {isDesktop ? <h1>Desktop</h1> : <h1>Mobile</h1>}
       <AuthProvider>
         <ProfileProvider>
           <BrowserRouter>
-            <SideNav />
+            <SideNav isDesktop={isDesktop}/>
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/books" element={<Outlet />}>
