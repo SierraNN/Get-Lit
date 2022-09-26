@@ -260,3 +260,13 @@ export const ADD_POST_TO_CLUB = gql`
     }
   }
 `
+export const EDIT_CLUB_POST = gql`
+  mutation EditClubPost($clubId: ID, $postId: ID, $text: String) {
+    editClubPost(clubId: $clubId, postId: $postId, text: $text) 
+  }
+`
+export const REMOVE_CLUB_POST = gql`
+  mutation RemoveClubPost($clubId: ID, $postId: ID) {
+    removeClubPost(clubId: $clubId, postId: $postId) 
+  }
+`

@@ -3,6 +3,7 @@
   color: white 
   z-index: 2
   .item
+    cursor: pointer
     color: white
     transition: color 400ms, background 400ms
     &:hover
@@ -23,6 +24,10 @@
     color: white
 
 
+.ui.button
+  &.margin-left-1
+    margin-left: 1rem
+    
 
 .ui.segment
   background: rgba(255,255,255,0.8)
@@ -166,9 +171,11 @@ a.placeholder
       box-shadow: unset !important
       padding-left: 0.5rem
       padding-right: 0.5rem
-    .edit
-    .trash
-
+    &.in-edit
+      position: absolute
+      right: 0
+      top: 50%
+      transform: translateY(-50%)
   
 .ui.placeholder.profileImage
   height: 300px
@@ -253,3 +260,17 @@ a.placeholder
 .ui.button:disabled, .ui.buttons .disabled.button, .ui.disabled.active.button, .ui.disabled.button, .ui.disabled.button:hover
   opacity: 0.7 !important
 
+.ui.message.update-error
+  margin: 0
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%,-50%)
+  max-width: 100%
+  width: max-content
+  box-shadow: 0 0 0 1px #e0b4b4 inset, 0 0 3px 5px rgba(224, 180, 180,0.4)
+  .close.icon
+    top: 2px
+    right: 2px
+
+  // box-shadow: 0 0 3px 5px rgba(190,190,190,0.4)

@@ -290,6 +290,29 @@ const resolvers = {
       if (!club) throw new AuthenticationError("Club not found")
       return club.posts
     },
+
+    /**
+     * COMMENTS / POSTS
+     */
+    editClubPost: async (parent, { clubId, postId, text }, { user }) => {
+      const update = await BookClub.updateOne({
+        _id: clubId, posts: { $elemMatch: { _id: ID(postId), author: ID(user._id) } }
+      }, {
+        $set: { "posts.$.text": text }
+      }, { new: true }).populate({ path: "posts", populate: "author" })
+      console.log(update)
+      if (!update) throw new AuthenticationError("Club or post not found")
+      // return false
+      return update.acknowledged || false
+    },
+    removeClubPost: async (parent, { clubId, postId }, { user }) => {
+      const club = await BookClub.findByIdAndUpdate(clubId, {
+        $pull: { posts: { _id: ID(postId), author: ID(user._id) } }
+      }, { new: true }).populate({ path: "posts", populate: "author" })
+
+      if (!club) throw new AuthenticationError("Club not found")
+      return club ? true : false
+    }
   }
 }
 
