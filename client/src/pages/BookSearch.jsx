@@ -40,7 +40,7 @@ const BookSearch = (props) => {
               { text: 'By author', value: 'inauthor' },
               { text: 'By title', value: 'intitle' },
               { text: 'By subject', value: 'subject' },
-            ], width: '4'
+            ], width: '5%'
           }
         ]} />
       </FormProvider>

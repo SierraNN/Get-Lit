@@ -74,7 +74,7 @@ const Reviews = (props) => {
       <Container className="ui container1">
         <Header as='h1'>Book Reviews!</Header>
         {display === 'search' && (
-          <FormProvider>
+          <FormProvider className="form">
             <Form submitBtnText="Search Reviews" submit={onSubmit} fields={[
               { name: 'term', useLabel: false, width: '12' },
               {
@@ -82,7 +82,7 @@ const Reviews = (props) => {
                   { text: 'Search book title', value: 'name' },
                   { text: 'By text', value: 'reviewText' },
                   { text: 'By creator', value: 'creator' },
-                ], width: '4'
+                ], width: '5%'
               }
             ]} buttons={auth ? [{ content: 'My Reviews', color: 'green', onClick: () => setDisplay('profile') }] : []} />
             {fresh && <div>

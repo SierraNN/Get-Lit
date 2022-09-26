@@ -85,7 +85,7 @@ const Clubs = (props) => {
                   { text: 'By description', value: 'description' },
                   { text: 'By tags', value: 'tags' },
                   { text: 'By creator', value: 'creator' },
-                ], width: '4'
+                ], width: '5%'
               }
             ]} buttons={auth ? [{ content: 'My Clubs', color: 'green', onClick: () => setDisplay('profile') }] : []} />
             {fresh && <div>

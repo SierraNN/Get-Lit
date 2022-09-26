@@ -72,29 +72,30 @@ const Lists = (props) => {
   return (
     <div className="background3">
       <Container className="ui container1">
-        <Header as='h1'>Book Lists!</Header>
-        {display === 'search' && (
-          <FormProvider>
-            <Form submit={onSubmit} fields={[
-              { name: 'term', useLabel: false, width: '12' },
-              {
-                name: 'type', useLabel: false, control: Dropdown, options: [
-                  { text: 'Search list name', value: 'name' },
-                  { text: 'By description', value: 'description' },
-                  { text: 'By tags', value: 'tags' },
-                  { text: 'By creator', value: 'creator' },
-                ], width: '4'
-              }
-            ]} buttons={auth ? [{ content: 'My Lists', color: 'green', onClick: () => setDisplay('profile') }] : []} />
-            {fresh && <div>
-              <Button.Group floated="right">
-                <Button icon="angle left" onClick={prevPage} />
-                <Button content={pageNum} onClick={null} />
-                <Button icon="angle right" onClick={nextPage} />
-              </Button.Group>
-            </div>}
-          </FormProvider>
-        )}
+        <Header as='h1'>Book Lists</Header>
+          {display === 'search' && (
+            <FormProvider>
+              <Form submit={onSubmit} fields={[
+                { name: 'term', useLabel: false, width: '12' },
+                {
+                  name: 'type', useLabel: false, control: Dropdown, options: [
+                    { text: 'Search list name', value: 'name' },
+                    { text: 'By description', value: 'description' },
+                    { text: 'By tags', value: 'tags' },
+                    { text: 'By creator', value: 'creator' },
+                  ], width: '5%'
+                }
+              ]}  buttons={auth ? [{ content: 'My Lists', color: 'green', onClick: () => setDisplay('profile') }] : []} />
+              {fresh && <div>
+                <Button.Group floated="right">
+                  <Button icon="angle left" onClick={prevPage} />
+                  <Button content={pageNum} onClick={null} />
+                  <Button icon="angle right" onClick={nextPage} />
+                </Button.Group>
+              </div>}
+            </FormProvider>
+          )}
+        
         {display === 'profile' && (
           <>
             <Button icon="search" color="green" content="Search for Lists" onClick={() => setDisplay('search')} />

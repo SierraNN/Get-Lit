@@ -56,14 +56,13 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-
 function App() {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
         <ProfileProvider>
           <BrowserRouter>
-            <SideNav />
+            <SideNav/>
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/books" element={<Outlet />}>
