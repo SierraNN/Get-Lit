@@ -10,6 +10,7 @@ import UserList from "../components/lists/UserList"
 import CommentList from "../components/lists/CommentList"
 import { useFetch } from "../context/SearchContext"
 import { useMutationCB } from "../hooks/useMutationCB"
+import KeywordList from "../components/lists/KeywordList"
 
 
 const ClubDetails = (props) => {
@@ -58,13 +59,13 @@ const ClubDetails = (props) => {
   const onEdit = async (data) => {
     const update = await editPost({ variables: data })
     if (update) {
-      updateClub({ posts: posts.map((post) => post._id === data.postId ? { ...post, text: data.text } : post) })
+      updateClub({ posts: posts.map((post) => post._id === data.commentId ? { ...post, text: data.text } : post) })
     }
     return update
   }
   const onDelete = async (data) => {
     const update = await deletePost({ variables: data })
-    if (update) updateClub({ posts: posts.filter(({ _id }) => _id !== data.postId) })
+    if (update) updateClub({ posts: posts.filter(({ _id }) => _id !== data.commentId) })
     // console.log('Delete post not configured', { data })
   }
 
@@ -93,10 +94,7 @@ const ClubDetails = (props) => {
           {profile?._id && <MembershipButton floated='right' />}
         </Header>
         <p>{description}</p>
-        <Label.Group>
-          <Header as='h3'>Keywords</Header>
-          {tags.map(({ text }, i) => <Label key={i} content={text} />)}
-        </Label.Group>
+        <KeywordList list={tags} />
       </Segment>
       <Segment>
         <UserList header={<Header as='h2' content='Members' />} list={members} />

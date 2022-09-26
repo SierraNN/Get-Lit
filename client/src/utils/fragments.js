@@ -2,109 +2,24 @@
 
 import { gql } from "@apollo/client";
 
+export const SPRITE_FIELDS = gql`
+  fragment SpriteFields on User {
+      _id
+      username
+      spriteChoice
+  }
+`
 export const COMMENT_FIELDS = gql`
+  ${SPRITE_FIELDS}
   fragment CommentFields on Comment {
     _id
     text
     author {
-      _id
-      username
-      spriteChoice
+      ...SpriteFields
     }
     createdAt
   }
-`
-export const PROFILE_FIELDS = gql`
-  fragment ProfileFields on User {
-    _id
-    username
-    spriteChoice
-    bio
-    following {
-      _id
-      username
-      spriteChoice
-    }
-    books {
-      _id
-      googleId
-      title
-      authors
-      thumbnail
-      description
-    }
-    reviews {
-      _id
-      reviewTitle
-      book {
-        _id
-        title
-        googleId
-        thumbnail
-      }
-      creator {
-        _id
-        username
-        spriteChoice
-      }
-    }
-    lists {
-      _id
-      name
-      description
-      creator {
-        _id
-        username
-        spriteChoice
-      }
-      books {
-        _id
-        googleId
-        title
-        thumbnail
-      }
-      tags {
-        _id
-        text
-      }
-      comments {
-        _id
-        text
-        author {
-          _id
-          username
-          email
-          following {
-            _id
-            username
-            spriteChoice
-          }
-          spriteChoice
-        }
-        createdAt
-        replies {
-          _id
-          text
-          createdAt
-        }
-      }
-    }
-    clubs {
-      _id
-      name
-      creator {
-        _id
-        username
-        spriteChoice
-      }
-    }
-    tags {
-      _id
-      text
-    }
-  }
 `;
-
 export const BOOK_FIELDS = gql`
   fragment BookFields on Book {
     _id
@@ -118,15 +33,14 @@ export const BOOK_FIELDS = gql`
 `;
 
 export const REVIEW_FIELDS = gql`
+  ${SPRITE_FIELDS}
   fragment ReviewFields on Review {
     _id
     reviewTitle
     reviewText
     rating
     creator {
-      _id
-      username
-      spriteChoice
+      ...SpriteFields
     }
     rating
     book {
@@ -146,8 +60,7 @@ export const REVIEW_FIELDS = gql`
       _id
       text
       author {
-        _id
-        username
+        ...SpriteFields
       }
       createdAt
     }
@@ -156,17 +69,14 @@ export const REVIEW_FIELDS = gql`
 `;
 export const CLUB_FIELDS = gql`
   ${COMMENT_FIELDS}
+  ${SPRITE_FIELDS}
   fragment ClubFields on BookClub {
     _id
     creator {
-      _id
-      username
-      spriteChoice
+      ...SpriteFields
     }
     members {
-      _id
-      username
-      spriteChoice
+      ...SpriteFields
     }
     name
     description
@@ -180,12 +90,11 @@ export const CLUB_FIELDS = gql`
   }
 `;
 export const LIST_FIELDS = gql`
+  ${SPRITE_FIELDS}
   fragment ListFields on BookList {
     _id
     creator {
-      _id
-      username
-      spriteChoice
+      ...SpriteFields
     }
     name
     description
@@ -206,10 +115,42 @@ export const LIST_FIELDS = gql`
       _id
       text
       author {
-        _id
-        username
+        ...SpriteFields
       }
       createdAt
+    }
+  }
+`;
+
+export const PROFILE_FIELDS = gql`
+  ${BOOK_FIELDS}
+  ${REVIEW_FIELDS}
+  ${CLUB_FIELDS}
+  ${LIST_FIELDS}
+  ${SPRITE_FIELDS}
+  fragment ProfileFields on User {
+    _id
+    username
+    spriteChoice
+    bio
+    following {
+      ...SpriteFields
+    }
+    books {
+      ...BookFields
+    }
+    reviews {
+      ...ReviewFields
+    }
+    lists {
+      ...ListFields
+    }
+    clubs {
+      ...ClubFields
+    }
+    tags {
+      _id
+      text
     }
   }
 `;

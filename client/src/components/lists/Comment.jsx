@@ -10,14 +10,14 @@ const Comment = ({ comment, parents, onEdit, onDelete }) => {
   const [value, setValue] = useState(comment.text)
   const [error, setError] = useState(null)
   const handleEdit = async () => {
-    let update = await onEdit({ ...parents, postId: comment._id, text: value })
+    let update = await onEdit({ ...parents, commentId: comment._id, text: value })
     if (update) setIsEditing(false)
     else {
       setError('Error.. did not save')
     }
   }
   const handleDelete = async () => {
-    let update = await onDelete({ ...parents, postId: comment._id })
+    let update = await onDelete({ ...parents, commentId: comment._id })
   }
   return (
     <List.Item className="comment">

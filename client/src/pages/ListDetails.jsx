@@ -8,67 +8,80 @@ import { useProfile } from "../context/ProfileContext"
 import { GET_LIST } from "../utils/queries"
 import BookImageList from "../components/BookImageList"
 import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
-import { ADD_COMMENT_TO_LIST } from '../utils/mutations';
+import { ADD_COMMENT_TO_LIST, EDIT_LIST_COMMENT, REMOVE_LIST_COMMENT } from '../utils/mutations';
+import { useFetch } from "../context/SearchContext"
+import CommentList from "../components/lists/CommentList"
+import { useMutationCB } from "../hooks/useMutationCB"
+import KeywordList from "../components/lists/KeywordList"
 
 
 const ListDetails = (props) => {
   const { listId } = useParams()
   const [profile, updateProfile] = useProfile()
-  const { Form } = useForm()
-  const { data, refetch } = useQuery(GET_LIST, {
-    variables: { id: listId }
-  })
-  const list = data?.getList || null
+  const { list } = useFetch()
+  const [listInfo, setListInfo] = useState()
 
-  const [addCommentToList] = useMutation(ADD_COMMENT_TO_LIST)
+  const updateList = (data) => {
+    let update = { ...listInfo, ...data }
+    setListInfo(update)
+    list.updateCacheById(listId, update)
+  }
+
+  const createComment = useMutationCB('addCommentToList', ADD_COMMENT_TO_LIST,
+    comments => updateList({ comments })
+  )
+  const editComment = useMutationCB('editListComment', EDIT_LIST_COMMENT, (update) => update)
+  const deleteComment = useMutationCB('removeListComment', REMOVE_LIST_COMMENT, (update) => update)
 
   useEffect(() => {
-    if (listId) refetch()
+    async function getList(id) {
+      let fetchedList = await list.getById(id)
+      setListInfo(fetchedList)
+    }
+    if (listId) getList(listId)
   }, [listId, profile.lists])
 
-  if (!list) return <Loading message="Retrieving list" />
-  const isCreator = list.creator._id === profile._id
-  const { name, description, books, comments, tags, creator } = list
+  if (!listInfo) return <Loading message="Retrieving list" />
+  const isCreator = listInfo.creator._id === profile._id
+  const { name, description, books, comments, tags, creator } = listInfo
 
-  const onSubmit = async ({ text }) => {
-    const { data } = await addCommentToList({
-      variables: {
-        listId,
-        comment: text
-      }
-    })
-    if (data && data.addCommentToList) {
-      updateProfile('UPDATE_LIST', { ...list, comment: data.addCommentToList })
+  const submitComment = async ({ text }) => {
+    return await createComment({ variables: { listId, comment: text } })
+  }
+  const onEdit = async (data) => {
+    const update = await editComment({ variables: data })
+    if (update) {
+      updateList({ comments: comments.map((comment) => comment._id === data.commentId ? { ...comment, text: data.text } : comment) })
     }
-    return { data }
+    return update
+  }
+  const onDelete = async (data) => {
+    const update = await deleteComment({ variables: data })
+    if (update) updateList({ comments: comments.filter(({ _id }) => _id !== data.commentId) })
   }
 
   return (
-    <div className=" background3">
+    <div className="background3">
       <Header as='h1' content={name} subheader={creator.username} />
       <Segment>
-        <Header>Description</Header>
-        {description}
-        <Label.Group>
-          {tags.map(({ text }, i) => <Label key={i} content={text} />)}
-        </Label.Group>
+        <Header as='h2'>Description</Header>
+        <p>{description}</p>
+        <KeywordList list={tags} />
       </Segment>
       <Segment>
-        <BookImageList header="Books in List" list={list.books} />
+        <BookImageList header="Books in List" list={books} />
         {isCreator && <Link to="/books"><Button content="add book" color="green" icon="plus" /></Link>}
       </Segment>
       <Segment>
-        <List className="comment-list">
-          {list.comments.map((comment, i) => <List.Item key={i} >
-            {comment.text}<Label content={comment.author.username} detail={comment.createdAt} />
-          </List.Item>)}
-        </List>
-
-        <FormProvider>
-          <Form submit={onSubmit} fields={[
-            { name: "text", label: 'Comment on this list:', control: "textarea", required: true }
-          ]} />
-        </FormProvider>
+        <CommentList
+          parents={{ listId }}
+          header={<Header as='h2' content="List Discussion" />}
+          onSubmit={submitComment}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          list={comments}
+          noCommentLabel="No comments yet"
+          textAreaLabel="Comment on this list" />
       </Segment>
     </div>
   )

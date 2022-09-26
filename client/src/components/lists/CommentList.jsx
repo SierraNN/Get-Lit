@@ -8,7 +8,7 @@ import Comment from "./Comment"
 const CommentList = ({
   list,
   header,
-  userCanPost = false,
+  userCanPost = true,
   disabledMessage,
   onSubmit,
   onEdit,
@@ -43,7 +43,7 @@ const CommentList = ({
           </FormProvider> : disabledMessage}
         </>
       ) : (<Message positive>
-        Must be logged in to view posts
+        Must be logged in to view
         <Link to="/login" state={{ from: location.pathname }}>
           <Button className="margin-left-1" color="green" content="Log In" />
         </Link>

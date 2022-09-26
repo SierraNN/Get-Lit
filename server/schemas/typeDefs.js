@@ -192,8 +192,12 @@ const typeDefs = gql`
     createClub(club: CreateClub): BookClub
     addPostToClub(clubId: ID, post: String): [Comment]
     # COMMENTS / POSTS
-    editClubPost(clubId: ID, postId: ID, text: String): Boolean
-    removeClubPost(clubId: ID, postId: ID): Boolean
+    editClubPost(clubId: ID, commentId: ID, text: String): Boolean
+    removeClubPost(clubId: ID, commentId: ID): Boolean
+    editListComment(listId: ID, commentId: ID, text: String): Boolean
+    removeListComment(listId: ID, commentId: ID): Boolean
+    editReviewComment(reviewId: ID, commentId: ID, text: String): Boolean
+    removeReviewComment(reviewId: ID, commentId: ID): Boolean
   }
 `;
 

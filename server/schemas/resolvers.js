@@ -3,6 +3,7 @@ const { User, Book, BookList, BookClub, Review } = require('../models')
 const { signToken } = require("../utils/auth");
 const { Types } = require('mongoose');
 const { create } = require("../models/books/eBook");
+const confirmModified = require("../utils/confirmModified");
 
 const ID = Types.ObjectId
 const resolvers = {
@@ -291,28 +292,62 @@ const resolvers = {
       return club.posts
     },
 
-    /**
-     * COMMENTS / POSTS
+    /** COMMENTS / POSTS
+     * Any model that has posts or comments uses the same underlying Mongoose model
      */
-    editClubPost: async (parent, { clubId, postId, text }, { user }) => {
+    editClubPost: async (parent, { clubId, commentId, text }, { user }) => {
       const update = await BookClub.updateOne({
-        _id: clubId, posts: { $elemMatch: { _id: ID(postId), author: ID(user._id) } }
+        _id: clubId, posts: { $elemMatch: { _id: ID(commentId), author: ID(user._id) } }
       }, {
         $set: { "posts.$.text": text }
       }, { new: true }).populate({ path: "posts", populate: "author" })
       console.log(update)
       if (!update) throw new AuthenticationError("Club or post not found")
-      // return false
-      return update.acknowledged || false
+      return confirmModified(update, 1)
+      // return update.acknowledged || false
     },
-    removeClubPost: async (parent, { clubId, postId }, { user }) => {
+    removeClubPost: async (parent, { clubId, commentId }, { user }) => {
       const club = await BookClub.findByIdAndUpdate(clubId, {
-        $pull: { posts: { _id: ID(postId), author: ID(user._id) } }
+        $pull: { posts: { _id: ID(commentId), author: ID(user._id) } }
       }, { new: true }).populate({ path: "posts", populate: "author" })
 
       if (!club) throw new AuthenticationError("Club not found")
       return club ? true : false
-    }
+    },
+    editListComment: async (parent, { listId, commentId, text }, { user }) => {
+      const update = await BookList.updateOne({
+        _id: listId, comments: { $elemMatch: { _id: ID(commentId), author: ID(user._id) } }
+      }, {
+        $set: { "comments.$.text": text }
+      }, { new: true }).populate({ path: "comments", populate: "author" })
+      if (!update) throw new AuthenticationError("List or comment not found")
+      return confirmModified(update, 1)
+    },
+    removeListComment: async (parent, { listId, commentId }, { user }) => {
+      const list = await BookList.findByIdAndUpdate(listId, {
+        $pull: { comments: { _id: ID(commentId), author: ID(user._id) } }
+      }, { new: true }).populate({ path: "comments", populate: "author" })
+
+      if (!list) throw new AuthenticationError("List not found")
+      return list ? true : false
+    },
+    editReviewComment: async (parent, { reviewId, commentId, text }, { user }) => {
+      const update = await Review.updateOne({
+        _id: reviewId, comments: { $elemMatch: { _id: ID(commentId), author: ID(user._id) } }
+      }, {
+        $set: { "comments.$.text": text }
+      }, { new: true }).populate({ path: "comments", populate: "author" })
+      if (!update) throw new AuthenticationError("Review or comment not found")
+      return confirmModified(update, 1)
+    },
+    removeReviewComment: async (parent, { reviewId, commentId }, { user }) => {
+      const review = await Review.findByIdAndUpdate(reviewId, {
+        $pull: { comments: { _id: ID(commentId), author: ID(user._id) } }
+      }, { new: true }).populate({ path: "comments", populate: "author" })
+
+      if (!review) throw new AuthenticationError("Review not found")
+      return review ? true : false
+    },
   }
 }
 
