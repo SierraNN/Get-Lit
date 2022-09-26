@@ -27,14 +27,6 @@
   overflow: auto;
 }
 
-.body{
-  height: auto;
-  width: 75%;
-  display: flex;
-  justify-content: center;
-  margin-left: 200px;
-}
-
 /* Navigation and misc */
 #main-content {
   position: absolute;
@@ -152,4 +144,18 @@
   right: -3px;
   top: 1px;
   transform: rotate(1.4deg);
+}
+
+@media only screen and (max-width: 600px) {
+
+  .profile {
+    color: black;
+    background-color: rgba(38, 47, 85, 0.8);
+    margin-top: 10%;
+    margin-left: 18% !important;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 25px;
+  }
+
 }

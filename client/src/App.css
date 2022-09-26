@@ -1359,11 +1359,11 @@
   .ui.container1 {
     color: black;
     background-color: rgba(38, 47, 85, 0.8);
-    margin-left: 25% !important;
+    margin-top: 10%;
+    margin-left: 18% !important;
     font-weight: bold;
     padding: 20px;
     border-radius: 25px;
-
   }
   
   .background {
