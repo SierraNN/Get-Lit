@@ -74,7 +74,7 @@ const Reviews = (props) => {
       <Container className="ui container1">
         <Header as='h1'>Book Reviews!</Header>
         {display === 'search' && (
-          <FormProvider>
+          <FormProvider className="form">
             <Form submitBtnText="Search Reviews" submit={onSubmit} fields={[
               { name: 'term', useLabel: false, width: '12' },
               {
