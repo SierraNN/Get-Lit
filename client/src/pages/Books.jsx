@@ -68,7 +68,7 @@ const Books = (props) => {
   return (
     <div className="background3">
       <Container className="ui container1">
-        <Header as='h1'>Books!</Header>
+        <Header as='h1'>Search</Header>
         {display === 'search' && (
           <FormProvider>
             <Form submit={onSubmit} respond={onResponse} fields={[
@@ -79,7 +79,7 @@ const Books = (props) => {
                   { text: 'By author', value: 'inauthor' },
                   { text: 'By title', value: 'intitle' },
                   { text: 'By subject', value: 'subject' },
-                ], width: '4'
+                ], width: '5%'
               }
             ]} buttons={auth ? [{ content: 'My Books', color: 'green', onClick: () => setDisplay('profile') }] : []} />
           </FormProvider>

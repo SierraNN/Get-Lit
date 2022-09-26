@@ -82,7 +82,7 @@ const Reviews = (props) => {
                   { text: 'Search book title', value: 'name' },
                   { text: 'By text', value: 'reviewText' },
                   { text: 'By creator', value: 'creator' },
-                ], width: '4'
+                ], width: '5%'
               }
             ]} buttons={auth ? [{ content: 'My Reviews', color: 'green', onClick: () => setDisplay('profile') }] : []} />
             {fresh && <div>

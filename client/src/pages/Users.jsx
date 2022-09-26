@@ -84,7 +84,7 @@ const Lists = (props) => {
                 name: 'type', useLabel: false, control: Dropdown, options: [
                   { text: 'Search username', value: 'name' },
                   { text: 'By tags', value: 'tags' },
-                ], width: '4'
+                ], width: '5%'
               }
             ]} buttons={auth ? [{ content: 'Following', color: 'green', onClick: () => setDisplay('profile') }] : []} />
             {fresh && <div>
