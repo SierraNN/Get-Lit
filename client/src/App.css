@@ -1173,15 +1173,23 @@ body{
   font-family: 'Alagard';
 }
 
+.ui.container{
+  margin-top: 10%;
+  margin-left: 18% !important;
+  font-weight: bold;
+  padding: 20px;
+  border-radius: 25px;
+}
+
 .ui.container1 {
   color: black;
   background-color: rgba(38, 47, 85, 0.8);
   font-weight: bold;
   border-radius: 25px;
-  margin-left: 220px !important;
   margin-top: 50px;
-  border-color: #F80;
+
 }
+
 
 .form{
   margin: 5%;
@@ -1369,11 +1377,16 @@ body{
 
 @media only screen and (max-width: 600px) {
 
+  .ui.container{
+    margin-left:-15% !important;
+  }
+
   .ui.container1 {
+    width:100% !important;
     color: black;
     background-color: rgba(38, 47, 85, 0.8);
     margin-top: 10%;
-    margin-left: 18% !important;
+    margin-left:-20%;
     font-weight: bold;
     padding: 20px;
     border-radius: 25px;
@@ -1450,7 +1463,7 @@ body{
   #main-navigation {
     top: 0px;
     left: 0px;
-    width: 15%;
+    width: 15% !important;
     height: 100%;
     background: url("https://i.pinimg.com/originals/49/49/40/494940db287a82ef6047819d94098ff7.jpg");
     position: fixed;
@@ -1459,6 +1472,7 @@ body{
     font-size: large;
     justify-content: flex;
     flex-direction: row;
+    margin-left: 0% !important;
   }
 
   #main-navigation ul {
