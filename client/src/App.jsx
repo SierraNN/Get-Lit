@@ -33,6 +33,7 @@ import CreateReview from './components/forms/CreateReview';
 import CreateClub from './components/forms/CreateClub';
 import LandingPage from './pages/LandingPage';
 import UserDetails from './pages/UserDetails';
+import SearchProvider from './context/SearchContext';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -60,47 +61,51 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
-        <ProfileProvider>
-          <BrowserRouter>
-            <SideNav/>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/books" element={<Outlet />}>
-                <Route index element={<Books />} />
-                <Route path=":bookId" element={<BookDetails />} />
-              </Route>
-              <Route path="/lists" element={<Outlet />}>
-                <Route index element={<Lists />} />
-                <Route path=":listId" element={<ListDetails />} />
-              </Route>
-              <Route path="/reviews" element={<Outlet />}>
-                <Route index element={<Reviews />} />
-                <Route path=":reviewId" element={<ReviewDetails />} />
-              </Route>
-              <Route path="/clubs" element={<Outlet />}>
-                <Route index element={<Clubs />} />
-                <Route path=":clubId" element={<ClubDetails />} />
-              </Route>
-              <Route path="/users" element={<Outlet />}>
-                <Route index element={<Users />} />
-                <Route path=":userId" element={<Profile />} />
-              </Route>
-              <Route path="/" element={<GuestOnly />}>
-                {/** Redirected if already logged in  */}
-                <Route path="login" element={<Login />} />
-                <Route path="register" element={<Register />} />
-              </Route>
-              <Route path="/" element={<AuthGuard />}>
-                {/** Redirected if not logged in */}
-                <Route path="profile" element={<Profile />} />
-                <Route path="lists/new" element={<CreateList />} />
-                <Route path="books/:bookId/reviews/new" element={<CreateReview />} />
-                <Route path="clubs/new" element={<CreateClub />} />
-              </Route>
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </ProfileProvider>
+        <SearchProvider>
+          <ProfileProvider>
+            <BrowserRouter>
+              <SideNav />
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/books" element={<Outlet />}>
+                  <Route index element={<Books />} />
+                  <Route path=":bookId" element={<BookDetails />} />
+                </Route>
+                <Route path="/lists" element={<Outlet />}>
+                  <Route index element={<Lists />} />
+                  <Route path=":listId" element={<ListDetails />} />
+                </Route>
+                <Route path="/reviews" element={<Outlet />}>
+                  <Route index element={<Reviews />} />
+                  <Route path=":reviewId" element={<ReviewDetails />} />
+                </Route>
+                <Route path="/clubs" element={<Outlet />}>
+                  <Route index element={<Clubs />} />
+                  <Route path=":clubId" element={<ClubDetails />} />
+                </Route>
+                <Route path="/users" element={<Outlet />}>
+                  <Route index element={<Users />} />
+                  <Route path=":userId" element={<Profile />} />
+                </Route>
+                <Route path="/" element={<GuestOnly />}>
+                  {/** Redirected if already logged in  */}
+                  <Route path="login" element={<Login />} />
+                  <Route path="register" element={<Register />} />
+                </Route>
+                <Route path="/" element={<AuthGuard />}>
+                  {/** Redirected if not logged in */}
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="lists/new" element={<CreateList />} />
+                  <Route path="reviews/new" element={<CreateReview />} />
+                  <Route path="books/:bookId/reviews/new" element={<CreateReview />} />
+                  <Route path="clubs/new" element={<CreateClub />} />
+                </Route>
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+
+          </ProfileProvider>
+        </SearchProvider>
       </AuthProvider>
     </ApolloProvider>
   );

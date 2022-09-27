@@ -13,7 +13,6 @@ const BookListForm = (props) => {
   const [profile, updateProfile] = useProfile()
   const navigate = useNavigate()
   const { state } = useLocation()
-  console.log(state)
   const [createList] = useMutation(CREATE_LIST)
   const onSubmit = async (listInfo) => {
     const list = { ...listInfo }
@@ -25,7 +24,6 @@ const BookListForm = (props) => {
     })
   }
   const onResponse = async ({ data }) => {
-    console.log(data.createList)
     if (data?.createList) {
       updateProfile('ADD_LIST', data.createList)
       navigate(`/lists/${data.createList._id}`)
@@ -33,17 +31,18 @@ const BookListForm = (props) => {
   }
 
   return (
-    <Container className="background3">
-      <FormProvider>
-        <Header as='h1'>New Book List</Header>
-        <Form submit={onSubmit} respond={onResponse} fields={[
-          { name: 'name', required: true },
-          { name: 'description', control: TextArea },
-          { name: 'tags', label: 'Tags (comma separated)' }
-        ]} submitBtnText="Create List" />
-      </FormProvider>
-
-    </Container>
+    <div className="background3">
+      <Container className="container1">
+        <FormProvider>
+          <Header as='h1'>New Book List</Header>
+          <Form submit={onSubmit} respond={onResponse} fields={[
+            { name: 'name', required: true },
+            { name: 'description', control: TextArea },
+            { name: 'tags', label: 'Tags (comma separated)' }
+          ]} submitBtnText="Create List" />
+        </FormProvider>
+      </Container>
+    </div>
   )
 }
 

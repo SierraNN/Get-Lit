@@ -1,17 +1,19 @@
 import { Header, List, ListItem } from "semantic-ui-react"
+import AppList from "./AppList"
+import ListHeader from "./AppListHeader"
 import ReviewImage from "./ReviewImage"
 
+const ReviewList = (props) => {
+  return <AppList {...props} className="reviews" ItemComponent={ReviewImage} />
 
-
-const ReviewList = ({ headerText, list }) => {
-  return (
-    <>
-      <Header>{headerText}</Header>
-      <List horizontal className="display-list reviews">
-        {list && list.length ? list.map((item, i) => <ReviewImage key={i} review={item} />) : <ListItem content="No reviews" />}
-      </List>
-    </>
-  )
+  // return (
+  //   <>
+  //     <ListHeader header={header} />
+  //     <List horizontal className="display-list reviews">
+  //       {list && list.length ? list.map((review, i) => <ReviewImage key={i} info={review} />) : <ListItem content="No reviews" />}
+  //     </List>
+  //   </>
+  // )
 }
 
 export default ReviewList 

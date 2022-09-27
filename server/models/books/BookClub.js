@@ -24,12 +24,22 @@ const BookClubSchema = new Schema({
     required: true
   },
   books: {
-    type: [ID],
-    ref: 'Book'
+    type: [{
+      book: {
+        type: ID,
+        ref: 'Book'
+      },
+      comments: [CommentSchema]
+    }]
   },
   lists: {
-    type: [ID],
-    ref: 'BookList'
+    type: [{
+      list: {
+        type: ID,
+        ref: 'BookList'
+      },
+      comments: [CommentSchema]
+    }]
   },
   tags: [TagSchema],
   posts: [CommentSchema],
@@ -37,7 +47,7 @@ const BookClubSchema = new Schema({
   // schema options
 })
 BookClubSchema.plugin(mongoosePaginate)
-BookClubSchema.statics.search = paginatedSearch({populate:["creator","members","posts.author",]})
+BookClubSchema.statics.search = paginatedSearch({ populate: ["creator", "members", "posts.author",] })
 
 const BookClub = model('BookClub', BookClubSchema)
 

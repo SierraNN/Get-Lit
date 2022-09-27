@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Icon, Menu } from 'semantic-ui-react'
 import { useAuth } from '../context/AuthContext';
 import { useProfile } from '../context/ProfileContext';
@@ -6,11 +6,10 @@ import { useProfile } from '../context/ProfileContext';
 const SideNav = (props) => {
   const [auth, setAuth] = useAuth()
   const [profile, updateProfile] = useProfile()
-
+  const navigate = useNavigate()
+  const location = useLocation()
 
   return (
-    <div>
-
     <Menu id="main-navigation" vertical>
       <Link to="/">
         <span className="hovertext" data-hover="Home">
@@ -46,7 +45,7 @@ const SideNav = (props) => {
           <Menu.Item><Icon name="user" /></Menu.Item>
         </span>
       </Link>
-      
+
       {auth
         ? <>
           <Link to="/profile">
@@ -54,21 +53,22 @@ const SideNav = (props) => {
               <Menu.Item><Icon name="user circle" /></Menu.Item>
             </span>
           </Link>
-          <Link to="/login">
-            <span className="hovertext" data-hover="Logout">
-              <Menu.Item onClick={() => { setAuth(null); updateProfile('CLEAR_PROFILE') }}><Icon name="sign out" /></Menu.Item>
-            </span>
-          </Link>
+          <span className="link hovertext" data-hover="Logout">
+            <Menu.Item as='div' onClick={() => {
+              setAuth(null);
+              updateProfile('CLEAR_PROFILE');
+              window.location.reload()
+            }}><Icon name="sign out" /></Menu.Item>
+          </span>
         </>
         : <>
           <Link to="/login">
             <span className="hovertext" data-hover="Login">
-              <Menu.Item><Icon name='sign in' /></Menu.Item>
+              <Menu.Item ><Icon name='sign in' /></Menu.Item>
             </span>
           </Link>
         </>}
     </Menu>
-    </div>
   )
 }
 

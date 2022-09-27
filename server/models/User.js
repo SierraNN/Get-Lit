@@ -31,7 +31,6 @@ const UserSchema = new Schema({
   },
   spriteChoice: {
     type: Number,
-    default: 0,
     get: function (value) {
       return value || 0
     }
@@ -71,7 +70,16 @@ UserSchema.methods.isCorrectPassword = async function (password) {
 };
 
 UserSchema.statics.fullProfile = async function (userId) {
-  const user = await this.findById(userId).populate('following').populate('books').populate({ path: 'lists', populate: 'books' }).populate('clubs')
+  // const user = await this.findById(userId).populate('following').populate('books').populate({ path: 'lists', populate: 'books' }).populate('clubs')
+  const user = await this.findById(userId).populate(
+    [
+      'following',
+      'books',
+      'clubs',
+      { path: 'lists', populate: 'books' },
+      { path: 'reviews', populate: 'book' },
+    ]
+  )
   return user
 }
 

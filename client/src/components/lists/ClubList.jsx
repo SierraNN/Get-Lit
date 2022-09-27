@@ -1,17 +1,12 @@
 import { Header, List, ListItem } from "semantic-ui-react"
 import ClubImage from "./ClubImage"
+import ListHeader from "./AppListHeader"
+import AppList from "./AppList"
 
 
 
-const ClubList = ({ headerText, list }) => {
-  return (
-    <>
-      <Header>{headerText}</Header>
-      <List horizontal className="display-list clubs">
-        {list && list.length ? list.map((item, i) => <ClubImage key={i} club={item} />) : <ListItem content="No lists" />}
-      </List>
-    </>
-  )
+const ClubList = (props) => {
+  return <AppList {...props} className="clubs" ItemComponent={ClubImage} />
 }
 
 export default ClubList

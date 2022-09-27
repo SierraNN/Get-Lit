@@ -1,61 +1,31 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { Header, Image, Label, Placeholder } from "semantic-ui-react"
-import reviewCache from "../../utils/reviews"
+import { Header, Placeholder } from "semantic-ui-react"
+import reviewCache from "../../utils/reviewCache"
+// import { imgList } from '../ProfileImage';
+import BookImage from "../BookImage"
+import UserLabel from "../UserLabel"
 
-const ReviewImage = ({ review }) => {
-  const [info, setInfo] = useState(null)
+const ReviewImage = ({ info }) => {
+  const [review, setReview] = useState(null)
 
   useEffect(() => {
-    setInfo(review)
-  }, [review])
+    if (info && info.book) {
+      setReview(info)
+    }
+  }, [info])
 
-  if (!info) return <Placeholder.Image />
-  const { _id, book, creator } = info
-  // console.log('REVIEW', info)
-
-  const renderBookThumbnail = () => {
-    const thumbnail = book?.thumbnail || null
-    if (!thumbnail) return (
-      <Placeholder>
-        <Placeholder.Paragraph>
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-          <Placeholder.Line />
-        </Placeholder.Paragraph>
-      </Placeholder>
-    )
-    else return (
-      <Image src={thumbnail} />
-    )
+  if (!review) {
+    return <Placeholder.Image />
   }
-  const imgList = [
-    "/assets/bg/a.jpg",
-    "/assets/bg/b.png",
-    "/assets/bg/e.png",
-    "/assets/bg/f.png",
-    "/assets/bg/g.png",
-  ]
-  const renderUserIcon = () => {
-    let sprite = creator?.spriteChoice || null
-    return sprite !== null && <Label className="creatorLabel">
-      <Image src={imgList[sprite]} className="labelSprite " circular bordered />
-      <Label.Detail content={creator?.username} />
-    </Label>
-  }
+  const { _id, book, creator, reviewTitle } = review
 
   return (
-    <Link to={`/reviews/${_id}`} className="item">
-      <div onClick={() => reviewCache.recent.updateById(review._id, review)} >
-        <Header as="h3" content={book?.title} />
-        {renderBookThumbnail()}
-        {renderUserIcon()}
-      </div>
-
+    <Link to={`/reviews/${_id}`} onClick={() => reviewCache.recent.updateById(review._id, review)} className="item">
+      <Header as="h3" content={reviewTitle} />
+      <BookImage book={book} />
+      <UserLabel user={creator} />
     </Link>
 
   )

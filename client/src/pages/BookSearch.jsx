@@ -2,30 +2,28 @@ import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
 import { useState } from "react"
 import { Card, Container, Dropdown, Header, Message } from 'semantic-ui-react'
 import BookImageList from "../components/BookImageList"
-import books from "../utils/books"
+import bookCache from "../utils/bookCache"
 import { bookSearch } from "../utils/google"
 
-const cachedResults = books.results.get()
+const cachedResults = bookCache.results.get()
 
 const BookSearch = (props) => {
   const { Form } = useForm()
   const [results, setResults] = useState(cachedResults)
   // const [resultCount, setResultCount] = useState(null)
-  const [pageNum, setPageNum] = useState(1)
+  const [page, setPageNum] = useState(1)
   // const [loading, setLoading] = useState(false)
   const onSubmit = async ({ term, type }) => {
     if (term === '') {
       return { errors: { term: 'Please enter a search term' } }
     } else {
-      return bookSearch({ term, type, pageNum })
+      return bookSearch({ term, type, page })
     }
   }
   const onResponse = async ({ data, error }) => {
-    // console.log(data)
     if (data) {
-      // setResultCount(data.totalItems)
       setResults(data.items)
-      books.results.set(data.items)
+      bookCache.results.set(data.items)
     }
   }
   return (

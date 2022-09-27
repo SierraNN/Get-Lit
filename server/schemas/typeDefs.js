@@ -63,6 +63,7 @@ const typeDefs = gql`
     _id: ID
     book: Book
     creator: User
+    reviewTitle: String
     reviewText: String
     suggestedBooks: [Book]
     suggestedTags: [Tag]
@@ -71,11 +72,10 @@ const typeDefs = gql`
     createdAt: String
   }
   input CreateReview {
-    book: ID
+    book: BookInfo
+    reviewTitle: String
     reviewText: String
-    suggestedBooks: [ID]
-    suggestedTags: [String]
-    rating: Int
+    rating: Float
   }
 
   type BookList {
@@ -114,7 +114,7 @@ const typeDefs = gql`
   input SearchParams {
     term: String
     type: String
-    pageNum: Int
+    page: Int
     pageSize: Int
   }
 
@@ -123,24 +123,28 @@ const typeDefs = gql`
     docs: [BookList]
     totalPages: Int
     page: Int
+    pageSize: Int
   }
   type ClubResults {
     totalDocs: Int
     docs: [BookClub]
     totalPages: Int
     page: Int
+    pageSize: Int
   }
   type UserResults {
     totalDocs: Int
     docs: [User]
     totalPages: Int
     page: Int
+    pageSize: Int
   }
   type ReviewResults {
     totalDocs: Int
     docs: [Review]
     totalPages: Int
     page: Int
+    pageSize: Int
   }
 
   type Query {
@@ -163,18 +167,20 @@ const typeDefs = gql`
 
   type Mutation {
     # auth
+    login(username: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
+    # PROFILE
     updateUserTags(tags: [String]): [Tag]
     updateBio(bio: String): String
     updateSprite(spriteChoice: Int): Int
-    login(username: String!, password: String!): Auth
-    fetchUser(userId: ID): User
-    # following
     addFollowing(followingId: ID): [User]
     removeFollowing(followingId: ID): [User]
-    # books
     saveBook(book: BookInfo): Book
     removeBook(bookId: ID): Boolean
+    joinClub(id: ID): Boolean
+    leaveClub(id: ID): Boolean
+
+    # following
     # lists
     createList(list: CreateList): BookList
     addBookToList(listId: ID, book: BookInfo): BookList
@@ -185,6 +191,13 @@ const typeDefs = gql`
     # clubs
     createClub(club: CreateClub): BookClub
     addPostToClub(clubId: ID, post: String): [Comment]
+    # COMMENTS / POSTS
+    editClubPost(clubId: ID, commentId: ID, text: String): Boolean
+    removeClubPost(clubId: ID, commentId: ID): Boolean
+    editListComment(listId: ID, commentId: ID, text: String): Boolean
+    removeListComment(listId: ID, commentId: ID): Boolean
+    editReviewComment(reviewId: ID, commentId: ID, text: String): Boolean
+    removeReviewComment(reviewId: ID, commentId: ID): Boolean
   }
 `;
 
