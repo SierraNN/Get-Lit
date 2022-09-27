@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500);
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap');
 
 /* Medium devices (landscape tablets, 600px and up) */
 @media only screen and (min-width: 600px) {
@@ -1165,6 +1165,12 @@
 }
 [class*="zocial-"]:before {
   font-family: 'zocial', sans-serif;
+}
+
+@font-face { font-family: Alagard; src: url('../src/font/alagard/alagard.ttf'); } 
+
+body{
+  font-family: 'Alagard';
 }
 
 .ui.container1 {
