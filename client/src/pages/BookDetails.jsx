@@ -62,7 +62,7 @@ const BookDetails = (props) => {
 
   return (
     <div className="background3">
-      <Container className="ui container1">
+      <Container className="ui blue-box">
         <Header as='h1' content={info.title} subheader={`By ${info.authors.join(', ')}`} />
         <Segment.Group>
           <Segment basic className="flex">
