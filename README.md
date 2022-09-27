@@ -24,7 +24,7 @@ Our list page, which allows users to share topical lists of books with the Get L
 
 ![list page](https://user-images.githubusercontent.com/107456698/189208397-932bf193-119a-4ed5-9878-49657c67168a.jpg)
 
-The heart of the Git Lit experience, being able to set up "book clubs" in which users have the ability to join and participate in discussion around specific books. 
+The heart of the Get Lit experience, being able to set up "book clubs" in which users have the ability to join and participate in discussion around specific books. 
 
 ![clubs](https://user-images.githubusercontent.com/107456698/189208547-fe973dae-ba0e-4a3a-a979-dd9c4eda219f.jpg)
 
@@ -35,7 +35,6 @@ User Page in which you can network with fellow users and make connections with t
 User profile page in which you can choose from a variety of animated pixel art sprites to make your profile your own. Includes a comprehensive list of tags and spaces to add a bio and further information. 
 
 ![userprofile](https://user-images.githubusercontent.com/107456698/189208957-95236206-ad9c-433d-bf8f-c3384ab591de.jpg)
-
 
 # The Future 
 
@@ -48,7 +47,6 @@ Many industry-leading technologies were utilized in the creation of Get Lit; mos
 _**React | SASS | HTML5 | Node JS | Heroku | MongoDB | NPM | Three JS**_
 
 Our presentation was created using _**Canva**_. 
-
 
 # Get Lit Team
 
