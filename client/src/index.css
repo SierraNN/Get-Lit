@@ -4,7 +4,8 @@
   }
   body{
     color: #fff;
-    font-family :'Times New Roman', Times, serif
+    font-family :'Times New Roman', Times, serif;
+    margin-left: 17% !important;
   }
   
   canvas{
@@ -84,9 +85,6 @@
     transform: translate(100px, 100px);
     animation-delay: 2.4s;
   }
-  
-  
-  
   .choices-card .title{
     font-size: 1.5em;
     font-weight: bold;
@@ -97,7 +95,22 @@
   .choices-card .btn{
     background:#053574;
   }
-
   .card-image{
     height: 40px;
+  }
+  @media only screen and (max-width: 600px) {
+    .btn{
+      background: #a7a7a7;
+      color: #fff;
+      padding: .5em 1em;
+      border-radius: 3px;
+      text-decoration: none;
+      font-size: 1em;
+      border: none;
+      margin-right: .5em;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
   }

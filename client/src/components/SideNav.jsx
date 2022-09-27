@@ -45,6 +45,7 @@ const SideNav = (props) => {
           <Menu.Item><Icon name="user" /></Menu.Item>
         </span>
       </Link>
+
       {auth
         ? <>
           <Link to="/profile">
