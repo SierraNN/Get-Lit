@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,500);
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap');
 
 /* Medium devices (landscape tablets, 600px and up) */
 @media only screen and (min-width: 600px) {
@@ -1167,6 +1167,12 @@
   font-family: 'zocial', sans-serif;
 }
 
+@font-face { font-family: Alagard; src: url('../src/font/alagard/alagard.ttf'); } 
+
+body{
+  font-family: 'Alagard';
+}
+
 .ui.container1 {
   color: black;
   background-color: rgba(38, 47, 85, 0.8);
@@ -1174,6 +1180,7 @@
   border-radius: 25px;
   margin-left: 220px !important;
   margin-top: 50px;
+  border-color: #F80;
 }
 
 .form{
@@ -1193,6 +1200,7 @@
   top: 0;
   left: 0;
   overflow: auto;
+  font-family: 'Alagard';
 }
 
 .background2{
