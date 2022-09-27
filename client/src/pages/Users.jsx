@@ -61,7 +61,7 @@ const Users = (props) => {
 
   return (
     <div className="background2">
-      <Container className="container1">
+      <Container className="blue-box">
         <Header as='h1'>Fellow Readers</Header>
         {display === 'search' && (
           <FormProvider>

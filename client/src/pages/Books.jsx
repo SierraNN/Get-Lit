@@ -66,7 +66,7 @@ const Books = (props) => {
 
   return (
     <div className="background3">
-      <Container className="container1">
+      <Container className="blue-box">
         <Header as='h1'>Search</Header>
         {display === 'search' && (
           <FormProvider>

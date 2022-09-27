@@ -11,7 +11,7 @@ box-sizing: border-box;
 body{
   color: #fff;
   font-family: 'Alagard';
-  margin-left: 17% !important;
+  /* margin-left: 17% !important; */
   position: relative;
   min-height: 100vh;
   background: linear-gradient(to bottom, #5d326c, #350048); 

@@ -27,7 +27,7 @@ const BookSearch = (props) => {
     }
   }
   return (
-    <Container className="ui container1 background3 stackable grid">
+    <Container className="ui blue-box background3 stackable grid">
       <FormProvider>
         <Header as='h1'>Search</Header>
         <br />

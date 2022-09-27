@@ -1,20 +1,69 @@
 
-#main-navigation
+#main-navigation.ui.vertical.menu
+  position: absolute
+  height: 100vh
   color: white 
   z-index: 2
+  width: 6rem
+  font-size: 3rem
+  transition: width 400ms
+  background: url("https://i.pinimg.com/originals/49/49/40/494940db287a82ef6047819d94098ff7.jpg")
+  &.open
+    box-shadow: 0 0 10px #995200
+    width: 5.5em
+
   .item
+    position: relative
+    box-sizing: border-box
+    display: flex
+    align-items: center
+    justify-content: flex-start
     cursor: pointer
     color: white
-    transition: color 400ms, background 400ms
+    padding: 0
+    // margin: 0 1rem
+    width: 100%
+    height: 1.5em
+    transition: width 400ms, color 400ms, background 400ms
+    i.icon
+      float: unset
+      margin: 0 1rem
+    .content
+      transform-origin: left
+      justify-self: flex-start
+      padding: 0.2em 0.4em 0.2em 0.2em
+      font-size: 0.9em
+      border-radius: 0 25px 25px  0
+      white-space: nowrap
+      background: rgba(255,255,255,0.7)
+      color: rgb(38, 47, 85)
+    &:not(.active)
+      .content
+        animation: 400ms fadeIn forwards
+    &.active
+      background-color: rgba(90,90,90,0.5)
+      // color: rgb(126, 142, 217)
     &:hover
       background: rgba(90,90,90,0.3)
-  + *
-    padding-top: 1rem
-    padding-left: calc(120px + 1rem)
-    padding-right: 1rem
-    .ui.header, .sub.header 
-      color: white
-      text-shadow: 1px 1px 3px black
+      // i.icon
+      //   transform: translateX(2.75em)
+  
+@keyframes fadeIn
+  from
+    opacity: 0
+    transform: translateX(-100%)
+    max-width: 0
+  to
+    opacity: 1
+    transform: translateX(0)
+    max-width: 5em
+
+#main-content
+  min-height: 100vh
+  margin-left: 6rem
+  .ui.header, .sub.header 
+    color: white
+    text-shadow: 1px 1px 3px black
 
 .ui.form.use-form
   .ui.dropdown
