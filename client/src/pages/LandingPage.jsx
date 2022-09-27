@@ -41,6 +41,7 @@ function LandingPage() {
             </div>
         </div>
       </div>
+      <img src="../assets/logo/landing.png" className="imageLogo"></img>
     </div>
     
   );
