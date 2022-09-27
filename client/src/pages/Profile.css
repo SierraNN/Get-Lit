@@ -147,6 +147,16 @@
 }
 
 @media only screen and (max-width: 600px) {
+  
+  .ui.container1 {
+    width:100% !important;
+    color: black;
+    background-color: rgba(38, 47, 85, 0.8);
+    margin-top: 10%;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 25px;
+  }
 
   .profile {
     color: black;

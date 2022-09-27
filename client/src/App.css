@@ -1377,11 +1377,16 @@ body{
 
 @media only screen and (max-width: 600px) {
 
+  .ui.container{
+    margin-left:-15% !important;
+  }
+
   .ui.container1 {
+    width:100% !important;
     color: black;
     background-color: rgba(38, 47, 85, 0.8);
     margin-top: 10%;
-    margin-left: 18% !important;
+    margin-left:-20%;
     font-weight: bold;
     padding: 20px;
     border-radius: 25px;
