@@ -66,7 +66,13 @@ export function init() {
         scene.add(model)
     })
 // Renders image to the page and animates them
-	renderer = new THREE.WebGLRenderer( { antialias: true } );
+        if (global.renderer) {
+                renderer = global.renderer
+        } else {
+                renderer = new THREE.WebGLRenderer({ antialias: true });
+                global.renderer = renderer
+        }
+        // renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.setAnimationLoop( animation );
         renderer.setClearColor( 0x272727, 1 );
