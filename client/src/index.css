@@ -23,7 +23,15 @@ body{
   display: flex;
   justify-content: right;
 }
-  
+
+.footer{
+display: flex;
+justify-content: center;
+font-family: Alagard;
+font-size: small;
+color: #0bd62d;
+}
+
 .btn1 {
 	position: relative;
 	top: 0;
