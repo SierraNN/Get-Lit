@@ -8,7 +8,7 @@ Get Lit Was born from a desire to see a more enjoyable User Experience from a So
 
 # The Story 
 
-The idea for Get Lit was originally conceptualized by our team member Sierra Nutt who was looking to develop an app that improves upon the groundwork that websites like goodread.com set forth. Why can't the utility of a social cataloging website be combined with a fun and fresh UI and UX? Git Lit aims to take the next step towards the future in which reading is promoted in a way that welcomes both experienced and new readers alike, through the wardrobe, into a world of wonder and possibility.
+The idea for Get Lit was originally conceptualized by our team member Sierra Nutt who was looking to develop an app that improves upon the groundwork that websites like goodread.com set forth. Why can't the utility of a social cataloging website be combined with a fun and fresh UI and UX? Get Lit aims to take the next step towards the future in which reading is promoted in a way that welcomes both experienced and new readers alike, through the wardrobe, into a world of wonder and possibility.
 
 # The App
 
@@ -39,9 +39,23 @@ User profile page in which you can choose from a variety of animated pixel art s
 
 # The Future 
 
-We at Get Lit aim to continue improving our User Experience in such a way that it  fosters a community of Readers. We hope to create a space where it is as socially advantageous as posting on a Social Media app such as Instagram. This may include the creation of rpg-like elements within the user experience to incentivise reading and developing tools that improve literacy.  
+We at Get Lit aim to continue improving our User Experience in such a way that it  fosters a community of Readers. We hope to create a space where it is as socially advantageous as posting on a Social Media app such as Instagram. This may include the creation of rpg-like elements within the user experience to incentivise reading and developing tools that improve literacy. 
 
-# Git Lit Team
+# Technologies
+
+Many industry-leading technologies were utilized in the creation of Get Lit; most notably:
+
+React
+SASS
+HTML5
+Node JS
+Heroku
+MongoDB
+NPM
+Three JS
+
+
+# Get Lit Team
 
 David Taylor - https://github.com/codewizard-dt
 
@@ -53,4 +67,32 @@ Roberto Moreno - https://github.com/rmoreno162303
 
 Calliope Williams - https://github.com/calliebwill
 
+# Collaborators
 
+All background images were sourced from wall.alphacoders.com:
+
+Pixel Landscape by Mark Ferrari
+http://www.markferrari.com/
+
+Artistic Pixel Art HD Wallpaper discovered by BlackDevilX
+https://alphacoders.com/users/profile/137982
+
+Artistic Pixel Art 4k Ultra HD Wallpaperdiscovered by bytecodeminer
+https://alphacoders.com/users/profile/97828
+
+Neon Landscape discovered by wildflower1555
+https://alphacoders.com/users/profile/83679
+
+Other Contributions:
+
+CSS Glass Morphism Button | Katarzyna Marta Kuich
+https://codepen.io/katarzynamarta
+
+Original site layout inspiration:
+Wattpad | https://www.wattpad.com/
+
+ # License
+
+ If interested, please view our pitch presentation here: https://www.canva.com/design/DAFLnExxE0A/npY6zQjM_NfyYNs30OkaQQ/view?utm_content=DAFLnExxE0A&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
+ MIT License.

@@ -1,7 +1,6 @@
-import { useLayoutEffect } from 'react';
 import { useReducer } from 'react';
 import { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Icon, ItemContent, Menu } from 'semantic-ui-react'
 import { useAuth } from '../context/AuthContext';
 import { useProfile } from '../context/ProfileContext';
@@ -34,7 +33,7 @@ const SideNav = (props) => {
     path: pathname
   })
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     menuDispatch({ type: 'PATH', payload: pathname })
   }, [pathname])
 
