@@ -222,6 +222,9 @@ color: #0bd62d;
     height: 40px;
   }
   @media only screen and (max-width: 600px) {
+
+
+    
     .btn{
       background: #a7a7a7;
       color: #fff;
