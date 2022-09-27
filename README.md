@@ -1,8 +1,8 @@
 # Get-Lit
 ![Screenshot 2022-09-08 140611](https://user-images.githubusercontent.com/107456698/189205889-2d976029-110a-47f4-b087-c978901a958a.jpg)
 
-We read to know we are not alone.
-— C.S. Lewis
+>**_"We read to know we are not alone."
+>— C.S. Lewis_**
 
 Get Lit Was born from a desire to see a more enjoyable User Experience from a Social Book cataloging Website. The few websites in this sphere have grown far too comfortable with a mundane user experience. Get Lit aims to bring back a fun & enjoyable Experience to Readers and more importantly those who might be new to reading in community. Reading is a passport to empathy. At Get Lit we strive to help create a more empathetic world. 
 
@@ -24,7 +24,7 @@ Our list page, which allows users to share topical lists of books with the Get L
 
 ![list page](https://user-images.githubusercontent.com/107456698/189208397-932bf193-119a-4ed5-9878-49657c67168a.jpg)
 
-The heart of the Git Lit experience, being able to set up "book clubs" in which users have the ability to join and participate in discussion around specific books. 
+The heart of the Get Lit experience, being able to set up "book clubs" in which users have the ability to join and participate in discussion around specific books. 
 
 ![clubs](https://user-images.githubusercontent.com/107456698/189208547-fe973dae-ba0e-4a3a-a979-dd9c4eda219f.jpg)
 
@@ -36,7 +36,6 @@ User profile page in which you can choose from a variety of animated pixel art s
 
 ![userprofile](https://user-images.githubusercontent.com/107456698/189208957-95236206-ad9c-433d-bf8f-c3384ab591de.jpg)
 
-
 # The Future 
 
 We at Get Lit aim to continue improving our User Experience in such a way that it  fosters a community of Readers. We hope to create a space where it is as socially advantageous as posting on a Social Media app such as Instagram. This may include the creation of rpg-like elements within the user experience to incentivise reading and developing tools that improve literacy. 
@@ -45,15 +44,9 @@ We at Get Lit aim to continue improving our User Experience in such a way that i
 
 Many industry-leading technologies were utilized in the creation of Get Lit; most notably:
 
-React
-SASS
-HTML5
-Node JS
-Heroku
-MongoDB
-NPM
-Three JS
+_**React | SASS | HTML5 | Node JS | Heroku | MongoDB | NPM | Three JS**_
 
+Our presentation was created using _**Canva**_. 
 
 # Get Lit Team
 
@@ -71,28 +64,23 @@ Calliope Williams - https://github.com/calliebwill
 
 All background images were sourced from wall.alphacoders.com:
 
-Pixel Landscape by Mark Ferrari
-http://www.markferrari.com/
+Pixel Landscape by Mark Ferrari | http://www.markferrari.com/
 
-Artistic Pixel Art HD Wallpaper discovered by BlackDevilX
-https://alphacoders.com/users/profile/137982
+Artistic Pixel Art HD Wallpaper discovered by BlackDevilX | https://alphacoders.com/users/profile/137982
 
-Artistic Pixel Art 4k Ultra HD Wallpaperdiscovered by bytecodeminer
-https://alphacoders.com/users/profile/97828
+Artistic Pixel Art 4k Ultra HD Wallpaperdiscovered by bytecodeminer | https://alphacoders.com/users/profile/97828
 
-Neon Landscape discovered by wildflower1555
-https://alphacoders.com/users/profile/83679
+Neon Landscape discovered by wildflower1555 | https://alphacoders.com/users/profile/83679
 
 Other Contributions:
 
-CSS Glass Morphism Button | Katarzyna Marta Kuich
-https://codepen.io/katarzynamarta
+CSS Glass Morphism Button | Katarzyna Marta Kuich | https://codepen.io/katarzynamarta
 
 Original site layout inspiration:
 Wattpad | https://www.wattpad.com/
 
- # License
+# License and Other Information
+ 
+[If interested, please view our pitch presentation here](https://www.canva.com/design/DAFLnExxE0A/npY6zQjM_NfyYNs30OkaQQ/view?utm_content=DAFLnExxE0A&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
- If interested, please view our pitch presentation here: https://www.canva.com/design/DAFLnExxE0A/npY6zQjM_NfyYNs30OkaQQ/view?utm_content=DAFLnExxE0A&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
-
- MIT License.
+MIT License.
