@@ -1,8 +1,24 @@
+import { useReducer } from 'react';
 import { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Icon, ItemContent, Menu } from 'semantic-ui-react'
 import { useAuth } from '../context/AuthContext';
 import { useProfile } from '../context/ProfileContext';
+
+const menuReducer = (state, { type, payload }) => {
+  switch (type) {
+    case 'HOVER':
+      return { ...state, hover: payload }
+    case 'PATH':
+      return { ...state, path: payload, hover: null }
+    case 'OPEN_MENU':
+      return { ...state, open: true }
+    case 'CLOSE_MENU':
+      return { ...state, open: false, hover: null }
+    default:
+      return state
+  }
+}
 
 const SideNav = (props) => {
   const [auth, setAuth] = useAuth()
@@ -11,22 +27,28 @@ const SideNav = (props) => {
   const location = useLocation()
   const { pathname } = location
 
+  const [menu, menuDispatch] = useReducer(menuReducer, {
+    open: false,
+    hover: null,
+    path: pathname
+  })
+
+  useEffect(() => {
+    menuDispatch({ type: 'PATH', payload: pathname })
+  }, [pathname])
 
   const HoverLink = ({ to, label, children, ...itemProps }) => {
-    const [hover, setHover] = useState(false)
-    const [active, setActive] = useState(false)
-    useEffect(() => {
-      if (to === '/') setActive(pathname === '/')
-      else if (to) setActive(pathname.includes(to))
-    }, [pathname])
+    const active = to === '/' ? menu.path === '/' : menu.path.includes(to)
+    const hover = menu.hover === to
     const Item = () => (
       <Menu.Item
         className={active ? 'active' : undefined}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => { setHover(false) }}
+        onMouseEnter={() => {
+          if (menu.hover !== to) menuDispatch({ type: 'HOVER', payload: to })
+        }}
         {...itemProps}
       >
-        {(hover || menuHover && active) && <ItemContent content={label} />}
+        {(menu.open && (active || hover)) && <ItemContent content={label} />}
         {children}
       </Menu.Item>
     )
@@ -40,9 +62,9 @@ const SideNav = (props) => {
 
   return (
     <Menu id="main-navigation" vertical
-      className={menuHover ? 'open' : undefined}
-      onMouseEnter={() => setMenuHover(true)}
-      onMouseLeave={() => { setMenuHover(false) }}>
+      className={menu.open ? 'open' : undefined}
+      onMouseEnter={() => { if (!menu.open) menuDispatch({ type: 'OPEN_MENU' }) }}
+      onMouseLeave={() => menuDispatch({ type: 'CLOSE_MENU' })}>
 
       <HoverLink to="/" label="Home">
         <Icon name='home' />
