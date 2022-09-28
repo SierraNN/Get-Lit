@@ -2,17 +2,20 @@ import { init } from "../utils/initBookLayer.js"
 import { useEffect } from "react"
 import { T, useSetLanguage, useCurrentLanguage } from "@tolgee/react"
 import { Link } from "react-router-dom"
+import { useAuth } from '../context/AuthContext';
 
 
 function LandingPage() {
+  const [auth] = useAuth()
   useEffect(() => {
     init()
   }, [])
+
   return (
     <div id="LandingPage">
       <div className="hero">
-        <Link to="/login">
-          <button className="btn1"><span href="#">Login to Get Lit</span></button>
+        <Link to={auth ? "/profile" : "/login"}>
+          <button className="btn1"><span >{auth ? 'Your Profile' : 'Login to Get Lit'}</span></button>
         </Link>
       </div>
       {/* content in each class has a T surrounding it to say its from tolgee */}
