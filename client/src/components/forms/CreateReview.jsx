@@ -71,7 +71,7 @@ const CreateReview = (props) => {
 
   return (
     <div className="background3">
-      <Container className="container1">
+      <Container className="blue-box">
         <FormProvider>
           <Header as='h1' content='New Review' />
           {book

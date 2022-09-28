@@ -27,9 +27,10 @@ const BookSearch = (props) => {
     }
   }
   return (
-    <Container className="ui container1 background3">
+    <Container className="ui blue-box background3 stackable grid">
       <FormProvider>
         <Header as='h1'>Search</Header>
+        <br />
         <Form submit={onSubmit} respond={onResponse} fields={[
           { name: 'term', useLabel: false, width: '12' },
           {
@@ -38,10 +39,11 @@ const BookSearch = (props) => {
               { text: 'By author', value: 'inauthor' },
               { text: 'By title', value: 'intitle' },
               { text: 'By subject', value: 'subject' },
-            ], width: '5%'
+            ], width: '4'
           }
         ]} />
       </FormProvider>
+
       {results
         ? <BookImageList list={results} />
         : results && <Message>No results</Message>

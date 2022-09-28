@@ -17,7 +17,6 @@ const Books = (props) => {
   const [searchParams, setSearchParams] = useState({})
   const [fresh, setFresh] = useState(false)
   const [totalPages, setTotalPages] = useState(1)
-  // const { state } = useLocation()
 
   const myBooks = auth ? profile.books : null
 
@@ -66,7 +65,7 @@ const Books = (props) => {
 
   return (
     <div className="background3">
-      <Container className="container1">
+      <Container className="blue-box">
         <Header as='h1'>Search</Header>
         {display === 'search' && (
           <FormProvider>
@@ -78,7 +77,7 @@ const Books = (props) => {
                   { text: 'By author', value: 'inauthor' },
                   { text: 'By title', value: 'intitle' },
                   { text: 'By subject', value: 'subject' },
-                ], width: '5%'
+                ], width: '4'
               }
             ]} buttons={auth ? [{ content: 'My Books', color: 'green', onClick: () => setDisplay('profile') }] : []} />
           </FormProvider>

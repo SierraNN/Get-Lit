@@ -74,7 +74,7 @@ const ReviewDetails = (props) => {
 
   return (
     <div className="background3">
-      <Container className="container1 ">
+      <Container className="blue-box ">
         <Header as='h1' content={book.title} />
         <Header as='h2'>
           <BookImage book={book} />

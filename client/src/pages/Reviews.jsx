@@ -65,7 +65,7 @@ const Reviews = (props) => {
 
   return (
     <div className="background3">
-      <Container className="ui container1">
+      <Container className="ui blue-box">
         <Header as='h1'>Book Reviews!</Header>
         {display === 'search' && (
           <FormProvider>
@@ -76,7 +76,7 @@ const Reviews = (props) => {
                   { text: 'Search book title', value: 'name' },
                   { text: 'By text', value: 'reviewText' },
                   { text: 'By creator', value: 'creator' },
-                ], width: '5%'
+                ], width: '4'
               }
             ]} buttons={auth ? [{ content: 'My Reviews', color: 'green', onClick: () => setDisplay('profile') }] : []} />
             {fresh && totalPages > 1 && <div>

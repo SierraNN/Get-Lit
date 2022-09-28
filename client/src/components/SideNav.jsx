@@ -1,73 +1,130 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Icon, Menu } from 'semantic-ui-react'
+import { useReducer } from 'react';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom'
+import { Icon, ItemContent, Menu } from 'semantic-ui-react'
 import { useAuth } from '../context/AuthContext';
 import { useProfile } from '../context/ProfileContext';
 
+const menuReducer = (state, { type, payload }) => {
+  switch (type) {
+    case 'HOVER':
+      return { ...state, hover: payload }
+    case 'PATH':
+      return { ...state, path: payload, hover: null }
+    case 'OPEN_MENU':
+      return { ...state, open: true }
+    case 'CLOSE_MENU':
+      return { ...state, open: false, hover: null }
+    case 'PAGE_BLUR':
+      return { ...state, windowFocus: false }
+    case 'PAGE_FOCUS':
+      return { ...state, windowFocus: true }
+    default:
+      return state
+  }
+}
+
 const SideNav = (props) => {
   const [auth, setAuth] = useAuth()
-  const [profile, updateProfile] = useProfile()
-  const navigate = useNavigate()
+  const [profile, updateProfile] = useProfile() // es-lint-ignore-line
   const location = useLocation()
+  const { pathname } = location
+
+  const [menu, menuDispatch] = useReducer(menuReducer, {
+    windowFocus: true,
+    open: false,
+    hover: null,
+    path: pathname
+  })
+
+  useEffect(() => {
+    let handleFocus = () => menuDispatch({ type: 'PAGE_FOCUS' })
+    let handleBlur = () => menuDispatch({ type: 'PAGE_BLUR' })
+    window.addEventListener('focus', handleFocus);
+    window.addEventListener('blur', handleBlur);
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('blur', handleBlur);
+    }
+  }, [])
+
+
+  useEffect(() => {
+    menuDispatch({ type: 'PATH', payload: pathname })
+  }, [pathname])
+
+  const HoverLink = ({ to, label, state, children, ...itemProps }) => {
+    const active = to === '/' ? menu.path === '/' : menu.path.includes(to)
+    const hover = menu.hover === to
+    const Item = () => (
+      <Menu.Item
+        className={active ? 'active' : undefined}
+        onMouseEnter={() => {
+          if (menu.hover !== to) menuDispatch({ type: 'HOVER', payload: to })
+        }}
+        {...itemProps}
+      >
+        {(menu.open && (active || hover)) && <ItemContent content={label} />}
+        {children}
+      </Menu.Item>
+    )
+    return to ? (
+      <Link to={to} state={state}>
+        <Item />
+      </Link>
+    ) : <Item />
+
+  }
 
   return (
-    <Menu id="main-navigation" vertical>
-      <Link to="/">
-        <span className="hovertext" data-hover="Home">
-          <Menu.Item><Icon name='home' /></Menu.Item>
-        </span>
-      </Link>
+    <Menu id="main-navigation" vertical
+      className={menu.open ? 'open' : undefined}
+      onMouseEnter={() => { console.log(menu); if (menu.windowFocus && !menu.open) menuDispatch({ type: 'OPEN_MENU' }) }}
+      onMouseLeave={() => menuDispatch({ type: 'CLOSE_MENU' })}>
 
-      <Link to="/books">
-        <span className="hovertext" data-hover="Books">
-          <Menu.Item><Icon name="book" /></Menu.Item>
-        </span>
-      </Link>
+      <HoverLink to="/" label="Home">
+        <Icon name='home' />
+      </HoverLink>
 
-      <Link to="/reviews">
-        <span className="hovertext" data-hover="Reviews">
-          <Menu.Item><Icon name="comment" /></Menu.Item>
-        </span>
-      </Link>
+      <HoverLink to="/books" label="Books">
+        <Icon name="book" />
+      </HoverLink>
 
-      <Link to="/lists">
-        <span className="hovertext" data-hover="Lists">
-          <Menu.Item><Icon name="list" /></Menu.Item>
-        </span>
-      </Link>
+      <HoverLink to="/reviews" label="Reviews">
+        <Icon name="comment" />
+      </HoverLink>
 
-      <Link to="/clubs">
-        <span className="hovertext" data-hover="Clubs">
-          <Menu.Item><Icon name="users" /></Menu.Item>
-        </span>
-      </Link>
-      <Link to="/users">
-        <span className="hovertext" data-hover="Users">
-          <Menu.Item><Icon name="user" /></Menu.Item>
-        </span>
-      </Link>
+      <HoverLink to='/lists' label="Lists">
+        <Icon name="list" />
+      </HoverLink>
+
+      <HoverLink to='/clubs' label="Clubs">
+        <Icon name="users" />
+      </HoverLink>
+
+      <HoverLink to='/users' label="Users">
+        <Icon name="user" />
+      </HoverLink>
 
       {auth
         ? <>
-          <Link to="/profile">
-            <span className="hovertext" data-hover="Profile">
-              <Menu.Item><Icon name="user circle" /></Menu.Item>
-            </span>
-          </Link>
-          <span className="link hovertext" data-hover="Logout">
-            <Menu.Item as='div' onClick={() => {
-              setAuth(null);
-              updateProfile('CLEAR_PROFILE');
-              window.location.reload()
-            }}><Icon name="sign out" /></Menu.Item>
-          </span>
+          <HoverLink to='/profile' label="Profile">
+            <Icon name="user circle" />
+          </HoverLink>
+          <HoverLink label="Log Out" as='div' onClick={() => {
+            setAuth(null);
+            updateProfile('CLEAR_PROFILE');
+            window.location.reload()
+          }}>
+            <Icon name="sign out" />
+          </HoverLink>
         </>
         : <>
-          <Link to="/login">
-            <span className="hovertext" data-hover="Login">
-              <Menu.Item ><Icon name='sign in' /></Menu.Item>
-            </span>
-          </Link>
-        </>}
+          <HoverLink to='/login' label="Log In" state={{ from: pathname }}>
+            <Icon name='sign in' />
+          </HoverLink>
+        </>
+      }
     </Menu>
   )
 }

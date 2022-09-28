@@ -32,7 +32,7 @@ const BookListForm = (props) => {
 
   return (
     <div className="background3">
-      <Container className="container1">
+      <Container className="blue-box">
         <FormProvider>
           <Header as='h1'>New Book List</Header>
           <Form submit={onSubmit} respond={onResponse} fields={[
