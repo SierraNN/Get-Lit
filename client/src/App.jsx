@@ -32,6 +32,10 @@ import CreateReview from './components/forms/CreateReview';
 import CreateClub from './components/forms/CreateClub';
 import LandingPage from './pages/LandingPage';
 import SearchProvider from './context/SearchContext';
+import MobileSideNav from '../src/components/MobileSideNav';
+import useMediaQuery from "../src/context/useMediaQuery"
+import { useState } from "react"
+import { Menu } from 'semantic-ui-react';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -56,7 +60,8 @@ const client = new ApolloClient({
 });
 
 function App() {
-
+  const [setIsMobile] = useState(true)
+  const mobile = useMediaQuery('(max-width: 500px)')
 
   return (
     <ApolloProvider client={client}>
@@ -64,7 +69,14 @@ function App() {
         <SearchProvider>
           <ProfileProvider>
             <BrowserRouter>
-              <SideNav />
+            {mobile
+            ? <>
+            <MobileSideNav />
+            </>
+            : <>
+            <SideNav />
+            </>
+            }
               <div id="main-content">
                 <Routes>
                   <Route path="/" element={<LandingPage />} />

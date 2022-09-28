@@ -1,57 +1,62 @@
-import { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { Icon, ItemContent, Menu } from 'semantic-ui-react'
-import { useAuth } from '../context/AuthContext';
-import { useProfile } from '../context/ProfileContext';
 
-const SideNav = (props) => {
+import { Menu } from 'semantic-ui-react'
+import { useAuth } from '../context/AuthContext'
+import { useProfile } from '../context/ProfileContext'
+import useMediaQuery from "../context/useMediaQuery"
+import { useState } from "react"
+import { Link, NavLink, useLocation } from "react-router-dom"
+
+const MobileSideNav = (props) => {
+    
   const [auth, setAuth] = useAuth()
-  const [profile, updateProfile] = useProfile() // es-lint-ignore-line
-  const location = useLocation()
-  const { pathname } = location
+  const [updateProfile] = useProfile() // es-lint-ignore-line
+  const shouldCollapse = useMediaQuery('(max-width: 500px)')
+  const [setIsMobile] = useState(true)
 
   return (
-    <Menu id="main-navigation" vertical>
+
+    <Menu id="mobile-navigation" >
+
       <Link to="/" label="Home">
-        <Icon name='home' />
+        <h1>Home</h1>
       </Link>
 
       <Link to="/books" label="Books">
-        <Icon name="book" />
+        <h1>Home</h1>
       </Link>
 
       <Link to="/reviews" label="Reviews">
-        <Icon name="comment" />
+        <h1>Home</h1>
       </Link>
 
       <Link to='/lists' label="Lists">
-        <Icon name="list" />
+        <h1>Home</h1>
       </Link>
 
       <Link to='/clubs' label="Clubs">
-        <Icon name="users" />
+        <h1>Home</h1>
       </Link>
 
       <Link to='/users' label="Users">
-        <Icon name="user" />
+        <h1>Home</h1>
       </Link>
 
       {auth
         ? <>
           <Link to='/profile' label="Profile">
-            <Icon name="user circle" />
+            <h1>Home</h1>
           </Link>
           <Link label="Log Out" as='div' onClick={() => {
             setAuth(null);
             updateProfile('CLEAR_PROFILE');
             window.location.reload()
           }}>
-            <Icon name="sign out" />
+            <h1>Home</h1>
           </Link>
         </>
         : <>
           <Link to='/login' label="Log In">
-            <Icon name='sign in' />
+            <h1>Home</h1>
           </Link>
         </>
       }
@@ -59,4 +64,4 @@ const SideNav = (props) => {
   )
 }
 
-export default SideNav
+export default MobileSideNav
