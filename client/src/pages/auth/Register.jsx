@@ -24,7 +24,7 @@ const Register = (props) => {
 
   return (
     <div className='background'>
-      <div className="ui blue-box">
+      <Container className="blue-box">
         <div id="Register" className="ui stackable grid">
           <div className="six wide column ">
             <img alt='logo' className='ui image' src='/assets/logo/get-lit-transparent.png' />
@@ -48,7 +48,7 @@ const Register = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   )
 }
