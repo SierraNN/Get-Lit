@@ -40,7 +40,7 @@ function LandingPage() {
             </Link>
           </div>
         </div>
-        <img src="../assets/logo/landing.png" className="imageLogo"></img>
+        <img src="/assets/logo/landing.png" className="imageLogo"></img>
       </div>
       <footer><h1 className="footer">MIT License. Find us on <a href='https://github.com/SierraNN/Get-Lit'> GitHub</a>. Made with ♡ </h1></footer>
     </div>

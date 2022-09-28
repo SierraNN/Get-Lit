@@ -11,7 +11,6 @@ box-sizing: border-box;
 body{
   color: #fff;
   font-family: 'Alagard';
-  /* margin-left: 17% !important; */
   position: relative;
   min-height: 100vh;
   background: linear-gradient(to bottom, #5d326c, #350048); 
@@ -30,6 +29,9 @@ justify-content: center;
 font-family: Alagard;
 font-size: small;
 color: #0bd62d;
+}
+.footer a {
+  margin-left: 0.5em;
 }
 
 .btn1 {
@@ -72,7 +74,8 @@ color: #0bd62d;
 }
 .btn1:hover span {
 	letter-spacing: 3px;
-  color: rgb(38, 47, 85)
+  color: rgb(38, 47, 85);
+  font-weight: 700;
 }
 .btn1 span::before {
 	content: "";
@@ -182,6 +185,9 @@ color: #0bd62d;
   .choices-table{
     padding: 3em;
     display: flex;
+  }
+  .choices img {
+    padding-left: 3em;
   }
   /* cards slide in late after book animation is finished */
   .choices-card{

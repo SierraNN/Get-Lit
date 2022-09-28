@@ -15,6 +15,10 @@ const menuReducer = (state, { type, payload }) => {
       return { ...state, open: true }
     case 'CLOSE_MENU':
       return { ...state, open: false, hover: null }
+    case 'PAGE_BLUR':
+      return { ...state, windowFocus: false }
+    case 'PAGE_FOCUS':
+      return { ...state, windowFocus: true }
     default:
       return state
   }
@@ -27,10 +31,23 @@ const SideNav = (props) => {
   const { pathname } = location
 
   const [menu, menuDispatch] = useReducer(menuReducer, {
+    windowFocus: true,
     open: false,
     hover: null,
     path: pathname
   })
+
+  useEffect(() => {
+    let handleFocus = () => menuDispatch({ type: 'PAGE_FOCUS' })
+    let handleBlur = () => menuDispatch({ type: 'PAGE_BLUR' })
+    window.addEventListener('focus', handleFocus);
+    window.addEventListener('blur', handleBlur);
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('blur', handleBlur);
+    }
+  }, [])
+
 
   useEffect(() => {
     menuDispatch({ type: 'PATH', payload: pathname })
@@ -62,7 +79,7 @@ const SideNav = (props) => {
   return (
     <Menu id="main-navigation" vertical
       className={menu.open ? 'open' : undefined}
-      onMouseEnter={() => { if (!menu.open) menuDispatch({ type: 'OPEN_MENU' }) }}
+      onMouseEnter={() => { console.log(menu); if (menu.windowFocus && !menu.open) menuDispatch({ type: 'OPEN_MENU' }) }}
       onMouseLeave={() => menuDispatch({ type: 'CLOSE_MENU' })}>
 
       <HoverLink to="/" label="Home">
