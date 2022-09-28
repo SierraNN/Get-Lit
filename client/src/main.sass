@@ -1,6 +1,7 @@
 
 #main-navigation.ui.vertical.menu
-  position: absolute
+  position: fixed
+  border-radius: 0
   height: 100vh
   color: white 
   z-index: 2
@@ -21,7 +22,6 @@
     cursor: pointer
     color: white
     padding: 0
-    // margin: 0 1rem
     width: 100%
     height: 1.5em
     transition: width 400ms, color 400ms, background 400ms
@@ -42,11 +42,8 @@
         animation: 400ms fadeIn forwards
     &.active
       background-color: rgba(90,90,90,0.5)
-      // color: rgb(126, 142, 217)
     &:hover
       background: rgba(90,90,90,0.3)
-      // i.icon
-      //   transform: translateX(2.75em)
   
 @keyframes fadeIn
   from

@@ -15,6 +15,10 @@ const menuReducer = (state, { type, payload }) => {
       return { ...state, open: true }
     case 'CLOSE_MENU':
       return { ...state, open: false, hover: null }
+    case 'PAGE_BLUR':
+      return { ...state, windowFocus: false }
+    case 'PAGE_FOCUS':
+      return { ...state, windowFocus: true }
     default:
       return state
   }
@@ -23,21 +27,33 @@ const menuReducer = (state, { type, payload }) => {
 const SideNav = (props) => {
   const [auth, setAuth] = useAuth()
   const [profile, updateProfile] = useProfile() // es-lint-ignore-line
-  const [menuHover, setMenuHover] = useState(false)
   const location = useLocation()
   const { pathname } = location
 
   const [menu, menuDispatch] = useReducer(menuReducer, {
+    windowFocus: true,
     open: false,
     hover: null,
     path: pathname
   })
 
   useEffect(() => {
+    let handleFocus = () => menuDispatch({ type: 'PAGE_FOCUS' })
+    let handleBlur = () => menuDispatch({ type: 'PAGE_BLUR' })
+    window.addEventListener('focus', handleFocus);
+    window.addEventListener('blur', handleBlur);
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('blur', handleBlur);
+    }
+  }, [])
+
+
+  useEffect(() => {
     menuDispatch({ type: 'PATH', payload: pathname })
   }, [pathname])
 
-  const HoverLink = ({ to, label, children, ...itemProps }) => {
+  const HoverLink = ({ to, label, state, children, ...itemProps }) => {
     const active = to === '/' ? menu.path === '/' : menu.path.includes(to)
     const hover = menu.hover === to
     const Item = () => (
@@ -53,7 +69,7 @@ const SideNav = (props) => {
       </Menu.Item>
     )
     return to ? (
-      <Link to={to}>
+      <Link to={to} state={state}>
         <Item />
       </Link>
     ) : <Item />
@@ -63,7 +79,7 @@ const SideNav = (props) => {
   return (
     <Menu id="main-navigation" vertical
       className={menu.open ? 'open' : undefined}
-      onMouseEnter={() => { if (!menu.open) menuDispatch({ type: 'OPEN_MENU' }) }}
+      onMouseEnter={() => { console.log(menu); if (menu.windowFocus && !menu.open) menuDispatch({ type: 'OPEN_MENU' }) }}
       onMouseLeave={() => menuDispatch({ type: 'CLOSE_MENU' })}>
 
       <HoverLink to="/" label="Home">
@@ -104,7 +120,7 @@ const SideNav = (props) => {
           </HoverLink>
         </>
         : <>
-          <HoverLink to='/login' label="Log In">
+          <HoverLink to='/login' label="Log In" state={{ from: pathname }}>
             <Icon name='sign in' />
           </HoverLink>
         </>

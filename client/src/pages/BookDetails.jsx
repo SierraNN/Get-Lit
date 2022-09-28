@@ -11,6 +11,7 @@ import Loading from "../components/Loading"
 import { useProfile } from "../context/ProfileContext"
 import AddToListButton from "../components/AddToListButton"
 import bookData from "../utils/bookData"
+import { sanitizeHtml } from "../utils/sanitizeHtml"
 
 const BookDetails = (props) => {
   const [auth] = useAuth()
@@ -72,7 +73,6 @@ const BookDetails = (props) => {
               <Label.Group>
                 {info.categories && info.categories.map((cat, i) => <Label key={i} content={cat} />)}
               </Label.Group>
-
             </div>
             {auth &&
               <Button.Group vertical>
@@ -85,8 +85,8 @@ const BookDetails = (props) => {
             }
 
           </Segment>
-          <Segment>
-            {info.description}
+          <Segment >
+            <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(info.description) }}></div>
           </Segment>
         </Segment.Group>
       </Container>

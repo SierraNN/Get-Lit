@@ -9,10 +9,10 @@ function LandingPage() {
     init()
   }, [])
   return (
-    <div id = "LandingPage">
+    <div id="LandingPage">
       <div className="hero">
         <Link to="/login">
-          <button className="btn1"><a href="#">Login to Get Lit</a></button>
+          <button className="btn1"><span href="#">Login to Get Lit</span></button>
         </Link>
       </div>
       {/* content in each class has a T surrounding it to say its from tolgee */}
@@ -22,29 +22,29 @@ function LandingPage() {
             <p className="title"><T>card1_title</T></p>
             <p className="info"><T>card1_text</T></p>
             <Link to="/lists">
-            <button className="btn"><T>click_here</T></button>
+              <button className="btn"><T>click_here</T></button>
             </Link>
           </div>
           <div className="choices-card">
             <p className="title"><T>card2_title</T></p>
             <p className="info"><T>card2_text</T></p>
             <Link to="/clubs">
-            <button className="btn"><T>click_here</T></button>
+              <button className="btn"><T>click_here</T></button>
             </Link>
           </div>
           <div className="choices-card">
             <p className="title"><T>card3_title</T></p>
             <p className="info"><T>card3_text</T></p>
             <Link to="/reviews">
-            <button className="btn"><T>click_here</T></button>
+              <button className="btn"><T>click_here</T></button>
             </Link>
-            </div>
+          </div>
         </div>
-        <img src="../assets/logo/landing.png" className="imageLogo"></img>
+        <img src="/assets/logo/landing.png" className="imageLogo"></img>
       </div>
       <footer><h1 className="footer">MIT License. Find us on <a href='https://github.com/SierraNN/Get-Lit'> GitHub</a>. Made with ♡ </h1></footer>
     </div>
-    
+
   );
 }
 
