@@ -22,7 +22,7 @@ const Login = (props) => {
   }
   return (
     <div className='background'>
-      <div className="ui blue-box">
+      <Container className="blue-box">
         <div id="Login" className="ui grid">
           <div className="six wide column ">
             <img alt='logo' className='ui image' src='/assets/logo/get-lit-transparent.png' />
@@ -43,7 +43,7 @@ const Login = (props) => {
 
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   )
 }
