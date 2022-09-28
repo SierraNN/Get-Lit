@@ -40,9 +40,9 @@ const SideNav = (props) => {
 
   return (
     <Menu id="main-navigation" vertical
-    className={menu.open ? 'open' : undefined}
-    onMouseEnter={() => { console.log(menu); if (menu.windowFocus && !menu.open) menuDispatch({ type: 'OPEN_MENU' }) }}
-    onMouseLeave={() => menuDispatch({ type: 'CLOSE_MENU' })}>
+      className={menu.open ? 'open' : undefined}
+      onMouseEnter={() => { console.log(menu); if (menu.windowFocus && !menu.open) menuDispatch({ type: 'OPEN_MENU' }) }}
+      onMouseLeave={() => menuDispatch({ type: 'CLOSE_MENU' })}>
 
       <HoverLink to="/" label="Home">
         <Icon name='home' />
