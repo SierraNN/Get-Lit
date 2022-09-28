@@ -2,14 +2,15 @@ import React, { Component, useState } from 'react';
 import EasyEdit from 'react-easy-edit';
 
 function Bio({ isOwnProfile = false, save, initial }) {
-  let bioText = isOwnProfile && initial === null ? "Click to edit" : initial
+  let bioText = (isOwnProfile && initial === null) ? "Click to edit" : initial
+
   let text = initial || isOwnProfile ? 'Click to edit' : 'No bio'
   const [bio, setBio] = useState(bioText)
   const cancel = () => { console.log("Cancelled") }
 
   return (
     isOwnProfile ? <EasyEdit
-      value={text}
+      value={bioText}
       type="text"
       onSave={(value) => {
         setBio(value)

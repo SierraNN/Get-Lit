@@ -22,7 +22,7 @@ const Users = (props) => {
     else if (!users.getCachedDocs()) users.refetch(params)
   }, [users.refetch, params])
 
-  const onSubmit = async ({ params: { term, type } }) => {
+  const onSubmit = async ({ term, type }) => {
     if (term === '') {
       setParams({ page: 1, pageSize })
     } else {
@@ -66,18 +66,15 @@ const Users = (props) => {
         {display === 'search' && (
           <FormProvider>
             <Form submitBtnText="Search" submit={onSubmit} fields={[
+              { name: 'term', useLabel: false, width: '12', initial: params?.term },
               {
-                name: 'params', fields: [
-                  { name: 'term', useLabel: false, width: '12', initial: params?.term },
-                  {
-                    name: 'type', useLabel: false, control: Dropdown, options: [
-                      { text: 'Username', value: 'username' },
-                      { text: 'Genres', value: 'tags' },
-                    ], width: '4'
-                  }
-                ]
+                name: 'type', useLabel: false, control: Dropdown, options: [
+                  { text: 'Username', value: 'username' },
+                  { text: 'Genres', value: 'tags' },
+                ], width: '4'
               }
-            ]} buttons={auth ? [
+            ]
+            } buttons={auth ? [
               { content: 'Friends', icon: 'heart', color: 'green', onClick: () => setDisplay('profile') },
               { content: 'Your Profile', icon: 'user circle', color: 'teal', onClick: () => { navigate("/profile") } }
             ] : []} />

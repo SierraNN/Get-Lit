@@ -38,7 +38,7 @@ const BookLink = ({ book }) => {
   return (
     <Link to={`/books/${id}`} className={thumbnail ? 'item' : 'item placeholder'}>
       {thumbnail
-        ? <Image className="ui image small" src={thumbnail} inline onClick={() => bookCache.recent.updateById(book.id, book)} />
+        ? <Image className="ui image small" src={thumbnail} inline onClick={() => bookCache.recent.updateById(info.id, info)} />
         : <>
           <Header as='h3'>{title}</Header>
           <Placeholder>
