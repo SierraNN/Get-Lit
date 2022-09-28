@@ -60,7 +60,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const [setIsMobile] = useState(true)
   const mobile = useMediaQuery('(max-width: 500px)')
 
   return (
