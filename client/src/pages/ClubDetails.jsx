@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client"
 import { useEffect } from "react"
 import { useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { Button, Header, Label, List, Message, Segment } from "semantic-ui-react"
+import { Button, Container, Header, Label, List, Message, Segment } from "semantic-ui-react"
 import Loading from "../components/Loading"
 import { useProfile } from "../context/ProfileContext"
 import { ADD_POST_TO_CLUB, EDIT_CLUB_POST, JOIN_CLUB, LEAVE_CLUB, REMOVE_CLUB_POST } from '../utils/mutations';
@@ -87,32 +87,34 @@ const ClubDetails = (props) => {
 
   return (
     <div className="background3 club-details">
-      <Header as='h1' content={name} subheader={`Book Club, created by ${creator?.username}`} />
-      <Segment>
-        <Header as='h2'>
-          Club Description
-          {profile?._id && <MembershipButton floated='right' />}
-        </Header>
-        <p>{description}</p>
-        <KeywordList list={tags} />
-      </Segment>
-      <Segment>
-        <UserList header={<Header as='h2' content='Members' />} list={members} />
-      </Segment>
+      <Container className="blue-box">
+        <Header as='h1' content={name} subheader={`Book Club, created by ${creator?.username}`} />
+        <Segment>
+          <Header as='h2'>
+            Club Description
+            {profile?._id && <MembershipButton floated='right' />}
+          </Header>
+          <p>{description}</p>
+          <KeywordList list={tags} />
+        </Segment>
+        <Segment>
+          <UserList header={<Header as='h2' content='Members' />} list={members} />
+        </Segment>
 
-      <Segment>
-        <CommentList
-          userCanPost={isMember}
-          parents={{ clubId }}
-          disabledMessage={<Message negative>Must be a member to post<MembershipButton /></Message>}
-          header={<Header as='h2' content="General Conversation" />}
-          onSubmit={submitPost}
-          onEdit={onEdit}
-          onDelete={onDelete}
-          list={posts}
-          noCommentLabel="No posts yet"
-          textAreaLabel="Post your thoughts" />
-      </Segment>
+        <Segment>
+          <CommentList
+            userCanPost={isMember}
+            parents={{ clubId }}
+            disabledMessage={<Message negative>Must be a member to post<MembershipButton /></Message>}
+            header={<Header as='h2' content="General Conversation" />}
+            onSubmit={submitPost}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            list={posts}
+            noCommentLabel="No posts yet"
+            textAreaLabel="Post your thoughts" />
+        </Segment>
+      </Container>
     </div>
   )
 }

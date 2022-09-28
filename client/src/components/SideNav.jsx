@@ -54,7 +54,8 @@ const SideNav = (props) => {
   }, [pathname])
 
   const HoverLink = ({ to, label, state, children, ...itemProps }) => {
-    const active = to === '/' ? menu.path === '/' : menu.path.includes(to)
+    // const active = to === '/' ? menu.path === '/' : menu.path.includes(to)
+    const active = menu.path === to
     const hover = menu.hover === to
     const Item = () => (
       <Menu.Item
@@ -79,7 +80,7 @@ const SideNav = (props) => {
   return (
     <Menu id="main-navigation" vertical
       className={menu.open ? 'open' : undefined}
-      onMouseEnter={() => { console.log(menu); if (menu.windowFocus && !menu.open) menuDispatch({ type: 'OPEN_MENU' }) }}
+      onMouseEnter={() => { if (menu.windowFocus && !menu.open) menuDispatch({ type: 'OPEN_MENU' }) }}
       onMouseLeave={() => menuDispatch({ type: 'CLOSE_MENU' })}>
 
       <HoverLink to="/" label="Home">

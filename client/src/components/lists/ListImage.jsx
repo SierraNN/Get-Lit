@@ -2,7 +2,6 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Header, Image, Placeholder } from "semantic-ui-react"
-import listCache from "../../utils/listCache"
 import UserLabel from "../UserLabel"
 
 const ListImage = ({ list }) => {
@@ -19,7 +18,7 @@ const ListImage = ({ list }) => {
     const thumbnails = books ? books.slice(0, 4).map(({ thumbnail }) => thumbnail) : null
     return thumbnails ? (
       <div className="multiThumbnail">
-        {thumbnails.map((url, i) => <Image size={thumbnails.length > 1 && 'tiny'} key={i} src={url} />)}
+        {thumbnails.map((url, i) => <Image size={thumbnails.length > 1 ? 'tiny' : undefined} key={i} src={url} />)}
       </div>
     ) : (
       <Placeholder>
@@ -37,12 +36,9 @@ const ListImage = ({ list }) => {
 
   return (
     <Link to={`/lists/${_id}`} className="item">
-      <div onClick={() => listCache.recent.updateById(list._id, list)} >
-        <Header as="h3" content={name} />
-        <UserLabel user={creator} />
-        {renderImage()}
-      </div>
-
+      <Header as="h3" content={name} />
+      <UserLabel user={creator} />
+      {renderImage()}
     </Link>
 
   )

@@ -36,11 +36,11 @@ const reducer = (state, action) => {
       return { ...state, books: withoutBook }
     case 'ADD_LIST':
       const withList = [...lists, action.payload]
-      bookListCache.saved.set(withList)
+      // bookListCache.saved.set(withList)
       return { ...state, lists: withList }
     case 'REMOVE_LIST':
       const noList = lists.filter(({ _id }) => _id !== action.payload)
-      bookListCache.saved.set(noList)
+      // bookListCache.saved.set(noList)
       return { ...state, lists: noList }
     case 'UPDATE_LIST':
       const filteredLists = lists.filter(({ _id }) => _id !== action.payload._id)
@@ -48,11 +48,11 @@ const reducer = (state, action) => {
       return { ...state, lists: filteredLists }
     case 'ADD_CLUB':
       const withClub = [...clubs, action.payload]
-      clubCache.saved.set(withClub)
+      // clubCache.saved.set(withClub)
       return { ...state, clubs: withClub }
     case 'REMOVE_CLUB':
       const noClub = clubs.filter(({ _id }) => _id !== action.payload)
-      clubCache.saved.set(noClub)
+      // clubCache.saved.set(noClub)
       return { ...state, clubs: noClub }
     case 'UPDATE_CLUB':
       const filteredClubs = clubs.filter(({ _id }) => _id !== action.payload._id)
@@ -60,11 +60,11 @@ const reducer = (state, action) => {
       return { ...state, clubs: filteredClubs }
     case 'ADD_REVIEW':
       const withReview = [...reviews, action.payload]
-      reviewCache.saved.set(withReview)
+      // reviewCache.saved.set(withReview)
       return { ...state, reviews: withReview }
     case 'REMOVE_REVIEW':
       const noReview = reviews.filter(({ _id }) => _id !== action.payload)
-      reviewCache.saved.set(noReview)
+      // reviewCache.saved.set(noReview)
       return { ...state, reviews: noReview }
     case 'UPDATE_REVIEW':
       const filteredReviews = reviews.filter(({ _id }) => _id !== action.payload._id)

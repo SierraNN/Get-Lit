@@ -22,7 +22,7 @@ const ReviewImage = ({ info }) => {
   const { _id, book, creator, reviewTitle } = review
 
   return (
-    <Link to={`/reviews/${_id}`} onClick={() => reviewCache.recent.updateById(review._id, review)} className="item">
+    <Link to={`/reviews/${_id}`} className="item">
       <Header as="h3" content={reviewTitle} />
       <BookImage book={book} />
       <UserLabel user={creator} />
