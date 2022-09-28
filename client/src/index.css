@@ -45,8 +45,9 @@ color: #0bd62d;
   background-color: transparent;
   border-color: transparent;
 }
-.btn1 a {
+.btn1 span {
 	position: absolute;
+  cursor: pointer;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -69,10 +70,11 @@ color: #0bd62d;
 	transition: 0.5s;
 	backdrop-filter: blur(15px);
 }
-.btn1:hover a {
+.btn1:hover span {
 	letter-spacing: 3px;
+  color: rgb(38, 47, 85)
 }
-.btn1 a::before {
+.btn1 span::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -84,7 +86,7 @@ color: #0bd62d;
 	transition: 0.5s;
 	filter: blur(0px);
 }
-.btn1:hover a::before {
+.btn1:hover span::before {
 	transform: skewX(45deg) translate(200px);
 }
 .btn1::before {
