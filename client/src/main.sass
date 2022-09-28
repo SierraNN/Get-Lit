@@ -2,6 +2,7 @@ $seafom: #B6DAA9
 $vine: #78BC61
 $periwinkle: #BDDAEF
 $microfiber: #368CCE
+
 #main-navigation.ui.vertical.menu
   position: fixed
   border-radius: 0
@@ -140,6 +141,7 @@ a.placeholder
   display: flex
   align-items: center
   border: 1px solid rgb(200,200,200)
+  z-index: 1
   .ui.image.labelSprite
     display: inline-block
     background: rgb(200,200,200)
@@ -198,9 +200,9 @@ a.placeholder
       margin: auto
     .creatorLabel
       position: absolute
-      bottom: 200px
+      // bottom: 
       right: 0
-      transform: translateY(-25%)
+      transform: translateY(-75%)
   &.lists
     align-items: flex-start
     .header

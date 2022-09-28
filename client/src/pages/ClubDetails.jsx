@@ -48,7 +48,13 @@ const ClubDetails = (props) => {
     if (clubId) getClub(clubId)
   }, [clubId, profile.clubs])
 
-  if (!clubInfo) return <Loading message="Retrieving club" />
+  if (!clubInfo) return (
+    <div className="background3 club-details">
+      <Container className="blue-box">
+        <Loading message="Retrieving club" />
+      </Container>
+    </div>
+  )
   const { name, description, members = [], posts = [], tags = [], creator } = clubInfo
   const isCreator = creator._id === profile._id
   const isMember = members.find(({ _id }) => _id === profile._id)
