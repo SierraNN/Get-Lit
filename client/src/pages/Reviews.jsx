@@ -61,42 +61,6 @@ const Reviews = (props) => {
   }
 
 
-  // useEffect(() => {
-  //   reviews.refetch()
-  // }, [])
-
-
-
-  // useEffect(() => {
-  //   let data = reviews.getQueryData()
-  //   if (!reviews.loading && data) {
-  //     let { page, totalPages } = data
-  //     setPageNum(page)
-  //     setTotalPages(totalPages)
-  //   }
-  // }, [reviews.loading, reviews.data])
-
-  // useEffect(() => {
-  //   if (params.term) {
-  //     reviews.refetch({ variables: { params: params } })
-  //     setFresh(true)
-  //   }
-  // }, [params])
-
-  // const onSubmit = async ({ term, type }) => {
-  //   if (term === '') {
-  //     return { errors: { term: 'Please enter a search term' } }
-  //   } else {
-  //     setPageNum(1)
-  //     setParams({ term, type, page: 1, pageSize })
-  //   }
-  // }
-
-  // const nextPage = async () => setPageNum(Math.min(page + 1, totalPages))
-  // const prevPage = async () => setPageNum(page - 1 || 1)
-
-  // if (reviews.loading) return <div className="background3"><Loading /></div>
-
   return (
     <div className="background3">
       <Container className="ui blue-box">
@@ -107,7 +71,7 @@ const Reviews = (props) => {
               { name: 'term', useLabel: false, width: '12' },
               {
                 name: 'type', useLabel: false, control: Dropdown, options: [
-                  { text: 'Search book title', value: 'name' },
+                  { text: 'Search book title', value: 'bookTitle' },
                   { text: 'By text', value: 'reviewText' },
                   { text: 'By creator', value: 'creator' },
                 ], width: '4'
