@@ -46,6 +46,7 @@ color: #0bd62d;
 	align-items: center;
   background-color: transparent;
   border-color: transparent;
+  font-family: Alagard;
 }
 .btn1 span {
 	position: absolute;
@@ -228,8 +229,4 @@ color: #0bd62d;
   }
   .card-image{
     height: 40px;
-  }
-  @media only screen and (max-width: 600px) {
-  
-
   }
