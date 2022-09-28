@@ -262,6 +262,7 @@ export const ADD_POST_TO_CLUB = gql`
   }
 `;
 
+/** COMMENTS / POSTS */
 export const EDIT_CLUB_POST = gql`
   mutation EditClubPost($clubId: ID, $commentId: ID, $text: String) {
     editClubPost(clubId: $clubId, commentId: $commentId, text: $text)
@@ -292,3 +293,5 @@ export const REMOVE_REVIEW_COMMENT = gql`
     removeReviewComment(reviewId: $reviewId, commentId: $commentId)
   }
 `;
+
+// export const UPDATE

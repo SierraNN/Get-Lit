@@ -21,6 +21,10 @@ const BookQuickFind = ({ onBookClick }) => {
       bookCache.results.set(data.items)
     }
   }
+  const handleClick = (book) => {
+    bookCache.recent.updateById(book.id, book)
+    if (onBookClick) onBookClick(book)
+  }
 
   return (
     <div>

@@ -3,13 +3,15 @@ import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
 import { useEffect } from "react";
 import { useState } from "react"
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Container, Header, Image, Segment, TextArea } from "semantic-ui-react"
+import { Container, Header, Image, Rating, Segment, TextArea } from "semantic-ui-react"
 import bookCache from "../../utils/bookCache";
 import { useProfile } from "../../context/ProfileContext";
 import { CREATE_REVIEW } from '../../utils/mutations';
 import BookQuickFind from "../BookQuickFind";
 import BookImage from "../BookImage";
 import bookData from '../../utils/bookData';
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
+import { bookByGoogleId } from "../../utils/google";
 
 const CreateReview = (props) => {
   const { Form } = useForm()
@@ -19,8 +21,24 @@ const CreateReview = (props) => {
   const [book, setBook] = useState(null)
   const { bookId } = useParams()
 
+  const fetchGoogleData = async (googleId) => {
+    try {
+      const { data: book } = await bookByGoogleId(googleId)
+      bookCache.recent.updateById(googleId, book)
+      setBook(book)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
-    if (bookId) setBook(bookCache.recent.getById(bookId))
+    if (bookId) {
+      let cached = bookCache.recent.getById(bookId)
+      if (cached) setBook(cached)
+      else fetchGoogleData(bookId)
+    } else {
+      setBook(null)
+    }
   }, [bookId])
 
   const onSubmit = async (reviewInfo) => {
@@ -53,18 +71,19 @@ const CreateReview = (props) => {
   }
 
   const renderForm = () => {
-    const { id, volumeInfo: { title, description, authors } } = book
+    const { id, volumeInfo: { title, description, authors = [] } } = book
 
     return <>
       <Header as='h2' content={title} subheader={authors.join(', ')} image={<BookImage book={book} action={null} />} />
       <Segment >
         <Header as='h3' content="Book Description" />
-        {description}
+        <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(description) }}></p>
+
       </Segment>
       <Form submit={onSubmit} respond={onResponse} fields={[
+        { name: 'rating', label: 'Rating', control: Rating },
         { name: 'reviewTitle', label: 'Review Title', required: true },
         { name: 'reviewText', label: 'Your Review', control: TextArea, required: true },
-        { name: 'rating', label: 'Rating out of 10', type: 'number', width: '4', validators: [validateRating, 'Must be between 0 and 10'] }
       ]} submitBtnText="Publish Review" />
     </>
   }

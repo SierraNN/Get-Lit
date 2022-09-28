@@ -27,19 +27,22 @@ const ListDetails = (props) => {
     list.updateCacheById(listId, update)
   }
 
+  useEffect(() => {
+    let subscription = list.observable.subscribe((list) => updateList(list))
+    return () => { subscription.unsubscribe() }
+  }, [])
+
+  useEffect(() => {
+    if (listId) list.setId(listId)
+  }, [listId, profile.lists])
+
+
   const createComment = useMutationCB('addCommentToList', ADD_COMMENT_TO_LIST,
     comments => updateList({ comments })
   )
   const editComment = useMutationCB('editListComment', EDIT_LIST_COMMENT, (update) => update)
   const deleteComment = useMutationCB('removeListComment', REMOVE_LIST_COMMENT, (update) => update)
 
-  useEffect(() => {
-    async function getList(id) {
-      let fetchedList = await list.getById(id)
-      setListInfo(fetchedList)
-    }
-    if (listId) getList(listId)
-  }, [listId, profile.lists])
 
   if (!listInfo) return <Loading message="Retrieving list" />
   const isCreator = listInfo.creator._id === profile._id
@@ -62,27 +65,29 @@ const ListDetails = (props) => {
 
   return (
     <div className="background3">
-      <Header as='h1' content={name} subheader={creator.username} />
-      <Segment>
-        <Header as='h2'>Description</Header>
-        <p>{description}</p>
-        <KeywordList list={tags} />
-      </Segment>
-      <Segment>
-        <BookImageList header="Books in List" list={books} />
-        {isCreator && <Link to="/books"><Button content="add book" color="green" icon="plus" /></Link>}
-      </Segment>
-      <Segment>
-        <CommentList
-          parents={{ listId }}
-          header={<Header as='h2' content="List Discussion" />}
-          onSubmit={submitComment}
-          onEdit={onEdit}
-          onDelete={onDelete}
-          list={comments}
-          noCommentLabel="No comments yet"
-          textAreaLabel="Comment on this list" />
-      </Segment>
+      <Container className="blue-box">
+        <Header as='h1' content={name} subheader={creator.username} />
+        <Segment>
+          <Header as='h2'>Description</Header>
+          <p>{description}</p>
+          <KeywordList list={tags} />
+        </Segment>
+        <Segment>
+          <BookImageList header="Books in List" list={books} />
+          {isCreator && <Link to="/books"><Button content="add book" color="green" icon="plus" /></Link>}
+        </Segment>
+        <Segment>
+          <CommentList
+            parents={{ listId }}
+            header={<Header as='h2' content="List Discussion" />}
+            onSubmit={submitComment}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            list={comments}
+            noCommentLabel="No comments yet"
+            textAreaLabel="Comment on this list" />
+        </Segment>
+      </Container>
     </div>
   )
 }

@@ -44,17 +44,25 @@ const Profile = () => {
   const [profile, updateProfile] = useProfile()
   const [isOwnProfile, setIsOwnProfile] = useState(false)
   const [userInfo, setUserInfo] = useState({})
-  const { userId = null } = useParams()
+  const { userId } = useParams()
   const { user } = useFetch()
 
+  const updateUser = (data) => {
+    let update = { ...userInfo, ...data }
+    console.log('updateUser', { data, update })
+    setUserInfo(update)
+    user.updateCacheById(userId, update)
+  }
+
   useEffect(() => {
-    async function getUser(id) {
-      let fetchedUser = await user.getById(id)
-      setUserInfo(fetchedUser)
-    }
-    if (userId) getUser(userId)
-    else if (profile?._id) getUser(profile._id)
-  }, [userId, profile])
+    let subscription = user.observable.subscribe((user) => updateUser(user))
+    return () => { subscription.unsubscribe() }
+  }, [])
+
+  useEffect(() => {
+    if (userId) user.setId(userId)
+    else if (profile?._id) user.setId(profile?._id)
+  }, [userId, profile?._id])
 
   useEffect(() => {
     setIsOwnProfile(userInfo._id === profile?._id)
@@ -99,7 +107,10 @@ const Profile = () => {
       <Header>Bio</Header>
       <Bio isOwnProfile={isOwnProfile} initial={bio} save={async (value) => {
         const { data } = await updateBio({ variables: { bio: value } })
-        if (data?.updateBio) updateProfile('SET_PROFILE', { bio: data.updateBio })
+        if (data?.updateBio) {
+          updateProfile('SET_PROFILE', { bio: data.updateBio })
+          updateUser({ bio: data.updateBio })
+        }
       }} />
     </Container>
   )
@@ -141,6 +152,7 @@ const Profile = () => {
             {isFollowing ? 'Unfollow' : 'Follow'}
           </Button>
           }
+          {isOwnProfile && <Header sub content='Your profile' />}
         </Header>
         <Title />
         <Divider clearing />

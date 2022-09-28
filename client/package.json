@@ -5,7 +5,7 @@
   "proxy": "http://localhost:3001",
   "dependencies": {
     "@apollo/client": "^3.6.9",
-    "@codewizard-dt/use-form-hook": "^1.1.49",
+    "@codewizard-dt/use-form-hook": "^1.1.52",
     "@semantic-ui-react/css-patch": "^1.1.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
@@ -18,6 +18,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "rxjs": "^7.5.7",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.1.3",
     "three": "^0.144.0",

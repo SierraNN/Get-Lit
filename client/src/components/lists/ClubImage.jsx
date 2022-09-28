@@ -22,7 +22,7 @@ const ClubImage = ({ info }) => {
     const memberSprites = members.slice(0, 2).map(({ spriteChoice }) => imgList[spriteChoice])
     const bookImages = books.slice(0, 2).map(({ thumbnail }) => thumbnail)
     const thumbnails = [...memberSprites, ...bookImages]
-    console.log(thumbnails, { members, books })
+    // console.log(thumbnails, { members, books })
     return thumbnails.length > 0 ? (
       <div className="multiThumbnail">
         {thumbnails.map((url, i) => <Image size={thumbnails.length > 1 ? 'tiny' : undefined} key={i} src={url} />)}

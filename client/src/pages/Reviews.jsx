@@ -1,12 +1,9 @@
-import { useQuery } from "@apollo/client"
 import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
 import { useEffect, useState } from "react"
 import { Button, Container, Dropdown, Header, Message } from "semantic-ui-react"
 import ReviewList from "../components/lists/ReviewList"
 import { useAuth } from "../context/AuthContext"
 import { useProfile } from "../context/ProfileContext"
-import reviewCache from "../utils/reviewCache"
-import { GET_REVIEWS } from "../utils/queries"
 import Loading from '../components/Loading';
 import { Link } from "react-router-dom"
 import { useSearch } from "../context/SearchContext"
@@ -15,53 +12,90 @@ import { useSearch } from "../context/SearchContext"
 const Reviews = (props) => {
   const [auth] = useAuth()
   const [profile] = useProfile()
-  // const myReviews = auth ? profile.reviews : null
   const { Form } = useForm()
   const { reviews } = useSearch()
-  const [searchParams, setSearchParams] = useState({})
-  const [fresh, setFresh] = useState(false)
+  const [params, setParams] = useState()
   const [display, setDisplay] = useState('search')
-  const [page, setPageNum] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
   const [pageSize] = useState(20)
 
   useEffect(() => {
-    reviews.refetch()
-  }, [])
-
-  // const { loading, data, refetch } = useQuery(GET_REVIEWS, {
-  //   variables: { ...searchParams }
-  // })
-
-  useEffect(() => {
-    let data = reviews.getQueryData()
-    if (!reviews.loading && data) {
-      let { page, totalPages } = data
-      setPageNum(page)
-      setTotalPages(totalPages)
-    }
-  }, [reviews.loading, reviews.data])
-
-  useEffect(() => {
-    if (searchParams.term) {
-      reviews.refetch({ variables: { params: searchParams } })
-      setFresh(true)
-    }
-  }, [searchParams])
+    if (params) reviews.refetch(params)
+    else if (!reviews.getCachedDocs()) reviews.refetch(params)
+  }, [reviews.refetch, params])
 
   const onSubmit = async ({ term, type }) => {
     if (term === '') {
-      return { errors: { term: 'Please enter a search term' } }
+      setParams({ page: 1, pageSize })
     } else {
-      setPageNum(1)
-      setSearchParams({ term, type, page: 1, pageSize })
+      setParams({ term, type, page: 1, pageSize })
     }
   }
 
-  const nextPage = async () => setPageNum(Math.min(page + 1, totalPages))
-  const prevPage = async () => setPageNum(page - 1 || 1)
+  const nextPage = async () => setParams({ ...params, page: reviews.getPage() + 1 })
+  const prevPage = async () => setParams({ ...params, page: reviews.getPage() - 1 })
 
-  if (reviews.loading) return <div className="background3"><Loading /></div>
+  const headerText = () => {
+    let text
+    if (display === 'search') {
+      if (!params?.term) text = `Showing all reviews`
+      else text = `Showing results for "${params?.term}"`
+    } else {
+      text = "Showing your reviews"
+    }
+    return text
+  }
+  const ListHeader = () => {
+    return <Header as='h2'>
+      {headerText()}
+      {params?.term && <Button className="clear-results" negative content={params?.term} icon="x" compact onClick={() => setParams({ ...params, term: undefined })} />}
+      {display === 'search' && <ListNav />}
+    </Header>
+  }
+  const ListNav = () => {
+    return reviews.getTotalPages() > 1 && <Button.Group className="list-nav-btns">
+      <Button icon="angle left" disabled={reviews.getPage() === 1} onClick={prevPage} />
+      <Button className="page" content={`pg ${reviews.getPage()}`} onClick={null} />
+      <Button className="total-pages" content={`/ ${reviews.getTotalPages()}`} onClick={null} />
+      <Button icon="angle right" disabled={reviews.getPage() === reviews.getTotalPages()} onClick={nextPage} />
+    </Button.Group>
+  }
+
+
+  // useEffect(() => {
+  //   reviews.refetch()
+  // }, [])
+
+
+
+  // useEffect(() => {
+  //   let data = reviews.getQueryData()
+  //   if (!reviews.loading && data) {
+  //     let { page, totalPages } = data
+  //     setPageNum(page)
+  //     setTotalPages(totalPages)
+  //   }
+  // }, [reviews.loading, reviews.data])
+
+  // useEffect(() => {
+  //   if (params.term) {
+  //     reviews.refetch({ variables: { params: params } })
+  //     setFresh(true)
+  //   }
+  // }, [params])
+
+  // const onSubmit = async ({ term, type }) => {
+  //   if (term === '') {
+  //     return { errors: { term: 'Please enter a search term' } }
+  //   } else {
+  //     setPageNum(1)
+  //     setParams({ term, type, page: 1, pageSize })
+  //   }
+  // }
+
+  // const nextPage = async () => setPageNum(Math.min(page + 1, totalPages))
+  // const prevPage = async () => setPageNum(page - 1 || 1)
+
+  // if (reviews.loading) return <div className="background3"><Loading /></div>
 
   return (
     <div className="background3">
@@ -78,14 +112,9 @@ const Reviews = (props) => {
                   { text: 'By creator', value: 'creator' },
                 ], width: '4'
               }
-            ]} buttons={auth ? [{ content: 'My Reviews', color: 'green', onClick: () => setDisplay('profile') }] : []} />
-            {fresh && totalPages > 1 && <div>
-              <Button.Group floated="right">
-                <Button icon="angle left" onClick={prevPage} />
-                <Button content={page} onClick={null} />
-                <Button icon="angle right" onClick={nextPage} />
-              </Button.Group>
-            </div>}
+            ]} buttons={auth ? [
+              { content: 'My Reviews', color: 'green', onClick: () => setDisplay('profile') }
+            ] : []} />
           </FormProvider>
         )}
         {display === 'profile' && (
