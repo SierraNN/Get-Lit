@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Button, Container, Header, Image, Label, Segment } from "semantic-ui-react"
-import books from "../utils/books"
+import bookCache from "../utils/bookCache"
 import { useAuth } from '../context/AuthContext';
 import { useMutation } from '@apollo/client';
 import { REMOVE_BOOK, SAVE_BOOK } from '../utils/mutations';
@@ -11,6 +11,7 @@ import Loading from "../components/Loading"
 import { useProfile } from "../context/ProfileContext"
 import AddToListButton from "../components/AddToListButton"
 import bookData from "../utils/bookData"
+import { sanitizeHtml } from "../utils/sanitizeHtml"
 
 const BookDetails = (props) => {
   const [auth] = useAuth()
@@ -24,9 +25,9 @@ const BookDetails = (props) => {
     const fetchById = async () => {
       const { data } = await bookByGoogleId(bookId)
       setBook(data)
-      books.recent.updateById(bookId, data)
+      bookCache.recent.updateById(bookId, data)
     }
-    let cached = books.recent.getById(bookId)
+    let cached = bookCache.recent.getById(bookId)
     if (cached) setBook(cached)
     else fetchById()
   }, [bookId])
@@ -62,9 +63,8 @@ const BookDetails = (props) => {
 
   return (
     <div className="background3">
-      <Container className="ui container1">
-        <Header as='h1' content={info.title} />
-        <Button icon="angle left" content="Back" onClick={() => navigate(-1)} />
+      <Container className="ui blue-box">
+        <Header as='h1' content={info.title} subheader={`By ${info.authors.join(', ')}`} />
         <Segment.Group>
           <Segment basic className="flex">
             <Image inline src={info?.imageLinks?.thumbnail} />
@@ -73,7 +73,6 @@ const BookDetails = (props) => {
               <Label.Group>
                 {info.categories && info.categories.map((cat, i) => <Label key={i} content={cat} />)}
               </Label.Group>
-
             </div>
             {auth &&
               <Button.Group vertical>
@@ -86,8 +85,8 @@ const BookDetails = (props) => {
             }
 
           </Segment>
-          <Segment>
-            {info.description}
+          <Segment >
+            <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(info.description) }}></div>
           </Segment>
         </Segment.Group>
       </Container>

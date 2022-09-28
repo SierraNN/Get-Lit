@@ -1,17 +1,8 @@
-import { Header, List, ListItem } from "semantic-ui-react"
+import AppList from "./AppList"
 import UserImage from "./UserImage"
 
-
-
-const UserList = ({ headerText, list }) => {
-  return (
-    <>
-      <Header>{headerText}</Header>
-      <List horizontal className="display-list users">
-        {list && list.length ? list.map((item, i) => <UserImage key={i} user={item} />) : <ListItem content="No users" />}
-      </List>
-    </>
-  )
+const UserList = (props) => {
+  return <AppList {...props} className="users" ItemComponent={UserImage} />
 }
 
 export default UserList 

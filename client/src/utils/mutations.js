@@ -1,7 +1,13 @@
-import { gql } from "@apollo/client";
+/** @format */
 
+import { gql } from "@apollo/client";
+import { COMMENT_FIELDS } from "./fragments";
+
+/**
+ * AUTH mutations
+ */
 export const LOGIN = gql`
-  mutation login($username:String!,$password:String!) {
+  mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
       token
       user {
@@ -10,9 +16,9 @@ export const LOGIN = gql`
       }
     }
   }
-`
+`;
 export const ADD_USER = gql`
-  mutation addUser($username:String!, $email:String!,$password:String!) {
+  mutation addUser($username: String!, $email: String!, $password: String!) {
     addUser(username: $username, email: $email, password: $password) {
       token
       user {
@@ -22,7 +28,11 @@ export const ADD_USER = gql`
       }
     }
   }
-`
+`;
+
+/**
+ * PROFILE mutations
+ */
 export const UPDATE_USER_TAGS = gql`
   mutation UpdateUserTags($tags: [String]) {
     updateUserTags(tags: $tags) {
@@ -30,33 +40,34 @@ export const UPDATE_USER_TAGS = gql`
       text
     }
   }
-`
+`;
 export const UPDATE_BIO = gql`
   mutation UpdateBio($bio: String) {
-    updateBio(bio: $bio) 
+    updateBio(bio: $bio)
   }
-`
+`;
 export const UPDATE_SPRITE = gql`
   mutation UpdateSprite($spriteChoice: Int) {
-    updateSprite(spriteChoice: $spriteChoice) 
+    updateSprite(spriteChoice: $spriteChoice)
   }
-`
+`;
 export const ADD_FOLLOWING = gql`
-  mutation AddFollowing($followingId:ID) {
-    addFollowing(followingId: $followingId){
+  mutation AddFollowing($followingId: ID) {
+    addFollowing(followingId: $followingId) {
       _id
       username
+      spriteChoice
     }
   }
-`
+`;
 export const REMOVE_FOLLOWING = gql`
-  mutation RemoveFollowing($followingId:ID) {
-    removeFollowing(followingId: $followingId){
+  mutation RemoveFollowing($followingId: ID) {
+    removeFollowing(followingId: $followingId) {
       _id
       username
     }
   }
-`
+`;
 export const SAVE_BOOK = gql`
   mutation saveBook($book: BookInfo) {
     saveBook(book: $book) {
@@ -68,12 +79,22 @@ export const SAVE_BOOK = gql`
       categories
     }
   }
-`
+`;
 export const REMOVE_BOOK = gql`
   mutation removeBook($bookId: ID) {
     removeBook(bookId: $bookId)
   }
-`
+`;
+export const JOIN_CLUB = gql`
+  mutation joinClub($id: ID) {
+    joinClub(id: $id)
+  }
+`;
+export const LEAVE_CLUB = gql`
+  mutation leaveClub($id: ID) {
+    leaveClub(id: $id)
+  }
+`;
 
 export const CREATE_LIST = gql`
   mutation CreateList($list: CreateList) {
@@ -92,7 +113,7 @@ export const CREATE_LIST = gql`
       }
     }
   }
-`
+`;
 export const CREATE_REVIEW = gql`
   mutation createReview($review: CreateReview) {
     createReview(review: $review) {
@@ -110,7 +131,7 @@ export const CREATE_REVIEW = gql`
       }
     }
   }
-`
+`;
 export const CREATE_CLUB = gql`
   mutation CreateClub($club: CreateClub) {
     createClub(club: $club) {
@@ -164,7 +185,8 @@ export const CREATE_CLUB = gql`
       }
     }
   }
-`
+`;
+
 export const ADD_BOOK_TO_LIST = gql`
   mutation AddBookToList($listId: ID, $book: BookInfo) {
     addBookToList(listId: $listId, book: $book) {
@@ -204,7 +226,7 @@ export const ADD_BOOK_TO_LIST = gql`
       }
     }
   }
-`
+`;
 export const ADD_COMMENT_TO_LIST = gql`
   mutation Mutation($listId: ID, $comment: String) {
     addCommentToList(listId: $listId, comment: $comment) {
@@ -217,7 +239,7 @@ export const ADD_COMMENT_TO_LIST = gql`
       createdAt
     }
   }
-`
+`;
 export const ADD_COMMENT_TO_REVIEW = gql`
   mutation Mutation($reviewId: ID, $comment: String) {
     addCommentToReview(reviewId: $reviewId, comment: $comment) {
@@ -230,17 +252,43 @@ export const ADD_COMMENT_TO_REVIEW = gql`
       createdAt
     }
   }
-`
+`;
 export const ADD_POST_TO_CLUB = gql`
+  ${COMMENT_FIELDS}
   mutation Mutation($clubId: ID, $post: String) {
     addPostToClub(clubId: $clubId, post: $post) {
-      _id
-      text
-      author {
-        _id
-        username
-      }
-      createdAt
+      ...CommentFields
     }
   }
-`
+`;
+
+export const EDIT_CLUB_POST = gql`
+  mutation EditClubPost($clubId: ID, $commentId: ID, $text: String) {
+    editClubPost(clubId: $clubId, commentId: $commentId, text: $text)
+  }
+`;
+export const REMOVE_CLUB_POST = gql`
+  mutation RemoveClubPost($clubId: ID, $commentId: ID) {
+    removeClubPost(clubId: $clubId, commentId: $commentId)
+  }
+`;
+export const EDIT_LIST_COMMENT = gql`
+  mutation EditListComment($listId: ID, $commentId: ID, $text: String) {
+    editListComment(listId: $listId, commentId: $commentId, text: $text)
+  }
+`;
+export const REMOVE_LIST_COMMENT = gql`
+  mutation RemoveListComment($listId: ID, $commentId: ID) {
+    removeListComment(listId: $listId, commentId: $commentId)
+  }
+`;
+export const EDIT_REVIEW_COMMENT = gql`
+  mutation EditReviewComment($reviewId: ID, $commentId: ID, $text: String) {
+    editReviewComment(reviewId: $reviewId, commentId: $commentId, text: $text)
+  }
+`;
+export const REMOVE_REVIEW_COMMENT = gql`
+  mutation RemoveReviewComment($reviewId: ID, $commentId: ID) {
+    removeReviewComment(reviewId: $reviewId, commentId: $commentId)
+  }
+`;

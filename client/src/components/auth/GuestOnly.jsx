@@ -6,7 +6,6 @@ export const GuestOnly = () => {
   let location = useLocation()
   let { state } = location
   const url = (state && state.from) ? state.from : '/'
-  console.log(location)
   return !auth ? <Outlet /> : <Navigate to={url} />
 }
 

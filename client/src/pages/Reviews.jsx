@@ -5,53 +5,48 @@ import { Button, Container, Dropdown, Header, Message } from "semantic-ui-react"
 import ReviewList from "../components/lists/ReviewList"
 import { useAuth } from "../context/AuthContext"
 import { useProfile } from "../context/ProfileContext"
-import bookReviews from "../utils/reviews"
+import reviewCache from "../utils/reviewCache"
 import { GET_REVIEWS } from "../utils/queries"
 import Loading from '../components/Loading';
 import { Link } from "react-router-dom"
+import { useSearch } from "../context/SearchContext"
 
-const cachedResults = bookReviews.results.get()
 
 const Reviews = (props) => {
-
-
   const [auth] = useAuth()
   const [profile] = useProfile()
-  const myReviews = auth ? profile.lists : null
+  // const myReviews = auth ? profile.reviews : null
   const { Form } = useForm()
-  const [results, setResults] = useState(cachedResults)
+  const { reviews } = useSearch()
   const [searchParams, setSearchParams] = useState({})
   const [fresh, setFresh] = useState(false)
   const [display, setDisplay] = useState('search')
-  const [pageNum, setPageNum] = useState(1)
+  const [page, setPageNum] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [pageSize] = useState(20)
 
+  useEffect(() => {
+    reviews.refetch()
+  }, [])
+
+  // const { loading, data, refetch } = useQuery(GET_REVIEWS, {
+  //   variables: { ...searchParams }
+  // })
 
   useEffect(() => {
-    if (display === 'search') setResults(bookReviews.results.get())
-    else if (display === 'profile') setResults(myReviews)
-  }, [display, myReviews])
-
-  const { loading, data, refetch } = useQuery(GET_REVIEWS, {
-    variables: { ...searchParams }
-  })
-
-  useEffect(() => {
-    if (data && data.getReviews) {
-      let { docs, page, totalDocs, totalPages } = data.getReviews
-      setResults(docs)
-      bookReviews.results.set(docs)
+    let data = reviews.getQueryData()
+    if (!reviews.loading && data) {
+      let { page, totalPages } = data
       setPageNum(page)
       setTotalPages(totalPages)
     }
-  }, [data])
+  }, [reviews.loading, reviews.data])
+
   useEffect(() => {
-    const search = async () => {
-      await refetch({ params: searchParams })
+    if (searchParams.term) {
+      reviews.refetch({ variables: { params: searchParams } })
       setFresh(true)
     }
-    if (searchParams.term) search()
   }, [searchParams])
 
   const onSubmit = async ({ term, type }) => {
@@ -59,23 +54,22 @@ const Reviews = (props) => {
       return { errors: { term: 'Please enter a search term' } }
     } else {
       setPageNum(1)
-      setSearchParams({ term, type, pageNum: 1, pageSize })
-      return { data }
+      setSearchParams({ term, type, page: 1, pageSize })
     }
   }
 
-  const nextPage = async () => setPageNum(Math.min(pageNum + 1, totalPages))
-  const prevPage = async () => setPageNum(pageNum - 1 || 1)
+  const nextPage = async () => setPageNum(Math.min(page + 1, totalPages))
+  const prevPage = async () => setPageNum(page - 1 || 1)
 
-  if (loading) return <div className="background3"><Loading /></div>
+  if (reviews.loading) return <div className="background3"><Loading /></div>
 
   return (
     <div className="background3">
-      <Container className="ui container1">
+      <Container className="ui blue-box">
         <Header as='h1'>Book Reviews!</Header>
         {display === 'search' && (
           <FormProvider>
-            <Form submitBtnText="Search Reviews" submit={onSubmit} fields={[
+            <Form submitBtnText="Search" submit={onSubmit} fields={[
               { name: 'term', useLabel: false, width: '12' },
               {
                 name: 'type', useLabel: false, control: Dropdown, options: [
@@ -85,10 +79,10 @@ const Reviews = (props) => {
                 ], width: '4'
               }
             ]} buttons={auth ? [{ content: 'My Reviews', color: 'green', onClick: () => setDisplay('profile') }] : []} />
-            {fresh && <div>
+            {fresh && totalPages > 1 && <div>
               <Button.Group floated="right">
                 <Button icon="angle left" onClick={prevPage} />
-                <Button content={pageNum} onClick={null} />
+                <Button content={page} onClick={null} />
                 <Button icon="angle right" onClick={nextPage} />
               </Button.Group>
             </div>}
@@ -103,10 +97,9 @@ const Reviews = (props) => {
           </>
 
         )}
-        {results
-          ? <ReviewList list={results} />
-          : results && <Message>No results</Message>
-        }
+
+        <ReviewList list={display === 'search' ? reviews.getDocs() : profile?.reviews} />
+
       </Container>
     </div>
   )

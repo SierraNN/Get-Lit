@@ -1,15 +1,15 @@
 import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { useContext } from "react";
-import { useState } from "react";
 import { useReducer } from "react";
 import { createContext } from "react";
-import AuthService from '../utils/auth'
-import bookCache from "../utils/books";
-import bookListCache from "../utils/bookLists"
+import bookCache from "../utils/bookCache";
+import bookListCache from "../utils/listCache"
 import { MY_PROFILE } from "../utils/queries";
 import { useAuth } from './AuthContext';
-import clubCache from "../utils/clubs"
+import clubCache from "../utils/clubCache"
+import reviewCache from "../utils/clubCache"
+import { useFetch } from "./SearchContext";
 
 
 const ProfileContext = createContext()
@@ -58,6 +58,18 @@ const reducer = (state, action) => {
       const filteredClubs = clubs.filter(({ _id }) => _id !== action.payload._id)
       filteredClubs.push(action.payload)
       return { ...state, clubs: filteredClubs }
+    case 'ADD_REVIEW':
+      const withReview = [...reviews, action.payload]
+      reviewCache.saved.set(withReview)
+      return { ...state, reviews: withReview }
+    case 'REMOVE_REVIEW':
+      const noReview = reviews.filter(({ _id }) => _id !== action.payload)
+      reviewCache.saved.set(noReview)
+      return { ...state, reviews: noReview }
+    case 'UPDATE_REVIEW':
+      const filteredReviews = reviews.filter(({ _id }) => _id !== action.payload._id)
+      filteredReviews.push(action.payload)
+      return { ...state, reviews: filteredReviews }
     default:
       return state
   }
@@ -66,6 +78,7 @@ const reducer = (state, action) => {
 const ProfileProvider = ({ children }) => {
   const [auth] = useAuth()
   const [profile, dispatch] = useReducer(reducer, {})
+  const { user } = useFetch()
   const { loading, data, refetch } = useQuery(MY_PROFILE)
   const updateProfile = (type, payload) => dispatch({ type, payload })
 
@@ -75,8 +88,9 @@ const ProfileProvider = ({ children }) => {
 
   useEffect(() => {
     if (!loading && data?.myProfile) {
-      dispatch({ type: 'SET_PROFILE', payload: data.myProfile })
-      console.log({ profile })
+      let profile = data.myProfile
+      user.updateCacheById(profile._id, profile)
+      dispatch({ type: 'SET_PROFILE', payload: profile })
     }
   }, [loading, data?.myProfile])
 

@@ -1,40 +1,85 @@
 
-#main-navigation
+#main-navigation.ui.vertical.menu
+  position: fixed
+  border-radius: 0
+  height: 100vh
   color: white 
   z-index: 2
+  width: 6rem
+  font-size: 3rem
+  transition: width 400ms
+  background: url("https://i.pinimg.com/originals/49/49/40/494940db287a82ef6047819d94098ff7.jpg")
+  &.open
+    box-shadow: 0 0 10px #995200
+    width: 5.5em
+
   .item
+    font-family: Alagard
+    position: relative
+    box-sizing: border-box
+    display: flex
+    align-items: center
+    justify-content: flex-start
+    cursor: pointer
     color: white
-    transition: color 400ms, background 400ms
+    padding: 0
+    width: 100%
+    height: 1.5em
+    transition: width 400ms, color 400ms, background 400ms
+    i.icon
+      float: unset
+      margin: 0 1rem
+    .content
+      transform-origin: left
+      justify-self: flex-start
+      padding: 0.2em 0.4em 0.2em 0.2em
+      font-size: 0.9em
+      border-radius: 0 25px 25px  0
+      white-space: nowrap
+      background: rgba(255,255,255,0.7)
+      color: rgb(38, 47, 85)
+    &:not(.active)
+      .content
+        animation: 400ms fadeIn forwards
+    &.active
+      background-color: rgba(90,90,90,0.5)
     &:hover
       background: rgba(90,90,90,0.3)
-  + *
-    padding-top: 1rem
-    padding-left: calc(120px + 1rem)
-    padding-right: 1rem
-    .ui.header, .sub.header 
-      color: white
-      text-shadow: 1px 1px 3px black
+  
+@keyframes fadeIn
+  from
+    opacity: 0
+    transform: translateX(-100%)
+    max-width: 0
+  to
+    opacity: 1
+    transform: translateX(0)
+    max-width: 5em
+
+#main-content
+  min-height: 100vh
+  margin-left: 6rem
+  .ui.header, .sub.header 
+    font-family: Alagard
+    color: white
+    text-shadow: 1px 1px 3px black
+    position: relative
+    font: Alagard
+
 
 .ui.form.use-form
   .ui.dropdown
     background-color: white
     min-width: max-content
+  .field>label
+    color: white
 
-.ui.horizontal.list.display-list
-  display: flex
-  flex-flow: row wrap
-  align-items: center
-  // align-content: flex-start
-  justify-content: flex-start
-  // justify-items: flex-start
-  gap: 1rem
-  transition: transform 400ms
-  > a, > .ui.item
-    margin: 0
-    .header
-      margin-bottom: 0.5rem
-    &:hover
-      transform: translateY(-3px)
+
+.ui.button
+  font-family: Alagard
+  &.margin-left-1
+    margin-left: 1rem
+    
 
 .ui.segment
   background: rgba(255,255,255,0.8)
@@ -43,15 +88,27 @@
     flex-flow: row wrap
     gap: 0.5rem
     .stretch
-      flex-grow: 1
+      flex: 1 1 0
     .ui.buttons
       align-items: flex-start
       .button
         flex-grow: 0
+  .header, .sub.header 
+    color: black
+    text-shadow: none
 
-.ui.segment.profile
-  max-width: 600px
-  margin: 0 auto
+  .ui.form
+    .field>label
+      color: black
+
+.ui.segment
+  &.profile
+    max-width: 600px
+    margin: 0 auto
+  &:not(.basic)
+    .ui.header
+      color: rgb(38, 47, 85) !important
+      text-shadow: none !important
 
 a.placeholder 
   width: 128px
@@ -61,28 +118,117 @@ a.placeholder
 #LandingPage
   color: white
 
-.display-list
+.ui.label.creatorLabel
+  transform: translateY(-25%)
+  display: flex
+  align-items: center
+  border: 1px solid rgb(200,200,200)
+  .ui.image.labelSprite
+    display: inline-block
+    background: rgb(200,200,200)
+    transform: translateX(-50%) scale(1.4)
+    margin: -1rem 0
+    height: 3em
+
+
+.ui.horizontal.list.display-list
+  display: flex
+  flex-flow: row wrap
+  align-items: center
+  justify-content: flex-start
+  gap: 1rem
+  transition: transform 400ms
+  > a, > .item
+    margin: 0
+    cursor: pointer
+    .header
+      margin-bottom: 0.5rem
+    &:hover
+      transform: translateY(-3px)
+  .header 
+    padding: 0 5px
   .item
+    position: relative
     background: rgba(255,255,255,0.2)
     border-radius: 5px
     border: 1px solid rgba(255,255,255,0.4)
     transition: transform 400ms
     min-width: 120px
+    max-width: 240px
+    &.empty
+      padding: 0.5rem !important
     &:hover
       transform: translateY(-3px)
+  &:after
+    content: ' '
+    display: block
+    flex: 20 1 auto
   .image
-    max-width: 120px
   &.books
     .item
       background: transparent
       border-width: 0px
     .image
-      max-width: 150px
-      min-width: 150px 
-      max-height: 200px
-      min-height: 200px
+      width: 150px
+      height: 200px
+  &.reviews
+    .item
+      width: 150px
+      background: transparent
+      border-width: 0px
+    .image:not(.labelSprite)
+      display: block
+      margin: auto
+    .creatorLabel
+      position: absolute
+      bottom: 200px
+      right: 0
+      transform: translateY(-25%)
+  &.lists
+    align-items: flex-start
+    .header
+      max-width: 160px
+    .creatorLabel
+      position: absolute
+      bottom: 0
+      right: 0
+      transform: translateY(50%)
+      z-index: 1
+  &.users
+    .item
+      flex-grow: 1
+    .image
+      display: block
+      margin: 0 auto
+      max-width: 120px
 
-
+.ui.list.comment-list
+  .comment
+    display: flex
+    align-items: center
+    gap: 2rem
+    .content 
+      flex-grow: 1
+  .ui.label.creatorLabel
+    transform: unset
+    display: inline-block
+    padding-left: 1.5rem
+    margin-left: 1rem
+    .labelSprite
+      position: relative
+      left: -0.5rem
+  .comment-buttons
+    margin-left: -1rem
+    .button
+      box-shadow: unset !important
+      padding-left: 0.5rem
+      padding-right: 0.5rem
+    &.in-edit
+      position: absolute
+      right: 0
+      top: 50%
+      transform: translateY(-50%)
+  
 .ui.placeholder.profileImage
   height: 300px
   width: 300px
@@ -94,7 +240,7 @@ a.placeholder
   position: absolute
   bottom: 0
 
-.listThumbnails
+.multiThumbnail
   max-width: 160px
   display: flex
   align-items: center
@@ -113,21 +259,71 @@ a.placeholder
       &:nth-of-type(3), &:nth-of-type(4)
         transform: rotate(-3deg) scale(1.1)
 
-.ui.label.creatorLabel
-  position: absolute
-  bottom: 0.5rem  
-  right: 0
-  display: flex
-  align-items: center
-  border: 1px solid rgb(200,200,200)
-  .ui.image.labelSprite
-    display: inline-block
-    background: rgb(200,200,200)
-    transform: translateX(-50%) scale(1.4)
-    margin: -1rem
-    height: 3em
-
-
 .ui.list.comment-list
   .label
     margin-left: 10px
+
+.ui.list > a.item 
+  i.icon.followingIcon
+    margin: 0 0 0 0.5rem
+    color: rgba(255,255,255,0.7)
+    font-size: 1.2rem
+    position: relative
+    bottom: 2px
+    transition: color 200ms
+  &:hover
+    i.icon.followingIcon
+      color: white
+
+.ui.buttons.list-nav-btns
+  position: absolute
+  right: 0
+  .button:first-child
+    border-right: 1px solid rgb(210,210,210)
+  .button:last-child
+    border-left: 1px solid rgb(210,210,210)
+  .page
+    padding-right: 0.2rem
+    padding-left: 1rem
+    &:hover, &:active, &:focus
+      background: #e0e1e2 none
+  .total-pages
+    padding-left: 0.2rem
+    padding-right: 1rem
+    color: rgba(0,0,0,.4)
+    &:hover, &:active, &:focus
+      background: #e0e1e2 none
+
+.ui.header
+  >.image:not(.icon), > img
+    &.book-image
+      min-width: 150px
+  
+.club-details, .profile
+  .ui.horizontal.list.display-list
+    &.users .item
+      border: 1px solid rgb(190,190,190)
+      i.icon.heart
+        color: rgb(190,190,190)
+.ui.labels.keyword-labels
+  .label
+    border: 1px solid rgb(190,190,190)
+  
+
+.ui.button:disabled, .ui.buttons .disabled.button, .ui.disabled.active.button, .ui.disabled.button, .ui.disabled.button:hover
+  opacity: 0.7 !important
+
+.ui.message.update-error
+  margin: 0
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%,-50%)
+  max-width: 100%
+  width: max-content
+  box-shadow: 0 0 0 1px #e0b4b4 inset, 0 0 3px 5px rgba(224, 180, 180,0.4)
+  .close.icon
+    top: 2px
+    right: 2px
+
+  // box-shadow: 0 0 3px 5px rgba(190,190,190,0.4)

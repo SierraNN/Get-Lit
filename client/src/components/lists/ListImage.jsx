@@ -2,7 +2,8 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Header, Image, Placeholder } from "semantic-ui-react"
-import bookLists from "../../utils/bookLists"
+import listCache from "../../utils/listCache"
+import UserLabel from "../UserLabel"
 
 const ListImage = ({ list }) => {
   const [info, setInfo] = useState(null)
@@ -12,23 +13,15 @@ const ListImage = ({ list }) => {
   }, [list])
 
   if (!info) return <Placeholder.Image />
-  const { _id, name, books } = info
-
-  // const { thumbnail = null } = books[0] || {}
+  const { _id, name, books, creator } = info
 
   const renderImage = () => {
-    const thumbnails = books ? books.slice(0, 3).map(({ thumbnail }) => thumbnail) : null
-    console.log('BOOKS', { books })
-    let size
-    switch (thumbnails.length) {
-      case 2:
-        size = 'medium'
-      case 3:
-        size = 'small'
-      case 4:
-        size = 'tiny'
-    }
-    if (!thumbnails) return (
+    const thumbnails = books ? books.slice(0, 4).map(({ thumbnail }) => thumbnail) : null
+    return thumbnails ? (
+      <div className="multiThumbnail">
+        {thumbnails.map((url, i) => <Image size={thumbnails.length > 1 && 'tiny'} key={i} src={url} />)}
+      </div>
+    ) : (
       <Placeholder>
         <Placeholder.Paragraph>
           <Placeholder.Line />
@@ -40,17 +33,13 @@ const ListImage = ({ list }) => {
         </Placeholder.Paragraph>
       </Placeholder>
     )
-    else return (
-      <div className="listThumbnails">
-        {thumbnails.map((url, i) => <Image size={size} key={i} src={url} />)}
-      </div>
-    )
   }
 
   return (
     <Link to={`/lists/${_id}`} className="item">
-      <div onClick={() => bookLists.recent.updateById(list._id, list)} >
+      <div onClick={() => listCache.recent.updateById(list._id, list)} >
         <Header as="h3" content={name} />
+        <UserLabel user={creator} />
         {renderImage()}
       </div>
 

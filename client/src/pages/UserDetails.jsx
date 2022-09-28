@@ -1,6 +1,6 @@
 const UserDetails = (props) => {
   return (
-    <div  className="ui container1">
+    <div className="ui blue-box">
       UserDetails
     </div>
   )
