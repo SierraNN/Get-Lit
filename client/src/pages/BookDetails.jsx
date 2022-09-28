@@ -25,6 +25,7 @@ const BookDetails = (props) => {
     const fetchById = async () => {
       const { data } = await bookByGoogleId(bookId)
       setBook(data)
+      console.log({ bookByGoogleId: data })
       bookCache.recent.updateById(bookId, data)
     }
     let cached = bookCache.recent.getById(bookId)

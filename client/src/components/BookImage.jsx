@@ -38,7 +38,7 @@ const BookImage = ({ book, action, size = 'small', ...imageProps }) => {
   const { id, volumeInfo: { title, authors, imageLinks } } = info
 
   const handleClick = () => {
-    bookCache.recent.updateById(book.id, book)
+    // bookCache.recent.updateById(book.id, book)
     if (action) action(book)
   }
 
@@ -58,23 +58,6 @@ const BookImage = ({ book, action, size = 'small', ...imageProps }) => {
         </Placeholder.Paragraph>
       </Placeholder>
     </>
-  return <List.Item>
-    {thumbnail
-      ? <Image className={`ui image ${size}`} src={thumbnail} inline onClick={handleClick} />
-      : <>
-        <Header as='h3'>{title}</Header>
-        <Placeholder>
-          <Placeholder.Paragraph>
-            <Placeholder.Line />
-            <Placeholder.Line />
-            <Placeholder.Line />
-            <Placeholder.Line />
-            <Placeholder.Line />
-            <Placeholder.Line />
-          </Placeholder.Paragraph>
-        </Placeholder>
-      </>}
-  </List.Item>
 }
 
 export default BookImage

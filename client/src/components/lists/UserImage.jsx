@@ -3,7 +3,6 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Header, Icon, Image, Label, List, Placeholder } from "semantic-ui-react"
 import { useProfile } from "../../context/ProfileContext"
-import userCache from "../../utils/userCache"
 
 import { imgList } from "../ProfileImage"
 
@@ -33,7 +32,7 @@ const UserImage = ({ info }) => {
     <Link to={`/users/${_id}`} className={thumbnail ? 'item' : 'item placeholder'}>
       <Header as='h3'>{username}{isFollowing && <Icon className="followingIcon" size="small" name='heart' />}</Header>
       {thumbnail
-        ? <Image src={thumbnail} onClick={() => userCache.recent.updateById(info._id, info)} />
+        ? <Image src={thumbnail} />
         : <Placeholder>
           <Placeholder.Image>
           </Placeholder.Image>
