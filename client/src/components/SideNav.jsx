@@ -23,7 +23,6 @@ const menuReducer = (state, { type, payload }) => {
 const SideNav = (props) => {
   const [auth, setAuth] = useAuth()
   const [profile, updateProfile] = useProfile() // es-lint-ignore-line
-  const [menuHover, setMenuHover] = useState(false)
   const location = useLocation()
   const { pathname } = location
 
@@ -37,7 +36,7 @@ const SideNav = (props) => {
     menuDispatch({ type: 'PATH', payload: pathname })
   }, [pathname])
 
-  const HoverLink = ({ to, label, children, ...itemProps }) => {
+  const HoverLink = ({ to, label, state, children, ...itemProps }) => {
     const active = to === '/' ? menu.path === '/' : menu.path.includes(to)
     const hover = menu.hover === to
     const Item = () => (
@@ -53,7 +52,7 @@ const SideNav = (props) => {
       </Menu.Item>
     )
     return to ? (
-      <Link to={to}>
+      <Link to={to} state={state}>
         <Item />
       </Link>
     ) : <Item />
@@ -104,7 +103,7 @@ const SideNav = (props) => {
           </HoverLink>
         </>
         : <>
-          <HoverLink to='/login' label="Log In">
+          <HoverLink to='/login' label="Log In" state={{ from: pathname }}>
             <Icon name='sign in' />
           </HoverLink>
         </>
