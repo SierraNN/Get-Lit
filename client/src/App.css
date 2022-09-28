@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: 'Alagard';
+  font-family: 'Alagard' !important;
 }
 
 /* Medium devices (landscape tablets, 600px and up) */

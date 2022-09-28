@@ -41,6 +41,7 @@ const SideNav = (props) => {
   return (
     <Menu id="main-navigation" vertical
       className={menuHover ? 'open' : undefined}
+      
       onMouseEnter={() => setMenuHover(true)}
       onMouseLeave={() => { setMenuHover(false) }}>
 

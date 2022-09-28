@@ -10,7 +10,7 @@ box-sizing: border-box;
 
 body{
   color: #fff;
-  font-family: 'Alagard';
+  font-family: 'Alagard' !important;
   /* margin-left: 17% !important; */
   position: relative;
   min-height: 100vh;
@@ -44,6 +44,7 @@ color: #0bd62d;
 	align-items: center;
   background-color: transparent;
   border-color: transparent;
+  font-family: Alagard;
 }
 .btn1 a {
 	position: absolute;
@@ -220,8 +221,4 @@ color: #0bd62d;
   }
   .card-image{
     height: 40px;
-  }
-  @media only screen and (max-width: 600px) {
-  
-
   }
