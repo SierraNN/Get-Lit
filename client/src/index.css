@@ -137,6 +137,7 @@ color: #0bd62d;
 	box-shadow: 0 0 5px #1eff45, 0 0 15px #1eff45, 0 0 30px #1eff45,
 		0 0 60px #1eff45;
 }
+
   canvas{
     position: fixed;
     top: 0;
@@ -246,8 +247,9 @@ color: #0bd62d;
 
 #mobile-nav .ui.list.expanded{
   transform: scale(1);
+  margin-left: 50px;
+  margin-top: 0;
 }
-
 #main-content.mobile{
   margin-left: 0;
   
