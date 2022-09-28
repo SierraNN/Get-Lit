@@ -230,3 +230,25 @@ color: #0bd62d;
   .card-image{
     height: 40px;
   }
+
+#mobile-nav{
+  position: absolute;
+}
+
+#mobile-nav .ui.list{
+  transition: transform 400ms;
+  transform-origin: top left;
+}
+
+#mobile-nav .ui.list.collapsed{
+  transform: scale(0);
+}
+
+#mobile-nav .ui.list.expanded{
+  transform: scale(1);
+}
+
+#main-content.mobile{
+  margin-left: 0;
+  
+}

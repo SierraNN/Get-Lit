@@ -68,15 +68,8 @@ function App() {
         <SearchProvider>
           <ProfileProvider>
             <BrowserRouter>
-            {mobile
-            ? <>
-            <MobileSideNav />
-            </>
-            : <>
-            <SideNav />
-            </>
-            }
-              <div id="main-content">
+            {mobile ? <MobileSideNav /> : <SideNav />}
+              <div id="main-content" className={mobile ? 'mobile' : undefined}>
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/books" element={<Outlet />}>

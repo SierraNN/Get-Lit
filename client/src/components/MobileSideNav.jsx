@@ -1,62 +1,65 @@
 
-import { Menu } from 'semantic-ui-react'
+import { Menu, List, Header } from 'semantic-ui-react'
 import { useAuth } from '../context/AuthContext'
 import { useProfile } from '../context/ProfileContext'
-import useMediaQuery from "../context/useMediaQuery"
 import { useState } from "react"
-import { Link, NavLink, useLocation } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const MobileSideNav = (props) => {
     
   const [auth, setAuth] = useAuth()
-  const [updateProfile] = useProfile() // es-lint-ignore-line
-  const [setIsCollapsed] = useState(true)
+  const [profile, updateProfile] = useProfile() // es-lint-ignore-line
+  const [isCollapsed, setIsCollapsed] = useState(true)
 
   return (
-    <>
+    <div id='mobile-nav'>
       <Menu.Menu position="right">
         <Menu.Item icon='bars' float="right" onClick={() => setIsCollapsed(!isCollapsed)} />
       </Menu.Menu>
       <List className={isCollapsed ? "sub-menu collapsed" : "sub-menu expanded"} divided >
-        <Link to="/" label="Home">
-          <h1>Home</h1>
-        </Link>
-        <Link to="/books" label="Books">
-          <h1>Home</h1>
-        </Link>
-        <Link to="/reviews" label="Reviews">
-          <h1>Home</h1>
-        </Link>
-        <Link to='/lists' label="Lists">
-          <h1>Home</h1>
-        </Link>
-        <Link to='/clubs' label="Clubs">
-          <h1>Home</h1>
-        </Link>
-        <Link to='/users' label="Users">
-          <h1>Home</h1>
-        </Link>
+        
+        <List.Item>
+          <Link to='/'>
+            <Header icon="home" content='Home' />
+          </Link>
+        </List.Item>
+
+        <List.Item to="/books" label="Books">
+          <Link to=''>Search</Link>
+        </List.Item>
+        <List.Item to="/reviews" label="Reviews">
+          <Link to=''>Reviews</Link>
+        </List.Item>
+        <List.Item to='/lists' label="Lists">
+          <Link to=''>Lists</Link>
+        </List.Item>
+        <List.Item to='/clubs' label="Clubs">
+          <Link to=''>Clubs</Link>
+        </List.Item>
+        <List.Item to='/users' label="Users">
+          <Link to=''>Users</Link>
+        </List.Item>
         {auth
           ? <>
-            <Link to='/profile' label="Profile">
-              <h1>Home</h1>
-            </Link>
-            <Link label="Log Out" as='div' onClick={() => {
+            <List.Item to='/profile' label="Profile">
+              <Link to=''>Profile</Link>
+            </List.Item>
+            <List.Item label="Log Out" as='div' onClick={() => {
               setAuth(null);
               updateProfile('CLEAR_PROFILE');
               window.location.reload()
             }}>
-              <h1>Home</h1>
-            </Link>
+              <Link to=''>Log Out</Link>
+            </List.Item>
           </>
           : <>
-            <Link to='/login' label="Log In">
-              <h1>Home</h1>
-            </Link>
+            <List.Item to='/login' label="Log In">
+              <Link to=''>Home</Link>
+            </List.Item>
           </>
         }
       </List>
-    </>
+    </div>
   )
   
 }
