@@ -4,12 +4,9 @@ import { useContext } from "react";
 import { useReducer } from "react";
 import { createContext } from "react";
 import bookCache from "../utils/bookCache";
-import bookListCache from "../utils/listCache"
 import { MY_PROFILE } from "../utils/queries";
 import { useAuth } from './AuthContext';
-import clubCache from "../utils/clubCache"
-import reviewCache from "../utils/clubCache"
-import { useFetch } from "./SearchContext";
+import { useFetch, useSearch } from "./SearchContext";
 
 
 const ProfileContext = createContext()
@@ -36,11 +33,9 @@ const reducer = (state, action) => {
       return { ...state, books: withoutBook }
     case 'ADD_LIST':
       const withList = [...lists, action.payload]
-      // bookListCache.saved.set(withList)
       return { ...state, lists: withList }
     case 'REMOVE_LIST':
       const noList = lists.filter(({ _id }) => _id !== action.payload)
-      // bookListCache.saved.set(noList)
       return { ...state, lists: noList }
     case 'UPDATE_LIST':
       const filteredLists = lists.filter(({ _id }) => _id !== action.payload._id)
@@ -48,11 +43,9 @@ const reducer = (state, action) => {
       return { ...state, lists: filteredLists }
     case 'ADD_CLUB':
       const withClub = [...clubs, action.payload]
-      // clubCache.saved.set(withClub)
       return { ...state, clubs: withClub }
     case 'REMOVE_CLUB':
       const noClub = clubs.filter(({ _id }) => _id !== action.payload)
-      // clubCache.saved.set(noClub)
       return { ...state, clubs: noClub }
     case 'UPDATE_CLUB':
       const filteredClubs = clubs.filter(({ _id }) => _id !== action.payload._id)
@@ -60,11 +53,9 @@ const reducer = (state, action) => {
       return { ...state, clubs: filteredClubs }
     case 'ADD_REVIEW':
       const withReview = [...reviews, action.payload]
-      // reviewCache.saved.set(withReview)
       return { ...state, reviews: withReview }
     case 'REMOVE_REVIEW':
       const noReview = reviews.filter(({ _id }) => _id !== action.payload)
-      // reviewCache.saved.set(noReview)
       return { ...state, reviews: noReview }
     case 'UPDATE_REVIEW':
       const filteredReviews = reviews.filter(({ _id }) => _id !== action.payload._id)
@@ -80,7 +71,12 @@ const ProfileProvider = ({ children }) => {
   const [profile, dispatch] = useReducer(reducer, {})
   const { user } = useFetch()
   const { loading, data, refetch } = useQuery(MY_PROFILE)
-  const updateProfile = (type, payload) => dispatch({ type, payload })
+
+  const { clearCache } = useSearch()
+  const updateProfile = (type, payload) => {
+    if (type === 'CLEAR_PROFILE') clearCache()
+    dispatch({ type, payload })
+  }
 
   useEffect(() => {
     if (auth) refetch()

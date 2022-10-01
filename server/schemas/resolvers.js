@@ -156,9 +156,9 @@ const resolvers = {
       return update.following
     },
     saveBook: async (parent, { book }, { user }) => {
-      let saved = await Book.find({ googleId: book.googleId })
+      let saved = await Book.findOne({ googleId: book.googleId })
       if (!saved) saved = await Book.create(book)
-      const update = await User.findByIdAndUpdate(user._id, {
+      update = await User.findByIdAndUpdate(user._id, {
         $addToSet: { books: Types.ObjectId(saved._id) }
       }, { new: true })
       return saved

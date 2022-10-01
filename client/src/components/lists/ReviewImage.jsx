@@ -2,8 +2,6 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Header, Placeholder } from "semantic-ui-react"
-import reviewCache from "../../utils/reviewCache"
-// import { imgList } from '../ProfileImage';
 import BookImage from "../BookImage"
 import UserLabel from "../UserLabel"
 

@@ -17,6 +17,7 @@ export class FetchService {
   }
 
   setId(id) {
+    this.currentId = id
     if (this.cache.getById(id)) this.observable.next(this.cache.getById(id))
     return this.fetch(id)
   }

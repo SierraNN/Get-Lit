@@ -1,4 +1,5 @@
 import { Cache } from "../utils/cache"
+import { Subject } from 'rxjs'
 
 export class SearchService {
   constructor(name, lazyQuery) {
@@ -10,14 +11,31 @@ export class SearchService {
     this.loading = loading
     this.previousData = previousData
     this.cache = new Cache(`${name}Query`, [])
+    this.observable = new Subject()
   }
+  clear = () => {
+    this.cache.clear()
+  }
+
+  setParams(params = {}) {
+    this.currentParams = params
+    this.observable.next(this.getDocs())
+    this.refetch(params)
+  }
+
   async refetch(params = {}) {
     this.params = params
     return this.query({ variables: { params } }).then(response => {
-      // console.log(`REFETCH ${this.name}`, response)
       this.cacheResponse(response)
       return response
     })
+  }
+  handleResponse({ data }) {
+    let validResponse = data && data[this.name]
+    if (validResponse) {
+      this.cache.set(validResponse)
+      this.observable.next(validResponse)
+    }
   }
   cacheResponse({ data }) {
     if (data) this.cache.set(data[this.name])

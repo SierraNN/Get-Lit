@@ -42,6 +42,7 @@ const BookDetails = (props) => {
         book: bookForDb
       }
     })
+    console.log({ data, error })
     if (data && data.saveBook) {
       updateProfile('ADD_BOOK', data.saveBook)
     }

@@ -2,7 +2,6 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Header, Image, Placeholder } from "semantic-ui-react"
-import clubCache from "../../utils/clubCache"
 import { imgList } from "../ProfileImage"
 
 

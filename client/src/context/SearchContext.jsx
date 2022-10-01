@@ -1,16 +1,16 @@
 import { useLazyQuery } from "@apollo/client";
 import { useContext } from "react";
 import { createContext } from "react";
-import { Cache } from "../utils/cache";
+import bookCache from "../utils/bookCache";
 import { GET_CLUB, GET_CLUBS, GET_LIST, GET_LISTS, GET_REVIEW, GET_REVIEWS, GET_USER, GET_USERS } from "../utils/queries";
-import { FetchService } from "./FetchService";
 
+import { FetchService } from "./FetchService";
 import { SearchService } from "./SearchService";
 
 const SearchContext = createContext()
 export const useSearch = () => {
-  const { users, lists, clubs, reviews } = useContext(SearchContext)
-  return { users, lists, clubs, reviews }
+  const { users, lists, clubs, reviews, logout } = useContext(SearchContext)
+  return { users, lists, clubs, reviews, clearCache: logout }
 }
 export const useFetch = () => {
   const { user, list, club, review } = useContext(SearchContext)
@@ -18,24 +18,25 @@ export const useFetch = () => {
 }
 
 const SearchProvider = ({ children }) => {
-  const usersQuery = useLazyQuery(GET_USERS)
-  const listsQuery = useLazyQuery(GET_LISTS)
-  const clubsQuery = useLazyQuery(GET_CLUBS)
-  const reviewsQuery = useLazyQuery(GET_REVIEWS)
-  const userQuery = useLazyQuery(GET_USER)
-  const listQuery = useLazyQuery(GET_LIST)
-  const clubQuery = useLazyQuery(GET_CLUB)
-  const reviewQuery = useLazyQuery(GET_REVIEW)
+  const users = new SearchService('getUsers', useLazyQuery(GET_USERS))
+  const lists = new SearchService('getLists', useLazyQuery(GET_LISTS))
+  const clubs = new SearchService('getClubs', useLazyQuery(GET_CLUBS))
+  const reviews = new SearchService('getReviews', useLazyQuery(GET_REVIEWS))
+  const user = new FetchService('getUser', useLazyQuery(GET_USER))
+  const list = new FetchService('getList', useLazyQuery(GET_LIST))
+  const club = new FetchService('getClub', useLazyQuery(GET_CLUB))
+  const review = new FetchService('getReview', useLazyQuery(GET_REVIEW))
   return (
     <SearchContext.Provider value={{
-      users: new SearchService('getUsers', usersQuery),
-      lists: new SearchService('getLists', listsQuery),
-      clubs: new SearchService('getClubs', clubsQuery),
-      reviews: new SearchService('getReviews', reviewsQuery),
-      user: new FetchService('getUser', userQuery),
-      list: new FetchService('getList', listQuery),
-      club: new FetchService('getClub', clubQuery),
-      review: new FetchService('getReview', reviewQuery),
+      users, lists, clubs, reviews,
+      user, list, club, review,
+      logout: () => {
+        users.clear()
+        lists.clear()
+        clubs.clear()
+        reviews.clear()
+        bookCache.clear()
+      }
     }}>
       {children}
     </SearchContext.Provider>

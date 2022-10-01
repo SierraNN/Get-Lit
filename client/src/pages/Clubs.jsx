@@ -1,13 +1,9 @@
-import { useQuery } from "@apollo/client"
 import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
 import { useEffect, useState } from "react"
 import { Button, Container, Dropdown, Header, Message } from "semantic-ui-react"
 import ClubList from "../components/lists/ClubList"
 import { useAuth } from "../context/AuthContext"
 import { useProfile } from "../context/ProfileContext"
-import clubCache from "../utils/clubCache"
-import { GET_CLUBS } from "../utils/queries"
-import Loading from '../components/Loading';
 import { Link } from "react-router-dom"
 import { useSearch } from "../context/SearchContext"
 
@@ -19,9 +15,7 @@ const Clubs = (props) => {
   const { clubs } = useSearch()
   const [params, setParams] = useState({})
   const [display, setDisplay] = useState('search')
-  const [page, setPageNum] = useState(1)
   const [pageSize] = useState(20)
-  const [totalPages, setTotalPages] = useState(1)
 
   useEffect(() => {
     clubs.refetch()
