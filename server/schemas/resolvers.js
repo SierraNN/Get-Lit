@@ -225,9 +225,23 @@ const resolvers = {
         $addToSet: { books: Types.ObjectId(foundBook._id) }
       }, {
         new: true
-      }).populate('creator')
-      list.populate('books')
+      }).populate(['creator', 'books'])
+      // list.populate('books')
 
+      if (!list) throw new AuthenticationError("List not found")
+      return list
+    },
+    removeBookFromList: async (parent, { listId, bookId }, { user }) => {
+      let book = await Book.findOne({ googleId: bookId })
+      if (!book) throw new UserInputError('Book not found')
+      const list = await BookList.findOneAndUpdate({
+        _id: ID(listId),
+        creator: ID(user._id)
+      }, {
+        $pull: { books: ID(book._id) }
+      }, {
+        new: true
+      }).populate(['creator', 'books'])
       if (!list) throw new AuthenticationError("List not found")
       return list
     },

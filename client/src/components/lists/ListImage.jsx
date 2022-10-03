@@ -4,15 +4,15 @@ import { Link } from "react-router-dom"
 import { Header, Image, Placeholder } from "semantic-ui-react"
 import UserLabel from "../UserLabel"
 
-const ListImage = ({ list }) => {
-  const [info, setInfo] = useState(null)
+const ListImage = ({ info }) => {
+  const [list, setList] = useState({})
 
   useEffect(() => {
-    setInfo(list)
-  }, [list])
+    setList(info)
+  }, [info])
 
   if (!info) return <Placeholder.Image />
-  const { _id, name, books, creator } = info
+  const { _id, name, books, creator } = list
 
   const renderImage = () => {
     const thumbnails = books ? books.slice(0, 4).map(({ thumbnail }) => thumbnail) : null

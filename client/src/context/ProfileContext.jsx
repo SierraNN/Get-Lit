@@ -38,9 +38,10 @@ const reducer = (state, action) => {
       const noList = lists.filter(({ _id }) => _id !== action.payload)
       return { ...state, lists: noList }
     case 'UPDATE_LIST':
-      const filteredLists = lists.filter(({ _id }) => _id !== action.payload._id)
-      filteredLists.push(action.payload)
-      return { ...state, lists: filteredLists }
+      let list = lists.find(({ _id }) => _id === action.payload._id)
+      let listUpdate = [...lists]
+      listUpdate.splice(lists.indexOf(list), 1, action.payload)
+      return { ...state, lists: listUpdate }
     case 'ADD_CLUB':
       const withClub = [...clubs, action.payload]
       return { ...state, clubs: withClub }

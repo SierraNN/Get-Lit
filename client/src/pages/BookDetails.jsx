@@ -12,6 +12,7 @@ import { useProfile } from "../context/ProfileContext"
 import AddToListButton from "../components/AddToListButton"
 import bookData from "../utils/bookData"
 import { sanitizeHtml } from "../utils/sanitizeHtml"
+import BookActions from "../components/auth-buttons/BookActions"
 
 const BookDetails = (props) => {
   const [auth] = useAuth()
@@ -76,7 +77,8 @@ const BookDetails = (props) => {
                 {info.categories && info.categories.map((cat, i) => <Label key={i} content={cat} />)}
               </Label.Group>
             </div>
-            {auth &&
+            {auth && <BookActions book={book} />}
+            {/* {auth &&
               <Button.Group vertical>
                 {alreadySaved()
                   ? <Button color='red' icon='trash' onClick={handleRemove} content="Remove from Profile" />
@@ -84,7 +86,7 @@ const BookDetails = (props) => {
                 <AddToListButton book={book} />
                 <Button color='teal' icon='pencil' content="Write a Review" onClick={() => navigate(`/books/${book.id}/reviews/new`)} />
               </Button.Group>
-            }
+            } */}
 
           </Segment>
           <Segment >

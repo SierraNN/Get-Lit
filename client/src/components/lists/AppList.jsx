@@ -2,6 +2,7 @@ import { Header, List, ListItem } from "semantic-ui-react"
 import AppListHeader from "./AppListHeader"
 
 const AppList = ({ className, ItemComponent, emptyMessage, header, list }) => {
+  console.log({ list })
   return (
     <>
       <AppListHeader header={header} />

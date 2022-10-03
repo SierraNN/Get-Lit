@@ -184,6 +184,7 @@ const typeDefs = gql`
     # lists
     createList(list: CreateList): BookList
     addBookToList(listId: ID, book: BookInfo): BookList
+    removeBookFromList(listId: ID, bookId: ID): BookList
     addCommentToList(listId: ID, comment: String): [Comment]
     # reviews
     createReview(review: CreateReview): Review

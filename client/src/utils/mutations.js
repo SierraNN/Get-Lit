@@ -1,7 +1,7 @@
 /** @format */
 
 import { gql } from "@apollo/client";
-import { COMMENT_FIELDS } from "./fragments";
+import { COMMENT_FIELDS, LIST_FIELDS } from "./fragments";
 
 /**
  * AUTH mutations
@@ -188,45 +188,22 @@ export const CREATE_CLUB = gql`
 `;
 
 export const ADD_BOOK_TO_LIST = gql`
+  ${LIST_FIELDS}
   mutation AddBookToList($listId: ID, $book: BookInfo) {
     addBookToList(listId: $listId, book: $book) {
-      _id
-      creator {
-        _id
-        username
-        email
-      }
-      name
-      description
-      books {
-        _id
-        googleId
-        title
-        authors
-        thumbnail
-        description
-        categories
-      }
-      tags {
-        _id
-        text
-      }
-      comments {
-        _id
-        text
-        author {
-          _id
-          username
-          email
-        }
-        replies {
-          _id
-          text
-        }
-      }
+      ...ListFields
     }
   }
 `;
+export const REMOVE_BOOK_FROM_LIST = gql`
+  ${LIST_FIELDS}
+  mutation removeBookFromList($listId: ID, $bookId: ID){
+    removeBookFromList(listId:$listId, bookId:$bookId){
+      ...ListFields
+    }
+  }
+`
+
 export const ADD_COMMENT_TO_LIST = gql`
   mutation Mutation($listId: ID, $comment: String) {
     addCommentToList(listId: $listId, comment: $comment) {
