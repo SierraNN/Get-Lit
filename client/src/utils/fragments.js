@@ -9,6 +9,7 @@ export const SPRITE_FIELDS = gql`
       spriteChoice
   }
 `
+
 export const COMMENT_FIELDS = gql`
   ${SPRITE_FIELDS}
   fragment CommentFields on Comment {
@@ -29,11 +30,14 @@ export const BOOK_FIELDS = gql`
     thumbnail
     description
     categories
+    averageRating
+    ratingCount
   }
 `;
 
 export const REVIEW_FIELDS = gql`
   ${SPRITE_FIELDS}
+  ${BOOK_FIELDS}
   fragment ReviewFields on Review {
     _id
     reviewTitle
@@ -44,17 +48,7 @@ export const REVIEW_FIELDS = gql`
     }
     rating
     book {
-      _id
-      googleId
-      title
-      authors
-      thumbnail
-      description
-      categories
-      tags {
-        _id
-        text
-      }
+      ...BookFields
     }
     comments {
       _id
@@ -154,3 +148,14 @@ export const PROFILE_FIELDS = gql`
     }
   }
 `;
+
+export const SEARCH_RESULTS = gql`
+  fragment SearchResults on SearchResults {
+    term
+    type
+    page
+    pageSize
+    totalDocs
+    totalPages
+  }
+`

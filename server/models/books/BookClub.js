@@ -11,6 +11,10 @@ const BookClubSchema = new Schema({
     type: ID,
     ref: 'User'
   },
+  creator_name: {
+    type: String,
+    required: true
+  },
   members: {
     type: [ID],
     ref: 'User'

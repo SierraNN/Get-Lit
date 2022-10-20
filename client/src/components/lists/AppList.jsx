@@ -1,11 +1,10 @@
 import { Header, List, ListItem } from "semantic-ui-react"
-import AppListHeader from "./AppListHeader"
+import AppHeader from "./AppHeader"
 
-const AppList = ({ className, ItemComponent, emptyMessage, header, list }) => {
-  console.log({ list })
+const AppList = ({ className, ItemComponent, emptyMessage, header = '', list }) => {
   return (
     <>
-      <AppListHeader header={header} />
+      <AppHeader content={header} />
       <List horizontal className={`display-list ${className}`}>
         {
           list && list.length

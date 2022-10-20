@@ -1,6 +1,6 @@
 import { Header, List, ListItem } from "semantic-ui-react"
 import ClubImage from "./ClubImage"
-import ListHeader from "./AppListHeader"
+import ListHeader from "./AppHeader"
 import AppList from "./AppList"
 
 

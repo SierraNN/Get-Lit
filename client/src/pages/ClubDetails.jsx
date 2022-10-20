@@ -62,17 +62,16 @@ const ClubDetails = (props) => {
   const submitPost = async ({ text }) => {
     return await createPost({ variables: { clubId, post: text } })
   }
-  const onEdit = async (data) => {
+  const onCommentEdit = async (data) => {
     const update = await editPost({ variables: data })
     if (update) {
       updateClub({ posts: posts.map((post) => post._id === data.commentId ? { ...post, text: data.text } : post) })
     }
     return update
   }
-  const onDelete = async (data) => {
+  const onCommentDelete = async (data) => {
     const update = await deletePost({ variables: data })
     if (update) updateClub({ posts: posts.filter(({ _id }) => _id !== data.commentId) })
-    // console.log('Delete post not configured', { data })
   }
 
   const MembershipButton = ({ floated }) => {
@@ -114,8 +113,8 @@ const ClubDetails = (props) => {
             disabledMessage={<Message negative>Must be a member to post<MembershipButton /></Message>}
             header={<Header as='h2' content="General Conversation" />}
             onSubmit={submitPost}
-            onEdit={onEdit}
-            onDelete={onDelete}
+            onEdit={onCommentEdit}
+            onDelete={onCommentDelete}
             list={posts}
             noCommentLabel="No posts yet"
             textAreaLabel="Post your thoughts" />

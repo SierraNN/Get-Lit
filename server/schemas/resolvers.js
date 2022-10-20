@@ -45,7 +45,8 @@ const resolvers = {
       return found.clubs
     },
     getBook: async (parent, { id }) => {
-      const book = await Book.findById(id)
+      const book = await Book.findOne({ googleId: id })
+      await book.getReviewData()
       return book
     },
     getClub: async (parent, { id }) => {
@@ -62,7 +63,8 @@ const resolvers = {
       return list
     },
     getReview: async (parent, { id }) => {
-      const review = await Review.findById(id).populate(['book', 'comments.author', 'creator'])
+      const review = await Review.findOne({ _id: id }).populate(['book', 'comments.author', 'creator'])
+      await review.getAverage()
       if (!review) throw new Error('List not found')
       return review
     },
@@ -197,13 +199,14 @@ const resolvers = {
 
     /** LISTS */
     createList: async (parent, { list }, { user }) => {
-      let book = list.book ? await Book.findOne({ googleId: list.book.googleId }) || await Book.create(list.book) : null
       if (!user) throw new AuthenticationError('Not logged in')
+      let book = list.book ? await Book.findOne({ googleId: list.book.googleId }) || await Book.create(list.book) : null
 
       const listInfo = {
         ...list,
         tags: list.tags.map(tag => ({ text: tag })),
-        creator: ID(user._id)
+        creator: ID(user._id),
+        creator_name: user.username
       }
       if (book) listInfo.books = [book._id]
       const created = await BookList.create(listInfo).then(c => c.populate('books'))
@@ -262,7 +265,8 @@ const resolvers = {
       const created = await Review.create({
         ...review,
         book: ID(book._id),
-        creator: ID(user._id)
+        creator: ID(user._id),
+        creator_name: user.username
       }).then(c => c.populate(['book', 'creator', 'comments.author']))
       if (created) {
         await User.findByIdAndUpdate(user._id, {
@@ -286,6 +290,7 @@ const resolvers = {
         ...club,
         tags: club.tags.map(tag => ({ text: tag })),
         creator: ID(user._id),
+        creator_name: user.username,
         members: [ID(user._id)]
       }
       const created = await BookClub.create(clubInfo)

@@ -1,98 +1,88 @@
 import { useEffect } from "react"
 import { useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { Button, Container, Header, Image, Label, Segment } from "semantic-ui-react"
-import bookCache from "../utils/bookCache"
+import { Link, useParams } from "react-router-dom"
+import { Button, Container, Header, Image, Label, Segment, Tab } from "semantic-ui-react"
 import { useAuth } from '../context/AuthContext';
-import { useMutation } from '@apollo/client';
-import { REMOVE_BOOK, SAVE_BOOK } from '../utils/mutations';
-import { bookByGoogleId } from "../utils/google"
 import Loading from "../components/Loading"
-import { useProfile } from "../context/ProfileContext"
-import AddToListButton from "../components/AddToListButton"
-import bookData from "../utils/bookData"
 import { sanitizeHtml } from "../utils/sanitizeHtml"
 import BookActions from "../components/auth-buttons/BookActions"
+import BookService from "../context/BookService"
+import { useFetch } from "../context/SearchContext"
+import ReviewList from '../components/lists/ReviewList';
+import RatingStars from "../components/forms/RatingStars"
 
 const BookDetails = (props) => {
   const [auth] = useAuth()
-  const [profile, updateProfile] = useProfile()
   const { bookId } = useParams()
-  const [book, setBook] = useState(null)
-  const navigate = useNavigate()
-  const alreadySaved = () => profile.books && profile.books.find(({ googleId }) => bookId === googleId) !== undefined
+  const [googleInfo, setGoogleInfo] = useState(null)
+  const [appInfo, setAppInfo] = useState({})
+  const { book } = useFetch()
 
   useEffect(() => {
-    const fetchById = async () => {
-      const { data } = await bookByGoogleId(bookId)
-      setBook(data)
-      console.log({ bookByGoogleId: data })
-      bookCache.recent.updateById(bookId, data)
+    let googleSubcription = BookService.googleData.subscribe(data => setGoogleInfo(data))
+    let appSubscription = book.observable.subscribe(data => setAppInfo(data))
+    BookService.setBook(bookId, book)
+    return () => {
+      googleSubcription.unsubscribe()
+      appSubscription.unsubscribe()
     }
-    let cached = bookCache.recent.getById(bookId)
-    if (cached) setBook(cached)
-    else fetchById()
   }, [bookId])
 
-  const [saveBook] = useMutation(SAVE_BOOK)
-  const handleSave = async () => {
-    if (!book) return
-    let bookForDb = bookData(book)
-    const { data, error } = await saveBook({
-      variables: {
-        book: bookForDb
-      }
-    })
-    console.log({ data, error })
-    if (data && data.saveBook) {
-      updateProfile('ADD_BOOK', data.saveBook)
-    }
-  }
+  if (!googleInfo) return <Loading message="Getting Book" />
+  const { volumeInfo } = googleInfo
+  const { reviews = [], clubs = [], lists = [] } = appInfo
 
-  const [removeBook] = useMutation(REMOVE_BOOK)
-  const handleRemove = async () => {
-    const id = profile.books.find(({ googleId }) => bookId === googleId)._id
-    const { data, error } = await removeBook({
-      variables: {
-        bookId: id
-      }
-    })
-    if (data && data.removeBook === true) {
-      updateProfile('REMOVE_BOOK', id)
-    }
-  }
-  if (!book) return <Loading message="Getting Book" />
-  const { volumeInfo: info } = book
+  const panes = [
+    {
+      menuItem: 'Description',
+      render: () => <Tab.Pane attached={false}><div dangerouslySetInnerHTML={{ __html: sanitizeHtml(volumeInfo.description) }}></div></Tab.Pane>,
+    },
+    {
+      menuItem: 'Reviews',
+      render: () => (
+        <Tab.Pane key="reviews" attached={false}>
+          <Link to={`reviews/new`}>
+            <Button floated="right" icon="plus" color="green" content="Write a Review" />
+          </Link>
+          <ReviewList list={reviews} emptyMessage="No reviews found" />
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: 'Book Lists',
+      render: () => (
+        <Tab.Pane key="lists" attached={false}>
+          <Link to={`lists/new`} state={{ book: googleInfo }}>
+            <Button floated="right" icon="plus" color="green" content="Write a Review" />
+          </Link>
+          <ReviewList list={reviews} emptyMessage="No reviews found" />
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: 'Book Clubs',
+      render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>,
+    },
+  ]
 
   return (
     <div className="background3">
       <Container className="ui blue-box">
-        <Header as='h1' content={info.title} subheader={`By ${info.authors.join(', ')}`} />
-        <Segment.Group>
-          <Segment basic className="flex">
-            <Image inline src={info?.imageLinks?.thumbnail} />
-            <div className="stretch">
-              <Header content="Categories" />
-              <Label.Group>
-                {info.categories && info.categories.map((cat, i) => <Label key={i} content={cat} />)}
-              </Label.Group>
-            </div>
-            {auth && <BookActions book={book} />}
-            {/* {auth &&
-              <Button.Group vertical>
-                {alreadySaved()
-                  ? <Button color='red' icon='trash' onClick={handleRemove} content="Remove from Profile" />
-                  : <Button color="blue" icon='save' onClick={handleSave} content="Save Book" />}
-                <AddToListButton book={book} />
-                <Button color='teal' icon='pencil' content="Write a Review" onClick={() => navigate(`/books/${book.id}/reviews/new`)} />
-              </Button.Group>
-            } */}
+        <Header as='h1' content={volumeInfo.title} subheader={`By ${volumeInfo.authors.join(', ')}`} />
+        <Segment basic className="flex">
+          <Image inline src={volumeInfo?.imageLinks?.thumbnail} />
+          <div className="stretch">
+            <Header content="Categories" />
+            <Label.Group>
+              {volumeInfo.categories && volumeInfo.categories.map((cat, i) => <Label key={i} content={cat} />)}
+            </Label.Group>
+          </div>
+          {auth && <BookActions book={googleInfo} />}
+        </Segment>
+        <Segment>
+          <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+        </Segment>
 
-          </Segment>
-          <Segment >
-            <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(info.description) }}></div>
-          </Segment>
-        </Segment.Group>
       </Container>
 
     </div>

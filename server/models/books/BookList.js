@@ -11,6 +11,10 @@ const BookListSchema = new Schema({
     type: ID,
     ref: 'User'
   },
+  creator_name: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true,

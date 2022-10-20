@@ -6,13 +6,13 @@ import { Header, Image, List, Placeholder } from "semantic-ui-react"
 import bookCache from "../utils/bookCache"
 import { bookByGoogleId } from "../utils/google"
 
-const BookImage = ({ book, action, size = 'small', ...imageProps }) => {
+const BookImage = ({ book, action, size, ...imageProps }) => {
   const [info, setInfo] = useState(null)
 
   const fetchGoogleData = async (googleId) => {
     try {
       const { data: book } = await bookByGoogleId(googleId)
-      bookCache.recent.updateById(googleId, book)
+      bookCache.google.updateById(googleId, book)
       setInfo(book)
     } catch (error) {
       console.log(error)
@@ -21,11 +21,14 @@ const BookImage = ({ book, action, size = 'small', ...imageProps }) => {
 
   useEffect(() => {
     // LOAD BOOK INFO IF NOT IN CACHE
-    if (book.googleId) {
-      let cached = bookCache.recent.getById(book.googleId)
+    const { googleId, volumeInfo } = book
+    if (googleId) {
+      let cached = bookCache.google.getById(book.googleId)
       if (cached) setInfo(cached)
       else fetchGoogleData(book.googleId)
-    } else if (book.volumeInfo) setInfo(book)
+    } else if (volumeInfo) {
+      setInfo(book)
+    }
     else {
       console.error('Book info missing')
     }
@@ -38,13 +41,12 @@ const BookImage = ({ book, action, size = 'small', ...imageProps }) => {
   const { id, volumeInfo: { title, authors, imageLinks } } = info
 
   const handleClick = () => {
-    // bookCache.recent.updateById(book.id, book)
     if (action) action(book)
   }
 
   const { thumbnail } = imageLinks || {}
   return thumbnail
-    ? <Image {...imageProps} className={`ui image book-image ${size}`} src={thumbnail} inline onClick={handleClick} />
+    ? <Image {...imageProps} size={size} className={`ui image book-image `} src={thumbnail} inline onClick={handleClick} />
     : <>
       <Placeholder>
         <Header as='h3'>{title}</Header>

@@ -11,6 +11,7 @@ import { useMutationCB } from "../hooks/useMutationCB"
 import { useFetch } from "../context/SearchContext"
 import CommentList from "../components/lists/CommentList"
 import RatingStars from "../components/forms/RatingStars"
+import AppHeader from "../components/lists/AppHeader"
 
 const ReviewDetails = (props) => {
   const { reviewId } = useParams()
@@ -62,23 +63,27 @@ const ReviewDetails = (props) => {
     }
   }
 
-  // const rating = 
-
   return (
     <div className="background3">
       <Container className="blue-box ">
-        <Header as='h1' content={book.title} />
-        <Header as='h2'>
+        <Header as='h1'>
           <BookImage book={book} />
           <Header.Content>
-            {reviewTitle}
-            <Header.Subheader content={"Review by " + creator.username} />
-            <RatingStars review={reviewInfo} />
-            <UserAvatar user={creator} size="tiny" />
+            {book.title}
+            <Header.Subheader content={`${book.ratingCount} Reviews`} />
+            <RatingStars average={book.averageRating} />
           </Header.Content>
         </Header>
         <Segment>
-          {reviewText}
+          <Header as='h2'  >
+            <UserAvatar user={creator} />
+            <Header.Content>
+              {reviewTitle}
+              <Header.Subheader content={"Review by " + creator.username} />
+              <RatingStars review={reviewInfo} />
+            </Header.Content>
+          </Header>
+          <p>{reviewText}</p>
         </Segment>
         <Segment>
           <CommentList

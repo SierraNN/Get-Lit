@@ -40,6 +40,8 @@ const typeDefs = gql`
     thumbnail: String
     description: String
     categories: [String]
+    averageRating: Int
+    ratingCount: Int
     tags: [Tag]
     ebooks: [eBook]
   }
@@ -117,6 +119,14 @@ const typeDefs = gql`
     page: Int
     pageSize: Int
   }
+  type SearchResults {
+    term: String
+    type: String
+    page: Int
+    pageSize: Int
+    totalDocs: Int
+    totalPages: Int
+  }
 
   type ListResults {
     totalDocs: Int
@@ -124,6 +134,8 @@ const typeDefs = gql`
     totalPages: Int
     page: Int
     pageSize: Int
+    term: String
+    type: String
   }
   type ClubResults {
     totalDocs: Int
@@ -131,6 +143,8 @@ const typeDefs = gql`
     totalPages: Int
     page: Int
     pageSize: Int
+    term: String
+    type: String
   }
   type UserResults {
     totalDocs: Int
@@ -138,6 +152,8 @@ const typeDefs = gql`
     totalPages: Int
     page: Int
     pageSize: Int
+    term: String
+    type: String
   }
   type ReviewResults {
     totalDocs: Int
@@ -145,6 +161,8 @@ const typeDefs = gql`
     totalPages: Int
     page: Int
     pageSize: Int
+    term: String
+    type: String
   }
 
   type Query {

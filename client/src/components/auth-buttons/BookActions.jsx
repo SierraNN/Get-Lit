@@ -14,7 +14,7 @@ const BookActions = ({ book }) => {
   useEffect(() => {
     if (profile.books) {
       let found = profile.books.find(({ googleId }) => googleId === book.id)
-      setFavoriteId(found ? found._id : null)
+      setFavoriteId(found ? found._id : false)
     }
   }, [profile])
   const addToFaves = useMutationCB('saveBook', SAVE_BOOK, (book) => {
@@ -25,7 +25,6 @@ const BookActions = ({ book }) => {
   })
   const handleClick = () => {
     if (favoriteId) {
-      // let bookId = profile.books.find(({ googleId }) => googleId === book.id)._id
       removeFromFaves({
         variables: { bookId: favoriteId }
       })

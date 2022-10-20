@@ -2,7 +2,7 @@ import { useLazyQuery } from "@apollo/client";
 import { useContext } from "react";
 import { createContext } from "react";
 import bookCache from "../utils/bookCache";
-import { GET_CLUB, GET_CLUBS, GET_LIST, GET_LISTS, GET_REVIEW, GET_REVIEWS, GET_USER, GET_USERS } from "../utils/queries";
+import { GET_BOOK, GET_CLUB, GET_CLUBS, GET_LIST, GET_LISTS, GET_REVIEW, GET_REVIEWS, GET_USER, GET_USERS } from "../utils/queries";
 
 import { FetchService } from "./FetchService";
 import { SearchService } from "./SearchService";
@@ -13,8 +13,8 @@ export const useSearch = () => {
   return { users, lists, clubs, reviews, clearCache: logout }
 }
 export const useFetch = () => {
-  const { user, list, club, review } = useContext(SearchContext)
-  return { user, list, club, review }
+  const { user, list, club, review, book } = useContext(SearchContext)
+  return { user, list, club, review, book }
 }
 
 const SearchProvider = ({ children }) => {
@@ -26,10 +26,11 @@ const SearchProvider = ({ children }) => {
   const list = new FetchService('getList', useLazyQuery(GET_LIST))
   const club = new FetchService('getClub', useLazyQuery(GET_CLUB))
   const review = new FetchService('getReview', useLazyQuery(GET_REVIEW))
+  const book = new FetchService('getBook', useLazyQuery(GET_BOOK))
   return (
     <SearchContext.Provider value={{
       users, lists, clubs, reviews,
-      user, list, club, review,
+      user, list, club, review, book,
       logout: () => {
         users.clear()
         lists.clear()
