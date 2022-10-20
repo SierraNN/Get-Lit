@@ -1,21 +1,23 @@
-import bookCache from "../utils/bookCache"
-import { bookByGoogleId } from "../utils/google"
+// import { useEffect, useState } from "react"
+// import BookService from "../context/BookService"
+// import { useFetch } from "../context/SearchContext"
 
-const useBook = (googleId) => {
-  return new Promise((resolve, reject) => {
-    let cached = bookCache.recent.getById(googleId)
-    if (cached) resolve(cached)
-    else {
-      bookByGoogleId(googleId).then(result => {
-        if (result?.kind === 'books#volume') {
-          bookCache.recent.updateById(googleId, result)
-          resolve(result)
-        } else {
-          resolve(null)
-        }
-      })
-    }
-  })
-}
+// const useBook = (googleId) => {
+//   const [googleInfo, setGoogleInfo] = useState({})
+//   const [appInfo, setAppInfo] = useState({})
+//   const { book } = useFetch()
 
-export default useBook
+//   useEffect(() => {
+//     let googleSubcription = BookService.googleData.subscribe(data => setGoogleInfo(data))
+//     let appSubscription = book.observable.subscribe(data => setAppInfo(data))
+//     BookService.setBook(googleId, book)
+//     return () => {
+//       googleSubcription.unsubscribe()
+//       appSubscription.unsubscribe()
+//     }
+//   }, [googleId])
+
+//   return { ...googleInfo, ...appInfo }
+// }
+
+// export default useBook

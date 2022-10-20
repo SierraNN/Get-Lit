@@ -4,23 +4,17 @@ import { gql } from "@apollo/client";
 import {
   BOOK_FIELDS,
   CLUB_FIELDS,
-  COMMENT_FIELDS,
   LIST_FIELDS,
   PROFILE_FIELDS,
   REVIEW_FIELDS,
+  SPRITE_FIELDS,
 } from "./fragments";
 
 export const MY_BOOKS = gql`
   ${BOOK_FIELDS}
   query MyBooks {
     myBooks {
-      _id
-      googleId
-      title
-      authors
-      thumbnail
-      description
-      categories
+      ...BookFields
     }
   }
 `;
@@ -33,6 +27,7 @@ export const MY_PROFILE = gql`
   }
 `;
 
+
 export const GET_LIST = gql`
   ${LIST_FIELDS}
   query getList($id: ID!) {
@@ -41,19 +36,78 @@ export const GET_LIST = gql`
     }
   }
 `;
+export const GET_USER = gql`
+  ${PROFILE_FIELDS}
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      ...ProfileFields
+    }
+  }
+`;
+export const GET_CLUB = gql`
+  ${CLUB_FIELDS}
+  query GetClub($id: ID!) {
+    getClub(id: $id) {
+      ...ClubFields
+    }
+  }
+`;
+export const GET_REVIEW = gql`
+  ${REVIEW_FIELDS}
+  query getReview($id: ID!) {
+    getReview(id: $id) {
+      ...ReviewFields
+    }
+  }
+`;
+export const GET_BOOK = gql`
+  ${BOOK_FIELDS}
+  query getBook($id: ID!) {
+    getBook(id: $id) {
+      ...BookFields
+    }
+  }
+`
+
+export const GET_REVIEWS = gql`
+  ${SPRITE_FIELDS}
+  query GetReviews($params: SearchParams) {
+    getReviews(params: $params) {
+      term
+      type
+      totalDocs
+      pageSize
+      docs {
+        _id
+        rating
+        book {
+          _id
+          googleId
+          title
+          thumbnail
+        }
+        creator {
+          ...SpriteFields
+        }
+        reviewTitle
+        reviewText
+      }
+    }
+  }
+`;
 export const GET_LISTS = gql`
-  ${COMMENT_FIELDS}
+  ${SPRITE_FIELDS}
   query GetLists($params: SearchParams) {
     getLists(params: $params) {
+      term
+      type
       totalDocs
       pageSize
       docs {
         _id
         name
         creator {
-          _id
-          username
-          spriteChoice
+          ...SpriteFields
         }
         description
         books {
@@ -73,27 +127,51 @@ export const GET_LISTS = gql`
           _id
           text
         }
-        comments {
-          ...CommentFields
-        }
       }
       totalPages
       page
     }
   }
 `;
-
-export const GET_USER = gql`
-  ${PROFILE_FIELDS}
-  query GetUser($id: ID!) {
-    getUser(id: $id) {
-      ...ProfileFields
+export const GET_CLUBS = gql`
+  ${SPRITE_FIELDS}
+  query Query($params: SearchParams) {
+    getClubs(params: $params) {
+      term
+      type
+      totalDocs
+      pageSize
+      docs {
+        _id
+        creator {
+          ...SpriteFields
+        }
+        name
+        members {
+          ...SpriteFields
+        }
+        description
+        tags {
+          _id
+          text
+        }
+        posts {
+          _id
+          text
+          author {
+            ...SpriteFields
+          }
+          createdAt
+        }
+      }
     }
   }
 `;
 export const GET_USERS = gql`
   query GetUsers($params: SearchParams) {
     getUsers(params: $params) {
+      term
+      type
       totalDocs
       docs {
         _id
@@ -107,80 +185,3 @@ export const GET_USERS = gql`
   }
 `;
 
-export const GET_CLUB = gql`
-  ${CLUB_FIELDS}
-  query GetClub($id: ID!) {
-    getClub(id: $id) {
-      ...ClubFields
-    }
-  }
-`;
-export const GET_CLUBS = gql`
-  query Query($params: SearchParams) {
-    getClubs(params: $params) {
-      totalDocs
-      pageSize
-      docs {
-        _id
-        creator {
-          _id
-          username
-        }
-        name
-        members {
-          _id
-          username
-          spriteChoice
-        }
-        description
-        tags {
-          _id
-          text
-        }
-        posts {
-          _id
-          text
-          author {
-            _id
-            username
-          }
-          createdAt
-        }
-      }
-    }
-  }
-`;
-
-export const GET_REVIEW = gql`
-  ${REVIEW_FIELDS}
-  query getReview($id: ID!) {
-    getReview(id: $id) {
-      ...ReviewFields
-    }
-  }
-`;
-export const GET_REVIEWS = gql`
-  query GetReviews($params: SearchParams) {
-    getReviews(params: $params) {
-      totalDocs
-      pageSize
-      docs {
-        _id
-        rating
-        book {
-          _id
-          googleId
-          title
-          thumbnail
-        }
-        creator {
-          _id
-          username
-          spriteChoice
-        }
-        reviewTitle
-        reviewText
-      }
-    }
-  }
-`;

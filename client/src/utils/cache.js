@@ -16,6 +16,11 @@ export class Cache {
       this.store.setItem(this.cacheName, value)
     }
   }
+  clear() {
+    this.store.removeItem(this.cacheName)
+  }
+
+
   // Object cache functions
   getById(id) {
     let cache = this.get()
@@ -26,6 +31,7 @@ export class Cache {
     cache[id] = value
     this.set(cache)
   }
+
   // Array cache functions
   push(value) {
     let cache = this.get()

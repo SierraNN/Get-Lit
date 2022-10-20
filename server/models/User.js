@@ -85,7 +85,7 @@ UserSchema.statics.fullProfile = async function (userId) {
 
 UserSchema.plugin(mongoosePaginate)
 
-UserSchema.statics.search = paginatedSearch({})
+UserSchema.statics.search = paginatedSearch({ defaultType: 'username' })
 
 const User = new model('User', UserSchema)
 

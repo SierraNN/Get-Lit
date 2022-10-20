@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const Review = require('../Review')
 const TagSchema = require('../Tag')
 // const { TaggableSchema, TaggableModel } = require('../custom/Taggable')
 
@@ -17,6 +18,8 @@ const BookSchema = new Schema({
   thumbnail: String,
   description: { type: String, default: "" },
   categories: [String],
+  averageRating: Number,
+  ratingCount: Number,
   eBooks: {
     type: Schema.Types.ObjectId,
     ref: 'eBook'
@@ -24,6 +27,27 @@ const BookSchema = new Schema({
   tags: [TagSchema],
 }, {
   // schema options
+  methods: {
+    getReviewData: async function () {
+      let result = await Review.aggregate(
+        [
+          { $match: { book: this._id } },
+          {
+            $group: {
+              _id: null,
+              averageRating: { $avg: '$rating' },
+              ratingCount: { $count: {} }
+            }
+          }
+        ]
+      ).then(groups => groups[0])
+      if (result) {
+        let { averageRating, ratingCount } = result
+        this.set({ averageRating, ratingCount })
+      }
+
+    }
+  }
 })
 
 const Book = new model('Book', BookSchema)

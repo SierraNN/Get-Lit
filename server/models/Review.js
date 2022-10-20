@@ -20,6 +20,10 @@ const ReviewSchema = new Schema({
     ref: 'User',
     required: true
   },
+  creator_name: {
+    type: String,
+    required: true
+  },
   reviewTitle: {
     type: String,
     required: true
@@ -33,6 +37,8 @@ const ReviewSchema = new Schema({
     ref: 'Book',
   },
   rating: Number,
+  // averageRating: Number,
+  // ratingCount: Number,
   comments: [CommentSchema],
   createdAt: {
     type: Date,
@@ -43,6 +49,11 @@ const ReviewSchema = new Schema({
   }
 }, {
   // schema options
+  methods: {
+    getAverage: async function () {
+      await this.book.getReviewData()
+    }
+  }
 })
 
 ReviewSchema.plugin(mongoosePaginate)

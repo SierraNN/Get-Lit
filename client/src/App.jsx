@@ -68,13 +68,14 @@ function App() {
         <SearchProvider>
           <ProfileProvider>
             <BrowserRouter>
-            {mobile ? <MobileSideNav /> : <SideNav />}
+              {mobile ? <MobileSideNav /> : <SideNav />}
               <div id="main-content" className={mobile ? 'mobile' : undefined}>
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/books" element={<Outlet />}>
                     <Route index element={<Books />} />
                     <Route path=":bookId" element={<BookDetails />} />
+                    <Route path=":bookId/:tab" element={<BookDetails />} />
                   </Route>
                   <Route path="/lists" element={<Outlet />}>
                     <Route index element={<Lists />} />

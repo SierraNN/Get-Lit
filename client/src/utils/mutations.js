@@ -1,7 +1,8 @@
 /** @format */
 
 import { gql } from "@apollo/client";
-import { COMMENT_FIELDS } from "./fragments";
+import { CLUB_FIELDS, COMMENT_FIELDS, LIST_FIELDS, REVIEW_FIELDS } from "./fragments";
+import { BOOK_FIELDS } from './fragments';
 
 /**
  * AUTH mutations
@@ -69,14 +70,10 @@ export const REMOVE_FOLLOWING = gql`
   }
 `;
 export const SAVE_BOOK = gql`
+  ${BOOK_FIELDS}
   mutation saveBook($book: BookInfo) {
     saveBook(book: $book) {
-      _id
-      title
-      authors
-      description
-      googleId
-      categories
+      ...BookFields
     }
   }
 `;
@@ -97,159 +94,60 @@ export const LEAVE_CLUB = gql`
 `;
 
 export const CREATE_LIST = gql`
+  ${LIST_FIELDS}
   mutation CreateList($list: CreateList) {
     createList(list: $list) {
-      _id
-      name
-      description
-      tags {
-        _id
-        text
-      }
-      books {
-        _id
-        googleId
-        title
-      }
+      ...ListFields
     }
   }
 `;
 export const CREATE_REVIEW = gql`
+  ${REVIEW_FIELDS}
   mutation createReview($review: CreateReview) {
     createReview(review: $review) {
-      _id
-      book {
-        _id
-      }
-      reviewText
-      rating
-      suggestedBooks {
-        _id
-      }
-      suggestedTags {
-        _id
-      }
+      ...ReviewFields
     }
   }
 `;
 export const CREATE_CLUB = gql`
+  ${CLUB_FIELDS}
   mutation CreateClub($club: CreateClub) {
     createClub(club: $club) {
-      _id
-      creator {
-        _id
-        email
-        username
-        clubs {
-          _id
-          name
-        }
-      }
-      members {
-        _id
-        username
-      }
-      name
-      description
-      tags {
-        _id
-        text
-      }
-      books {
-        _id
-        googleId
-        title
-        authors
-      }
-      lists {
-        _id
-        name
-        description
-        comments {
-          _id
-          text
-        }
-      }
-      posts {
-        _id
-        text
-        author {
-          _id
-          username
-          email
-        }
-        replies {
-          _id
-          text
-        }
-      }
+      ...ClubFields
     }
   }
 `;
 
 export const ADD_BOOK_TO_LIST = gql`
+  ${LIST_FIELDS}
   mutation AddBookToList($listId: ID, $book: BookInfo) {
     addBookToList(listId: $listId, book: $book) {
-      _id
-      creator {
-        _id
-        username
-        email
-      }
-      name
-      description
-      books {
-        _id
-        googleId
-        title
-        authors
-        thumbnail
-        description
-        categories
-      }
-      tags {
-        _id
-        text
-      }
-      comments {
-        _id
-        text
-        author {
-          _id
-          username
-          email
-        }
-        replies {
-          _id
-          text
-        }
-      }
+      ...ListFields
     }
   }
 `;
+export const REMOVE_BOOK_FROM_LIST = gql`
+  ${LIST_FIELDS}
+  mutation removeBookFromList($listId: ID, $bookId: ID){
+    removeBookFromList(listId:$listId, bookId:$bookId){
+      ...ListFields
+    }
+  }
+`
+
 export const ADD_COMMENT_TO_LIST = gql`
+  ${COMMENT_FIELDS}
   mutation Mutation($listId: ID, $comment: String) {
     addCommentToList(listId: $listId, comment: $comment) {
-      _id
-      text
-      author {
-        _id
-        username
-      }
-      createdAt
+      ...CommentFields
     }
   }
 `;
 export const ADD_COMMENT_TO_REVIEW = gql`
+  ${COMMENT_FIELDS}
   mutation Mutation($reviewId: ID, $comment: String) {
     addCommentToReview(reviewId: $reviewId, comment: $comment) {
-      _id
-      text
-      author {
-        _id
-        username
-      }
-      createdAt
+      ...CommentFields
     }
   }
 `;

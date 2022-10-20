@@ -111,9 +111,6 @@ $microfiber: #368CCE
       align-items: flex-start
       .button
         flex-grow: 0
-  .header, .sub.header 
-    color: black
-    text-shadow: none
 
   .ui.form
     .field>label
@@ -124,9 +121,12 @@ $microfiber: #368CCE
     max-width: 600px
     margin: 2em auto
   &:not(.basic)
-    .ui.header
+    .ui.header, .sub.header
       color: rgb(38, 47, 85) !important
       text-shadow: none !important
+    .ui.horizontal.list.display-list 
+      .item.empty
+        color: black
 
 a.placeholder 
   width: 128px
@@ -175,6 +175,7 @@ a.placeholder
     min-width: 120px
     max-width: 240px
     &.empty
+      color: white
       padding: 0.5rem !important
     &:hover
       transform: translateY(-3px)
@@ -220,6 +221,11 @@ a.placeholder
       display: block
       margin: 0 auto
       max-width: 120px
+
+.profile
+  .horizontal.list.display-list
+    .item.empty
+      color: black
 
 .ui.list.comment-list
   .comment
@@ -323,6 +329,11 @@ a.placeholder
   >.image:not(.icon), > img
     &.book-image
       min-width: 150px
+      &.small
+        min-width: 6em
+    &.labelSprite
+      min-width: 3em
+      vertical-align: top
   
 .club-details, .profile
   .ui.horizontal.list.display-list
@@ -351,10 +362,39 @@ a.placeholder
     top: 2px
     right: 2px
 
-  // box-shadow: 0 0 3px 5px rgba(190,190,190,0.4)
-
 i.icon.red
   text-shadow: 0 0 10px rgba(255,255,255,0.4)
 
-// .ui.rating .active.icon
-//   color:
+.ui.popup
+  &.rating
+    padding: 0.25em
+    .label
+      border-width: 0
+      background: none
+      .detail
+        margin-left: 0.2em
+
+.slide-down
+  .ui.header
+    margin-bottom: 0
+    cursor: pointer
+    + .slide-down-content
+      margin-top: 1rem
+      transform-origin: top
+      animation: 400ms slide-down forwards
+  .icon
+    opacity: 0.7
+    transition: transform 400ms, opacity 400ms
+  &.active
+    .icon
+      opacity: 1
+      transform: rotate(90deg)
+
+@keyframes slide-down
+  0%
+    opacity: 0
+    transform: scaleY(0)
+  100%
+    opacity: 1
+    transform: scaleY(1)
+    

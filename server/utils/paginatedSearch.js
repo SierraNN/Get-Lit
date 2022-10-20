@@ -1,4 +1,4 @@
-const User = require("../models/User")
+// const User = require("../models/User")
 
 function paginatedSearch({ defaultType = 'name', populate = [] }) {
   return async function ({ term, type = defaultType, pageSize = 20, page = 1 }) {
@@ -27,7 +27,7 @@ function paginatedSearch({ defaultType = 'name', populate = [] }) {
       page: page,
       limit: pageSize
     })
-    return { ...pages, pageSize }
+    return { ...pages, pageSize, term, type }
   }
 }
 

@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "@codewizard-dt/use-form-hook"
 import { useEffect } from "react";
 import { useState } from "react"
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Container, Header, Image, Rating, Segment, TextArea } from "semantic-ui-react"
+import { Accordion, Container, Header, Icon, Image, Rating, Segment, TextArea } from "semantic-ui-react"
 import bookCache from "../../utils/bookCache";
 import { useProfile } from "../../context/ProfileContext";
 import { CREATE_REVIEW } from '../../utils/mutations';
@@ -12,34 +12,39 @@ import BookImage from "../BookImage";
 import bookData from '../../utils/bookData';
 import { sanitizeHtml } from "../../utils/sanitizeHtml";
 import { bookByGoogleId } from "../../utils/google";
+import { useFetch } from "../../context/SearchContext";
+import BookService from "../../context/BookService";
+import Loading from "../Loading";
+import RatingStars from "./RatingStars";
 
 const CreateReview = (props) => {
   const { Form } = useForm()
   const [profile, updateProfile] = useProfile()
   const navigate = useNavigate()
   const [createReview] = useMutation(CREATE_REVIEW)
-  const [book, setBook] = useState(null)
+  const [info, setInfo] = useState(null)
   const { bookId } = useParams()
+  const [showDescription, setShowDescription] = useState(false)
 
-  const fetchGoogleData = async (googleId) => {
-    try {
-      const { data: book } = await bookByGoogleId(googleId)
-      bookCache.recent.updateById(googleId, book)
-      setBook(book)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const [googleInfo, setGoogleInfo] = useState(null)
+  const [appInfo, setAppInfo] = useState({})
+  const { book } = useFetch()
 
   useEffect(() => {
-    if (bookId) {
-      let cached = bookCache.recent.getById(bookId)
-      if (cached) setBook(cached)
-      else fetchGoogleData(bookId)
-    } else {
-      setBook(null)
+    let googleSubcription = BookService.googleData.subscribe(data => setGoogleInfo(data))
+    let appSubscription = book.observable.subscribe(data => setAppInfo(data))
+    BookService.setBook(bookId, book)
+    return () => {
+      googleSubcription.unsubscribe()
+      appSubscription.unsubscribe()
     }
   }, [bookId])
+  useEffect(() => {
+    console.log({ appInfo })
+  }, [appInfo])
+
+  if (!googleInfo) return <Loading message="Getting Book" />
+
 
   const onSubmit = async (reviewInfo) => {
     const review = { ...reviewInfo }
@@ -58,30 +63,35 @@ const CreateReview = (props) => {
     }
   }
 
-  const validateRating = (value) => {
-    if (value === '') return true
-    else {
-      let num = Number(value)
-      return num >= 0 && num <= 10
-    }
-  }
-
   const handleClick = (book) => {
     navigate(`/books/${book.id}/reviews/new`)
   }
 
+  const Rating = () => appInfo?.averageRating && <RatingStars average={appInfo?.averageRating} />
+
   const renderForm = () => {
-    const { id, volumeInfo: { title, description, authors = [] } } = book
+    const { id, volumeInfo: { title, description, authors } } = googleInfo
 
     return <>
-      <Header as='h2' content={title} subheader={authors.join(', ')} image={<BookImage book={book} action={null} />} />
+      <Header as='h2'>
+        <BookImage book={googleInfo} action={null} />
+        <Header.Content>
+          {title}
+          {authors && <Header.Subheader content={'By ' + authors.join(', ')} />}
+          <Rating />
+        </Header.Content>
+      </Header>
       <Segment >
-        <Header as='h3' content="Book Description" />
-        <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(description) }}></p>
-
+        <div className={showDescription ? 'active slide-down' : 'slide-down'}>
+          <Header as='h3'
+            icon='angle right'
+            content="Book Description"
+            onClick={() => setShowDescription(!showDescription)} />
+          {showDescription && <p className="slide-down-content" dangerouslySetInnerHTML={{ __html: sanitizeHtml(description) }}></p>}
+        </div>
       </Segment>
       <Form submit={onSubmit} respond={onResponse} fields={[
-        { name: 'rating', label: 'Rating', control: Rating },
+        { name: 'rating', label: 'Rating', control: Rating, maxRating: 5 },
         { name: 'reviewTitle', label: 'Review Title', required: true },
         { name: 'reviewText', label: 'Your Review', control: TextArea, required: true },
       ]} submitBtnText="Publish Review" />
@@ -92,7 +102,7 @@ const CreateReview = (props) => {
     <div className="background3">
       <Container className="blue-box">
         <FormProvider>
-          <Header as='h1' content='New Review' />
+          <Header as='h1' content='New Review' className="clickable" />
           {book
             ? renderForm()
             : <BookQuickFind onBookClick={handleClick} />}

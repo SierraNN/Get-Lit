@@ -10,7 +10,6 @@ const BookImageList = ({ header, list, onImageClick = 'link' }) => {
     <>
       <Header>{header}</Header>
       <List horizontal className="display-list books">
-        {/* {list && list.length ? list.map(renderBookImage) : <ListItem content={<Header content="No books" />} />} */}
         {list && list.length ? list.map(renderBookImage) : <ListItem content="None" />}
       </List>
     </>

@@ -1,24 +1,35 @@
 import { Cache } from "../utils/cache"
+import { Subject } from 'rxjs'
 
 export class SearchService {
   constructor(name, lazyQuery) {
     this.name = name
-    const [query, { loading, data, error, previousData }] = lazyQuery
+    const [query, { loading, data, error, stopPolling }] = lazyQuery
     this.query = query
     this.data = data
     this.error = error
     this.loading = loading
-    this.previousData = previousData
+    this.stopPolling = stopPolling
     this.cache = new Cache(`${name}Query`, [])
   }
-  async refetch(params = {}) {
-    this.params = params
-    return this.query({ variables: { params } }).then(response => {
-      // console.log(`REFETCH ${this.name}`, response)
+  clear = () => {
+    this.cache.clear()
+  }
+
+  setParams(params = {}) {
+    this.refetch(params)
+  }
+
+  async fetch(params = {}) {
+    return this.query({
+      variables: { params },
+      fetchPolicy: 'cache-and-network'
+    }).then(response => {
       this.cacheResponse(response)
       return response
     })
   }
+
   cacheResponse({ data }) {
     if (data) this.cache.set(data[this.name])
   }
@@ -41,6 +52,9 @@ export class SearchService {
   }
   getTotalPages() {
     return this.getQueryData()?.totalPages || this.getCachedParam('totalPages') || 1
+  }
+  getTotalDocs() {
+    return this.getQueryData()?.totalDocs || this.getCachedParam('totalDocs') || 0
   }
   getQueryData() {
     return this.data && this.data[this.name]

@@ -45,7 +45,8 @@ const resolvers = {
       return found.clubs
     },
     getBook: async (parent, { id }) => {
-      const book = await Book.findById(id)
+      const book = await Book.findOne({ googleId: id })
+      await book.getReviewData()
       return book
     },
     getClub: async (parent, { id }) => {
@@ -62,7 +63,8 @@ const resolvers = {
       return list
     },
     getReview: async (parent, { id }) => {
-      const review = await Review.findById(id).populate(['book', 'comments.author', 'creator'])
+      const review = await Review.findOne({ _id: id }).populate(['book', 'comments.author', 'creator'])
+      await review.getAverage()
       if (!review) throw new Error('List not found')
       return review
     },
@@ -156,9 +158,9 @@ const resolvers = {
       return update.following
     },
     saveBook: async (parent, { book }, { user }) => {
-      let saved = await Book.find({ googleId: book.googleId })
+      let saved = await Book.findOne({ googleId: book.googleId })
       if (!saved) saved = await Book.create(book)
-      const update = await User.findByIdAndUpdate(user._id, {
+      update = await User.findByIdAndUpdate(user._id, {
         $addToSet: { books: Types.ObjectId(saved._id) }
       }, { new: true })
       return saved
@@ -197,13 +199,14 @@ const resolvers = {
 
     /** LISTS */
     createList: async (parent, { list }, { user }) => {
-      let book = list.book ? await Book.findOne({ googleId: list.book.googleId }) || await Book.create(list.book) : null
       if (!user) throw new AuthenticationError('Not logged in')
+      let book = list.book ? await Book.findOne({ googleId: list.book.googleId }) || await Book.create(list.book) : null
 
       const listInfo = {
         ...list,
         tags: list.tags.map(tag => ({ text: tag })),
-        creator: ID(user._id)
+        creator: ID(user._id),
+        creator_name: user.username
       }
       if (book) listInfo.books = [book._id]
       const created = await BookList.create(listInfo).then(c => c.populate('books'))
@@ -225,9 +228,23 @@ const resolvers = {
         $addToSet: { books: Types.ObjectId(foundBook._id) }
       }, {
         new: true
-      }).populate('creator')
-      list.populate('books')
+      }).populate(['creator', 'books'])
+      // list.populate('books')
 
+      if (!list) throw new AuthenticationError("List not found")
+      return list
+    },
+    removeBookFromList: async (parent, { listId, bookId }, { user }) => {
+      let book = await Book.findOne({ googleId: bookId })
+      if (!book) throw new UserInputError('Book not found')
+      const list = await BookList.findOneAndUpdate({
+        _id: ID(listId),
+        creator: ID(user._id)
+      }, {
+        $pull: { books: ID(book._id) }
+      }, {
+        new: true
+      }).populate(['creator', 'books'])
       if (!list) throw new AuthenticationError("List not found")
       return list
     },
@@ -248,7 +265,8 @@ const resolvers = {
       const created = await Review.create({
         ...review,
         book: ID(book._id),
-        creator: ID(user._id)
+        creator: ID(user._id),
+        creator_name: user.username
       }).then(c => c.populate(['book', 'creator', 'comments.author']))
       if (created) {
         await User.findByIdAndUpdate(user._id, {
@@ -272,6 +290,7 @@ const resolvers = {
         ...club,
         tags: club.tags.map(tag => ({ text: tag })),
         creator: ID(user._id),
+        creator_name: user.username,
         members: [ID(user._id)]
       }
       const created = await BookClub.create(clubInfo)

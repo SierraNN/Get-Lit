@@ -7,6 +7,7 @@ import { Container, Header, TextArea } from "semantic-ui-react"
 import { useProfile } from "../../context/ProfileContext";
 import bookData from "../../utils/bookData";
 import { CREATE_LIST } from '../../utils/mutations';
+import BookImage from "../BookImage";
 
 const BookListForm = (props) => {
   const { Form } = useForm()
@@ -14,6 +15,7 @@ const BookListForm = (props) => {
   const navigate = useNavigate()
   const { state } = useLocation()
   const [createList] = useMutation(CREATE_LIST)
+
   const onSubmit = async (listInfo) => {
     const list = { ...listInfo }
     if (list.tags === '') list.tags = []
@@ -33,8 +35,15 @@ const BookListForm = (props) => {
   return (
     <div className="background3">
       <Container className="blue-box">
+        <Header as='h1'>
+          {state?.book && <BookImage size="small" book={state.book} />}
+          <Header.Content>
+            Create a New Book List
+            {state?.book && <Header.Subheader>{state.book.volumeInfo.title} will be added automatically</Header.Subheader>}
+          </Header.Content>
+        </Header>
+
         <FormProvider>
-          <Header as='h1'>New Book List</Header>
           <Form submit={onSubmit} respond={onResponse} fields={[
             { name: 'name', required: true },
             { name: 'description', control: TextArea },

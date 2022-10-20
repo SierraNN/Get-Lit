@@ -13,7 +13,7 @@ const Books = (props) => {
   const [auth] = useAuth()
   const { Form } = useForm()
   const [profile, updateProfile] = useProfile()
-  const [results, setResults] = useState(cachedResults)
+  const [results, setResults] = useState()
   const [searchParams, setSearchParams] = useState({})
   const [fresh, setFresh] = useState(false)
   const [totalPages, setTotalPages] = useState(1)
@@ -33,6 +33,7 @@ const Books = (props) => {
     }
   }
   const onResponse = async ({ data, error }) => {
+    console.log('BOOK RESULTS', { data, error })
     if (data && data.items) {
       console.log(data)
       setTotalPages(data.totalItems / pageSize)

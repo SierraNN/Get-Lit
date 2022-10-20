@@ -12,7 +12,7 @@ const BookLink = ({ book }) => {
   const fetchGoogleData = async (googleId) => {
     try {
       const { data: book } = await bookByGoogleId(googleId)
-      bookCache.recent.updateById(googleId, book)
+      // bookCache.google.updateById(googleId, book)
       setInfo(book)
     } catch (error) {
       console.log(error)
@@ -22,7 +22,7 @@ const BookLink = ({ book }) => {
   useEffect(() => {
     // LOAD BOOK INFO IF NOT IN CACHE
     if (book.googleId) {
-      let cached = bookCache.recent.getById(book.googleId)
+      let cached = bookCache.google.getById(book.googleId)
       if (cached) setInfo(cached)
       else fetchGoogleData(book.googleId)
     } else if (book.volumeInfo) setInfo(book)
@@ -38,7 +38,7 @@ const BookLink = ({ book }) => {
   return (
     <Link to={`/books/${id}`} className={thumbnail ? 'item' : 'item placeholder'}>
       {thumbnail
-        ? <Image className="ui image small" src={thumbnail} inline onClick={() => bookCache.recent.updateById(info.id, info)} />
+        ? <Image className="ui image small" src={thumbnail} inline />
         : <>
           <Header as='h3'>{title}</Header>
           <Placeholder>

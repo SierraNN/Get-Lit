@@ -22,7 +22,7 @@ const BookQuickFind = ({ onBookClick }) => {
     }
   }
   const handleClick = (book) => {
-    bookCache.recent.updateById(book.id, book)
+    bookCache.google.updateById(book.id, book)
     if (onBookClick) onBookClick(book)
   }
 

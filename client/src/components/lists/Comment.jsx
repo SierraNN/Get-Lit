@@ -17,7 +17,7 @@ const Comment = ({ comment, parents, onEdit, onDelete }) => {
     }
   }
   const handleDelete = async () => {
-    let update = await onDelete({ ...parents, commentId: comment._id })
+    await onDelete({ ...parents, commentId: comment._id })
   }
   return (
     <List.Item className="comment">

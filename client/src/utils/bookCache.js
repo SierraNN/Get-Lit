@@ -1,9 +1,15 @@
 import { Cache } from "./cache"
 
 class BookService {
-  recent = new Cache('recentBooks', {})
+  google = new Cache('googleBooks', {})
+  // appData = new Cache('appBooks', {})
   results = new Cache('bookSearchResults', null)
-  saved = new Cache('savedBooks', [])
+  // saved = new Cache('savedBooks', [])
+  clear = () => {
+    this.google.clear()
+    // this.appData.clear()
+    this.results.clear()
+  }
 }
 
 export default new BookService()
