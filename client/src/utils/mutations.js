@@ -118,6 +118,10 @@ export const CREATE_CLUB = gql`
   }
 `;
 
+/**
+ * Managing Books in Lists/Clubs
+ */
+
 export const ADD_BOOK_TO_LIST = gql`
   ${LIST_FIELDS}
   mutation AddBookToList($listId: ID, $book: BookInfo) {
@@ -134,6 +138,23 @@ export const REMOVE_BOOK_FROM_LIST = gql`
     }
   }
 `
+export const ADD_BOOK_TO_CLUB = gql`
+  ${CLUB_FIELDS}
+  mutation AddBookToClub($clubId: ID, $book: BookInfo) {
+    addBookToClub(clubId: $clubId, book: $book) {
+      ...ClubFields
+    }
+  }
+`;
+export const REMOVE_BOOK_FROM_CLUB = gql`
+  ${CLUB_FIELDS}
+  mutation removeBookFromClub($clubId: ID, $bookId: ID){
+    removeBookFromClub(clubId:$clubId, bookId:$bookId){
+      ...ClubFields
+    }
+  }
+`
+
 
 export const ADD_COMMENT_TO_LIST = gql`
   ${COMMENT_FIELDS}

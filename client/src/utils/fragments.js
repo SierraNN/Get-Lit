@@ -61,28 +61,6 @@ export const REVIEW_FIELDS = gql`
     createdAt
   }
 `;
-export const CLUB_FIELDS = gql`
-  ${COMMENT_FIELDS}
-  ${SPRITE_FIELDS}
-  fragment ClubFields on BookClub {
-    _id
-    creator {
-      ...SpriteFields
-    }
-    members {
-      ...SpriteFields
-    }
-    name
-    description
-    tags {
-      _id
-      text
-    }
-    posts {
-      ...CommentFields
-    }
-  }
-`;
 export const LIST_FIELDS = gql`
   ${SPRITE_FIELDS}
   fragment ListFields on BookList {
@@ -115,6 +93,38 @@ export const LIST_FIELDS = gql`
     }
   }
 `;
+
+export const CLUB_FIELDS = gql`
+  ${COMMENT_FIELDS}
+  ${SPRITE_FIELDS}
+  ${BOOK_FIELDS}
+  ${LIST_FIELDS}
+  fragment ClubFields on BookClub {
+    _id
+    creator {
+      ...SpriteFields
+    }
+    members {
+      ...SpriteFields
+    }
+    name
+    description
+    tags {
+      _id
+      text
+    }
+    books {
+      ...BookFields
+    }
+    lists {
+      ...ListFields
+    }
+    posts {
+      ...CommentFields
+    }
+  }
+`;
+
 
 export const PROFILE_FIELDS = gql`
   ${BOOK_FIELDS}

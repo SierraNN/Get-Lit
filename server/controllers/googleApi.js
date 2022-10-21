@@ -25,15 +25,20 @@ const bookSearch = async (req, res) => {
   }
 }
 
+const fetchBookById = async (googleId) => {
+  const url = `/volumes/${googleId}?key=${API_KEY}`
+  let { data } = await googleBooks.get(url)
+  return data
+}
+
 const fetchBook = async (req, res) => {
   const { googleId } = req.params
-  const url = `/volumes/${googleId}?key=${API_KEY}`
   try {
-    const { data } = await googleBooks.get(url)
+    let data = await fetchBookById(googleId)
     res.json({ data })
   } catch (error) {
     res.json({ error })
   }
 }
 
-module.exports = { bookSearch, fetchBook }
+module.exports = { bookSearch, fetchBook, fetchBookById }

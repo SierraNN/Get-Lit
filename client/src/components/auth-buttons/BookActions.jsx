@@ -5,7 +5,9 @@ import { useProfile } from "../../context/ProfileContext"
 import { useMutationCB } from "../../hooks/useMutationCB"
 import bookData from "../../utils/bookData"
 import { REMOVE_BOOK, SAVE_BOOK } from "../../utils/mutations"
-import AddToListButton from "../AddToListButton"
+import AddBookToListButton from "./AddBookToListButton"
+import AddBookToClubButton from "./AddBookToClubButton"
+import "./BookActions.sass"
 
 const BookActions = ({ book }) => {
   const [profile, updateProfile] = useProfile()
@@ -36,12 +38,13 @@ const BookActions = ({ book }) => {
 
   }
   return (
-    <Button.Group vertical>
+    <Button.Group vertical className="bookActions">
       {favoriteId
         ? <Button color='red' icon='trash' onClick={handleClick} content="Remove from Favorites" />
         : <Button color="blue" icon='save' onClick={handleClick} content="Save as Favorite" />}
-      <AddToListButton book={book} />
       <Button color='teal' icon='pencil' content="Write a Review" onClick={() => navigate(`/books/${book.id}/reviews/new`)} />
+      <AddBookToListButton book={book} />
+      {/* <AddBookToClubButton book={book} /> */}
     </Button.Group>
   )
 }

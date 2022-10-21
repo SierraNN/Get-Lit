@@ -19,7 +19,7 @@ import Register from './pages/auth/Register';
 import Books from './pages/Books';
 import BookDetails from './pages/BookDetails';
 import ProfileProvider from './context/ProfileContext';
-import Profile from './pages/Profile';
+import UserDetails from './pages/UserDetails';
 import Lists from './pages/Lists';
 import ListDetails from './pages/ListDetails';
 import Reviews from './pages/Reviews';
@@ -34,8 +34,6 @@ import LandingPage from './pages/LandingPage';
 import SearchProvider from './context/SearchContext';
 import MobileSideNav from '../src/components/MobileSideNav';
 import useMediaQuery from "../src/context/useMediaQuery"
-import { useState } from "react"
-import { Menu } from 'semantic-ui-react';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -91,7 +89,7 @@ function App() {
                   </Route>
                   <Route path="/users" element={<Outlet />}>
                     <Route index element={<Users />} />
-                    <Route path=":userId" element={<Profile />} />
+                    <Route path=":userId" element={<UserDetails />} />
                   </Route>
                   <Route path="/" element={<GuestOnly />}>
                     {/** Redirected if already logged in  */}
@@ -100,7 +98,7 @@ function App() {
                   </Route>
                   <Route path="/" element={<AuthGuard />}>
                     {/** Redirected if not logged in */}
-                    <Route path="profile" element={<Profile />} />
+                    <Route path="profile" element={<UserDetails />} />
                     <Route path="lists/new" element={<CreateList />} />
                     <Route path="reviews/new" element={<CreateReview />} />
                     <Route path="books/:bookId/reviews/new" element={<CreateReview />} />

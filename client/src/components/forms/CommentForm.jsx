@@ -4,7 +4,8 @@ import { useAuth } from '../../context/AuthContext';
 const CommentForm = ({ userCanPost = null, textAreaLabel = "Post a comment", onSubmit, disabledMessage }) => {
   const [auth] = useAuth()
   const { Form, clearData } = useForm()
-  return userCanPost !== null ? userCanPost : auth
+  if (userCanPost === null) userCanPost = auth !== null
+  return userCanPost
     ? <Form submit={onSubmit} respond={clearData} fields={[
       { name: "text", label: textAreaLabel, control: "textarea", required: true }
     ]} />

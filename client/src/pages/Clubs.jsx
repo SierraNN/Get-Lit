@@ -19,7 +19,7 @@ const Clubs = (props) => {
     { text: 'By club name', value: 'name' },
     { text: 'By description', value: 'description' },
     { text: 'By tags', value: 'tags' },
-    { text: 'By creator', value: 'creator' },
+    { text: 'By creator', value: 'creator_name' },
   ]
   const extraButtons = auth ? [
     { content: 'My Clubs', color: 'green', onClick: () => setDisplay('profile') }

@@ -1,5 +1,5 @@
-import { Container, Icon, Label } from 'semantic-ui-react';
-import { Divider, Header, Segment, Button, Menu } from 'semantic-ui-react';
+import { Container, Label } from 'semantic-ui-react';
+import { Divider, Header, Segment, Button } from 'semantic-ui-react';
 import './Profile.css';
 import { Dropdown } from 'semantic-ui-react';
 import React, { useEffect, useState } from 'react';
@@ -7,8 +7,7 @@ import Bio from './Bio';
 import ProfileImage from '../components/ProfileImage'
 import { useProfile } from '../context/ProfileContext';
 import { useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
-import { GET_USER } from '../utils/queries';
+import { useMutation } from '@apollo/client';
 import BookImageList from '../components/BookImageList';
 import ListOfBookLists from '../components/lists/ListOfBookLists';
 import { ADD_FOLLOWING, REMOVE_FOLLOWING, UPDATE_BIO, UPDATE_USER_TAGS } from '../utils/mutations';
@@ -49,13 +48,14 @@ const Profile = () => {
 
   const updateUser = (data) => {
     let update = { ...userInfo, ...data }
-    console.log('updateUser', { data, update })
     setUserInfo(update)
     user.updateCacheById(userId, update)
   }
 
   useEffect(() => {
-    let subscription = user.observable.subscribe((user) => updateUser(user))
+    let subscription = user.observable.subscribe((user) => {
+      if (user) updateUser(user)
+    })
     return () => { subscription.unsubscribe() }
   }, [])
 

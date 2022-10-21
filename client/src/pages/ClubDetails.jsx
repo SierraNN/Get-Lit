@@ -17,7 +17,23 @@ const ClubDetails = (props) => {
   const { clubId } = useParams()
   const [profile, updateProfile] = useProfile()
   const { club } = useFetch()
-  const [clubInfo, setClubInfo] = useState()
+  const [clubInfo, setClubInfo] = useState({})
+
+  const updateClub = (data) => {
+    let update = { ...clubInfo, ...data }
+    setClubInfo(update)
+    club.updateCacheById(clubId, update)
+  }
+
+  useEffect(() => {
+    let subscription = club.observable.subscribe((club) => {
+      if (club) updateClub(club)
+    })
+    return () => { subscription.unsubscribe() }
+  }, [])
+  useEffect(() => {
+    if (clubId) club.setId(clubId)
+  }, [clubId])
 
   const createPost = useMutationCB('addPostToClub', ADD_POST_TO_CLUB,
     posts => updateClub({ posts })
@@ -33,21 +49,6 @@ const ClubDetails = (props) => {
   const editPost = useMutationCB('editClubPost', EDIT_CLUB_POST, (update) => update)
   const deletePost = useMutationCB('removeClubPost', REMOVE_CLUB_POST, (update) => update)
 
-
-  const updateClub = (data) => {
-    let update = { ...clubInfo, ...data }
-    setClubInfo(update)
-    club.updateCacheById(clubId, update)
-  }
-
-  useEffect(() => {
-    async function getClub(id) {
-      let fetchedClub = await club.getById(id)
-      setClubInfo(fetchedClub)
-    }
-    if (clubId) getClub(clubId)
-  }, [clubId, profile.clubs])
-
   if (!clubInfo) return (
     <div className="background3 club-details">
       <Container className="blue-box">
@@ -56,7 +57,7 @@ const ClubDetails = (props) => {
     </div>
   )
   const { name, description, members = [], posts = [], tags = [], creator } = clubInfo
-  const isCreator = creator._id === profile._id
+  const isCreator = creator?._id === profile._id
   const isMember = members.find(({ _id }) => _id === profile._id)
 
   const submitPost = async ({ text }) => {
@@ -88,6 +89,8 @@ const ClubDetails = (props) => {
       <Button className="margin-left-1" onClick={handleClick} positive floated={floated ? "right" : undefined} content="Join Club" />
     )
   }
+
+
 
 
   return (

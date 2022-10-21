@@ -18,7 +18,7 @@ const ReviewDetails = (props) => {
   const [profile, updateProfile] = useProfile()
 
   const { review } = useFetch()
-  const [reviewInfo, setReviewInfo] = useState()
+  const [reviewInfo, setReviewInfo] = useState({})
 
   const updateReview = (data) => {
     let update = { ...reviewInfo, ...data }
@@ -26,24 +26,24 @@ const ReviewDetails = (props) => {
     review.updateCacheById(reviewId, update)
   }
 
+  useEffect(() => {
+    let subscription = review.observable.subscribe((review) => {
+      if (review) updateReview(review)
+    })
+    return () => { subscription.unsubscribe() }
+  }, [])
+  useEffect(() => {
+    if (reviewId) review.setId(reviewId)
+  }, [reviewId])
+
   const createComment = useMutationCB('addCommentToReview', ADD_COMMENT_TO_REVIEW,
     comments => updateReview({ comments })
   )
   const editComment = useMutationCB('editReviewComment', EDIT_REVIEW_COMMENT, (update) => update)
   const deleteComment = useMutationCB('removeReviewComment', REMOVE_REVIEW_COMMENT, (update) => update)
 
-  useEffect(() => {
-    async function getReview(id) {
-      let fetchedReview = await review.getById(id)
-      setReviewInfo(fetchedReview)
-    }
-    if (reviewId) getReview(reviewId)
-  }, [reviewId, profile.reviews])
-
-  if (!reviewInfo) return <Loading message="Retrieving review" />
-
-  const { reviewTitle, reviewText, book, creator, comments } = reviewInfo
-  const isCreator = reviewInfo.creator._id === profile._id
+  const { reviewTitle, reviewText, book, creator, comments = [] } = reviewInfo
+  const isCreator = reviewInfo.creator?._id === profile._id
   if (!book) return <Loading message="Retrieving book info" />
 
   const comment = {

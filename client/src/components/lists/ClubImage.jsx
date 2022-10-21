@@ -15,8 +15,6 @@ const ClubImage = ({ info }) => {
   if (!club) return <Placeholder.Image />
   const { _id, name, books = [], lists = [], members = [] } = club
 
-  const thumbnail = null
-
   const renderImage = () => {
     const memberSprites = members.slice(0, 2).map(({ spriteChoice }) => imgList[spriteChoice])
     const bookImages = books.slice(0, 2).map(({ thumbnail }) => thumbnail)
@@ -42,7 +40,7 @@ const ClubImage = ({ info }) => {
   }
 
   return (
-    <Link to={`/clubs/${_id}`} className={thumbnail ? 'item' : 'item   placeholder'}>
+    <Link to={`/clubs/${_id}`} className={'item'}>
       <Header as='h3' content={name} />
       {renderImage()}
     </Link>

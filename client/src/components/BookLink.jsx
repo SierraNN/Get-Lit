@@ -12,7 +12,6 @@ const BookLink = ({ book }) => {
   const fetchGoogleData = async (googleId) => {
     try {
       const { data: book } = await bookByGoogleId(googleId)
-      // bookCache.google.updateById(googleId, book)
       setInfo(book)
     } catch (error) {
       console.log(error)

@@ -1,15 +1,15 @@
 import { useEffect } from "react"
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Button, Grid, Header, List, Modal } from "semantic-ui-react"
-import { useProfile } from "../context/ProfileContext"
-import bookData from "../utils/bookData"
-import { ADD_BOOK_TO_LIST, REMOVE_BOOK_FROM_LIST } from "../utils/mutations"
-import './AddToListButton.sass'
-import BookImage from "./BookImage"
-import { useMutationCB } from '../hooks/useMutationCB';
+import { useProfile } from "../../context/ProfileContext"
+import bookData from "../../utils/bookData"
+import { ADD_BOOK_TO_LIST, REMOVE_BOOK_FROM_LIST } from "../../utils/mutations"
+import './AddBookToListButton.sass'
+import BookImage from "../BookImage"
+import { useMutationCB } from '../../hooks/useMutationCB';
 
-const AddToListButton = ({ book }) => {
+const AddBookToListButton = ({ book }) => {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
 
@@ -52,7 +52,7 @@ const AddToListButton = ({ book }) => {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button icon='plus' content="Add To List" />}
+      trigger={<Button icon='list' content="Your Lists" />}
     >
       <Modal.Content>
         <Grid>
@@ -88,4 +88,4 @@ const AddToListButton = ({ book }) => {
   )
 }
 
-export default AddToListButton
+export default AddBookToListButton

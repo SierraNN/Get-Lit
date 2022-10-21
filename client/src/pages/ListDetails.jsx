@@ -63,6 +63,8 @@ const ListDetails = (props) => {
     if (update) updateList({ comments: comments.filter(({ _id }) => _id !== data.commentId) })
   }
 
+  // console.log('LIST BOOKS', books)
+
   return (
     <div className="background3">
       <Container className="blue-box">

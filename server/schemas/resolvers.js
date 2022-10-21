@@ -46,6 +46,9 @@ const resolvers = {
     },
     getBook: async (parent, { id }) => {
       const book = await Book.findOne({ googleId: id })
+      if (!book) {
+        return {}
+      }
       await book.getReviewData()
       return book
     },
@@ -309,6 +312,37 @@ const resolvers = {
 
       if (!club) throw new AuthenticationError("Club not found")
       return club.posts
+    },
+    addBookToClub: async (parent, { clubId, book }, { user }) => {
+      let foundBook = await Book.findOne({ googleId: book.googleId })
+      if (!foundBook) foundBook = await Book.create(book)
+
+      const club = await BookClub.findOneAndUpdate({
+        _id: ID(clubId),
+        creator: ID(user._id)
+      }, {
+        $addToSet: { books: { book: Types.ObjectId(foundBook._id) } }
+      }, {
+        new: true
+      }).populate(['creator', 'books.book'])
+      // club.populate('books')
+      console.log(club)
+      if (!club) throw new AuthenticationError("Club not found")
+      return club
+    },
+    removeBookFromClub: async (parent, { clubId, bookId }, { user }) => {
+      let book = await Book.findOne({ googleId: bookId })
+      if (!book) throw new UserInputError('Book not found')
+      const club = await BookClub.findOneAndUpdate({
+        _id: ID(clubId),
+        creator: ID(user._id)
+      }, {
+        $pull: { books: ID(book._id) }
+      }, {
+        new: true
+      }).populate(['creator', 'books'])
+      if (!club) throw new AuthenticationError("Club not found")
+      return club
     },
 
     /** COMMENTS / POSTS
